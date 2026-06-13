@@ -1,5 +1,5 @@
 /* ============================================================
-   RJ Store — localStorage data layer (demo backend)
+   RJ Store, localStorage data layer (demo backend)
    Users, sessions, enrollments, messages.
    Note: passwords are stored in plain text for DEMO only.
    ============================================================ */
@@ -80,7 +80,7 @@
       all.push(rec); write(K.enroll, all);
       // auto welcome message from Ruth
       this.addMessage(userId, "ruth",
-        "🎉 Thank you for enrolling! Your payment is confirmed. I'm preparing your private access link and getting-started guide — you'll receive it right here in this chat shortly. Reply anytime with questions!");
+        "🎉 Thank you for enrolling! Your payment is confirmed. I'm preparing your private access link and getting-started guide, you'll receive it right here in this chat shortly. Reply anytime with questions!");
       return { rec };
     },
     setEnrollStatus(id, status) {

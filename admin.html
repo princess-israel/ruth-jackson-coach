@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Admin — Ruth Jackson AI Coach</title>
+<title>Admin, Ruth Jackson AI Coach</title>
 <meta name="robots" content="noindex">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#070e29">
@@ -140,7 +140,7 @@
       </tr>`;}).join("")}</tbody>`;
     t.querySelectorAll("[data-grant]").forEach(b=>b.onclick=()=>{
       Store.setEnrollStatus(b.dataset.grant,"active");
-      Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.ruthjackson.coach/access/"+b.dataset.grant.slice(0,6)+" — log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you! — Ruth");
+      Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.ruthjackson.coach/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
       renderAll();
     });
     t.querySelectorAll("[data-prog]").forEach(b=>b.onclick=()=>{

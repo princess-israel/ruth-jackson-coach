@@ -1,5 +1,5 @@
 /* ============================================================
-   chat.js — "Ruthie" AI Assistant widget (conversion helper)
+   chat.js, "Ruthie" AI Assistant widget (conversion helper)
    Rule-based, self-contained. Self-injects on every page.
    ============================================================ */
 (function () {
@@ -21,7 +21,7 @@
       <div class="av"><img src="${BASE}assets/img/ruth-photo.jpg" alt="Ruth"></div>
       <div>
         <h4>Ruthie · AI Assistant</h4>
-        <div class="status">Online — replies instantly</div>
+        <div class="status">Online, replies instantly</div>
       </div>
       <button class="chat-close" aria-label="Close">×</button>
     </div>
@@ -109,13 +109,13 @@
     const has = (...w) => w.some(x => q.includes(x));
 
     if (has("hi", "hello", "hey", "hallo")) {
-      reply = "Hello! 😊 Happy to help. Are you interested in a specific skill — like AI, digital marketing, SEO, or our customer service training?";
+      reply = "Hello! 😊 Happy to help. Are you interested in a specific skill, like AI, digital marketing, SEO, or our customer service training?";
     } else if (has("price", "cost", "how much", "fee", "pay", "$")) {
-      reply = `Each self-paced certificate course is just <b>$79</b> — that includes lifetime access and a certificate on completion. The <b>Customer Service Excellence</b> training is custom-priced because Ruth tailors it to your team. Want me to point you to a course? <a href="${BASE}programs.html">See all programs →</a>`;
+      reply = `Each self-paced certificate course is just <b>$79</b>, that includes lifetime access and a certificate on completion. The <b>Customer Service Excellence</b> training is custom-priced because Ruth tailors it to your team. Want me to point you to a course? <a href="${BASE}programs.html">See all programs →</a>`;
     } else if (has("certificate", "certified", "accredit")) {
       reply = `Yes! Every $79 course gives you a <b>certificate of completion</b> you can share on LinkedIn or with employers. Ruth herself is Microsoft-certified and a certified WIDB Lead Trainer. 🎓`;
     } else if (has("customer service", "banking", "service training", "team training")) {
-      reply = `Great choice 💬 Customer Service Excellence is Ruth's signature, personally delivered. She spent years in <b>banking customer service</b>, so this is her strongest craft. It's custom-built for you or your team — no fixed price. <a href="${BASE}customer-service.html">Request custom training →</a> or message her on <a href="${WHATSAPP}" target="_blank">WhatsApp</a>.`;
+      reply = `Great choice 💬 Customer Service Excellence is Ruth's signature, personally delivered. She spent years in <b>banking customer service</b>, so this is her strongest craft. It's custom-built for you or your team, no fixed price. <a href="${BASE}customer-service.html">Request custom training →</a> or message her on <a href="${WHATSAPP}" target="_blank">WhatsApp</a>.`;
     } else if (has("course", "program", "learn", "offer", "what do you", "topics")) {
       reply = `Ruth offers 6 self-paced certificate courses ($79 each): <br>🤖 AI for Women Entrepreneurs<br>📣 Digital Marketing & Social Media<br>🌐 Build Your Business Website<br>🔎 SEO & Online Visibility<br>📊 Data Analysis for Growth<br>🛒 E-Commerce & Selling Online<br><a href="${BASE}programs.html">Explore all →</a>`;
     } else if (has("enroll", "sign up", "buy", "register", "start", "how do i join")) {
@@ -123,17 +123,17 @@
     } else if (has("dashboard", "access", "after i buy", "instructions")) {
       reply = `After enrolling you get a personal <b>customer dashboard</b>. That's where Ruth shares your course access link, getting-started instructions, and where you two chat directly. <a href="${BASE}login.html">Go to dashboard →</a>`;
     } else if (has("ai", "artificial intelligence", "chatgpt")) {
-      reply = `Ruth's flagship is <b>Artificial Intelligence for Women Entrepreneurs</b> — practical AI tools for marketing, admin and growth, no tech background needed. $79, certificate included. <a href="${BASE}program.html?id=ai-women-entrepreneurs">View course →</a>`;
+      reply = `Ruth's flagship is <b>Artificial Intelligence for Women Entrepreneurs</b>, practical AI tools for marketing, admin and growth, no tech background needed. $79, certificate included. <a href="${BASE}program.html?id=ai-women-entrepreneurs">View course →</a>`;
     } else if (has("ruth", "who is", "about", "experience", "qualif")) {
-      reply = `Ruth Wanjohi — known as <b>Ruth Jackson</b> — is an AI coach, Microsoft-certified, and a certified <b>WIDB Lead Trainer</b> (Women in Digital Business / ITC–ILO). She empowers women in business and youth, and previously built deep expertise in banking customer service. <a href="${BASE}about.html">Read her story →</a>`;
+      reply = `Ruth Wanjohi, known as <b>Ruth Jackson</b>, is an AI coach, Microsoft-certified, and a certified <b>WIDB Lead Trainer</b> (Women in Digital Business / ITC-ILO). She empowers women in business and youth, and previously built deep expertise in banking customer service. <a href="${BASE}about.html">Read her story →</a>`;
     } else if (has("contact", "phone", "call", "whatsapp", "email", "reach")) {
       reply = `You can reach Ruth directly:<br>📞 ${PHONE}<br>💬 <a href="${WHATSAPP}" target="_blank">Chat on WhatsApp</a><br>Or just enroll and message her inside your dashboard.`;
     } else if (has("self", "pace", "time", "long", "duration")) {
-      reply = `All courses are <b>100% self-paced</b> — start anytime, learn on your schedule, keep lifetime access. Most take 6–8 hours total. 🎯`;
+      reply = `All courses are <b>100% self-paced</b>, start anytime, learn on your schedule, keep lifetime access. Most take 6-8 hours total. 🎯`;
     } else if (has("thank", "thanks", "asante", "great", "ok", "cool")) {
-      reply = `You're welcome! 🌟 Ready when you are — <a href="${BASE}programs.html">browse the courses</a> or ask me anything else.`;
+      reply = `You're welcome! 🌟 Ready when you are, <a href="${BASE}programs.html">browse the courses</a> or ask me anything else.`;
     } else if (has("women", "youth", "empower")) {
-      reply = `Absolutely — Ruth is passionate about empowering <b>women in business and youth</b>. Her programs are designed to be beginner-friendly and immediately practical. 💪 <a href="${BASE}programs.html">See how →</a>`;
+      reply = `Absolutely, Ruth is passionate about empowering <b>women in business and youth</b>. Her programs are designed to be beginner-friendly and immediately practical. 💪 <a href="${BASE}programs.html">See how →</a>`;
     } else {
       reply = `Good question! I can help with our <b>$79 certificate courses</b>, the custom <b>customer service training</b>, enrollment, or contacting Ruth. You can also reach her on <a href="${WHATSAPP}" target="_blank">WhatsApp</a> (${PHONE}). What would you like to know?`;
     }

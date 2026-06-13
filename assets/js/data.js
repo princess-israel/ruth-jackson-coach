@@ -1,12 +1,12 @@
 /* ============================================================
-   Shared catalog data — Ruth Jackson programs
+   Shared catalog data, Ruth Jackson programs
    ============================================================ */
 window.RJ_PROGRAMS = [
   {
     id: "ai-women-entrepreneurs",
     icon: "🤖",
     title: "Artificial Intelligence for Women Entrepreneurs",
-    short: "Use AI tools to plan, market and run your business — no tech background needed.",
+    short: "Use AI tools to plan, market and run your business, no tech background needed.",
     price: 79,
     level: "Beginner → Intermediate",
     hours: 8,
@@ -18,7 +18,7 @@ window.RJ_PROGRAMS = [
       "Create marketing copy, product descriptions and social posts with AI",
       "Build a simple AI-powered workflow for your business"
     ],
-    summary: "Ruth's flagship program, built on the same Microsoft & ITC–ILO curriculum she is certified to deliver. Learn to put practical AI to work in a real small business this week."
+    summary: "Ruth's flagship program, built on the same Microsoft & ITC-ILO curriculum she is certified to deliver. Learn to put practical AI to work in a real small business this week."
   },
   {
     id: "digital-marketing-social",
@@ -36,7 +36,7 @@ window.RJ_PROGRAMS = [
       "Run affordable, high-converting ads on Meta & TikTok",
       "Measure what works and double down on it"
     ],
-    summary: "From zero strategy to a calendar that runs your social presence on autopilot — with templates you keep forever."
+    summary: "From zero strategy to a calendar that runs your social presence on autopilot, with templates you keep forever."
   },
   {
     id: "website-development",
@@ -96,7 +96,7 @@ window.RJ_PROGRAMS = [
     id: "ecommerce-selling-online",
     icon: "🛒",
     title: "E-Commerce & Selling Online",
-    short: "Set up a store, take payments and ship — start selling this month.",
+    short: "Set up a store, take payments and ship, start selling this month.",
     price: 79,
     level: "Beginner",
     hours: 7,
@@ -116,7 +116,7 @@ window.RJ_PROGRAMS = [
 window.RJ_SIGNATURE = {
   id: "customer-service-excellence",
   icon: "💬",
-  title: "Customer Service Excellence — Personal Training by Ruth",
+  title: "Customer Service Excellence, Personal Training by Ruth",
   short: "Custom, live training drawn from Ruth's years in banking customer service.",
   level: "All levels · Teams welcome",
   tags: ["Customer Service", "Live & Custom", "For Teams"],
@@ -126,7 +126,7 @@ window.RJ_SIGNATURE = {
     "Phone, chat and in-person service standards",
     "A service culture your whole team can follow"
   ],
-  summary: "This one is personal. Before coaching, Ruth spent years on the front line of banking customer service — it is her strongest craft. She designs each session around your team and your customers. There is no fixed price; reach out and Ruth will tailor a quote to your needs."
+  summary: "This one is personal. Before coaching, Ruth spent years on the front line of banking customer service, it is her strongest craft. She designs each session around your team and your customers. There is no fixed price; reach out and Ruth will tailor a quote to your needs."
 };
 
 /* Partner organisations (real WIDB ecosystem) */

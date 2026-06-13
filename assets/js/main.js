@@ -1,5 +1,5 @@
 /* ============================================================
-   main.js — navigation, GSAP scroll/parallax/3D, renderers
+   main.js, navigation, GSAP scroll/parallax/3D, renderers
    ============================================================ */
 (function () {
   "use strict";
@@ -114,7 +114,7 @@
       : `<div class="price-tag">$${p.price}<small>certificate included</small></div>`;
     const cta = isFree
       ? `<a class="btn btn-ghost btn-block" href="customer-service.html">Talk to Ruth</a>`
-      : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Enroll — $${p.price}</a>`;
+      : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Enroll, $${p.price}</a>`;
     return `
       <article class="card program-card reveal">
         <span class="card-glow"></span>
