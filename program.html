@@ -53,19 +53,15 @@
       <div class="eyebrow">Secure checkout</div>
       <h3 id="pay-title">Enroll</h3>
       <p class="muted" id="pay-sub" style="font-size:.9rem"></p>
-      <div class="field"><label>Cardholder name</label><input id="cc-name" placeholder="Your name"></div>
-      <div class="field"><label>Card number</label><input id="cc-num" placeholder="4242 4242 4242 4242" inputmode="numeric"></div>
-      <div class="pay-row">
-        <div class="field"><label>Expiry</label><input id="cc-exp" placeholder="MM/YY"></div>
-        <div class="field"><label>CVC</label><input id="cc-cvc" placeholder="123" inputmode="numeric"></div>
-      </div>
-      <button class="btn btn-gold btn-block" id="pay-btn">Pay $79 &amp; Enroll</button>
-      <p class="demo-note">🔒 Demo checkout, no real card is charged. Enrollment is recorded instantly.</p>
+      <div class="field"><label>Phone number <span class="muted" style="font-weight:400">(for your payment receipt)</span></label><input id="pp-phone" placeholder="+254 7XX XXX XXX" inputmode="tel"></div>
+      <p id="pay-error" class="notice err" style="display:none"></p>
+      <button class="btn btn-gold btn-block" id="pay-btn">Pay with Pesapal</button>
+      <p class="demo-note">🔒 Secure payment via <b>Pesapal</b> — cards &amp; M-Pesa. You'll be redirected to complete payment, then brought back here.</p>
     </div>
     <div id="pay-success" class="hide center">
-      <div style="font-size:3rem">🎉</div>
-      <h3>You're enrolled!</h3>
-      <p class="muted">Taking you to your dashboard, where Ruth will share your access link and instructions…</p>
+      <div style="font-size:3rem">↗</div>
+      <h3>Redirecting to Pesapal…</h3>
+      <p class="muted">Taking you to the secure payment page. Please don't close this window.</p>
     </div>
   </div>
 </div>
@@ -138,18 +134,42 @@
       return;
     }
     document.getElementById("pay-title").textContent = "Enroll: " + p.title;
-    document.getElementById("pay-sub").textContent = `You'll be charged $${p.price} (demo). Logged in as ${u.email}.`;
+    document.getElementById("pay-sub").textContent = `You'll be charged $${p.price} USD. Logged in as ${u.email}.`;
+    document.getElementById("pay-btn").textContent = `Pay $${p.price} with Pesapal`;
+    document.getElementById("pay-error").style.display = "none";
     modal.classList.add("open");
   }
   document.getElementById("enroll-btn").addEventListener("click", openCheckout);
   modal.addEventListener("click", e=>{ if(e.target===modal) modal.classList.remove("open"); });
 
-  document.getElementById("pay-btn").addEventListener("click", ()=>{
+  const payBtn = document.getElementById("pay-btn");
+  payBtn.addEventListener("click", async ()=>{
     const u = Store.currentUser(); if(!u){ openCheckout(); return; }
-    const r = Store.enroll(u.id, id);
-    document.getElementById("pay-view").classList.add("hide");
-    document.getElementById("pay-success").classList.remove("hide");
-    setTimeout(()=>location.href="dashboard.html", 1800);
+    const errEl = document.getElementById("pay-error");
+    errEl.style.display = "none";
+    const phone = document.getElementById("pp-phone").value.trim();
+    payBtn.disabled = true; payBtn.textContent = "Connecting to Pesapal…";
+    try {
+      const resp = await fetch("/api/pesapal/pay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ programId: id, email: u.email, name: u.name, phone })
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.redirect_url) throw new Error(data.error || "Could not start payment. Please try again.");
+      // Remember what this payment is for, so the callback can confirm & enroll.
+      localStorage.setItem("rj_pending_payment", JSON.stringify({
+        programId: id, userId: u.id, orderTrackingId: data.order_tracking_id,
+        merchantReference: data.merchant_reference, ts: Date.now()
+      }));
+      document.getElementById("pay-view").classList.add("hide");
+      document.getElementById("pay-success").classList.remove("hide");
+      location.href = data.redirect_url;
+    } catch (e) {
+      payBtn.disabled = false; payBtn.textContent = `Pay $${p.price} with Pesapal`;
+      errEl.textContent = e.message + " (Payments run on the Vercel deployment — see PESAPAL-SETUP.md.)";
+      errEl.style.display = "block";
+    }
   });
 
   // auto-open after login redirect
