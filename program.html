@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Program — Ruth Jackson AI Coach</title>
+<meta name="description" content="Enroll in a self-paced $79 certificate course by Ruth Jackson.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070e29">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  .prog-hero{display:grid;grid-template-columns:1.3fr .9fr;gap:46px;align-items:start}
+  .buy-card{position:sticky;top:100px;background:var(--navy-850);border:1px solid var(--line-strong);border-radius:20px;padding:28px;box-shadow:var(--shadow)}
+  .buy-price{font-family:var(--font-head);font-size:3rem;font-weight:800;color:var(--gold);line-height:1}
+  .incl{list-style:none;padding:0;margin:20px 0}
+  .incl li{display:flex;gap:10px;align-items:center;margin-bottom:12px;font-size:.92rem;color:var(--muted)}
+  .incl li::before{content:"✓";color:#7ee0a8;font-weight:800}
+  /* modal */
+  .modal-bg{position:fixed;inset:0;background:rgba(3,6,18,.78);backdrop-filter:blur(6px);z-index:300;display:none;place-items:center;padding:20px}
+  .modal-bg.open{display:grid}
+  .modal{width:100%;max-width:460px;background:var(--navy-850);border:1px solid var(--line-strong);border-radius:22px;padding:32px;box-shadow:var(--shadow);animation:popmsg .35s ease}
+  .modal h3{margin-bottom:6px}
+  .pay-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .demo-note{font-size:.78rem;color:var(--muted-2);text-align:center;margin-top:14px}
+  @media(max-width:880px){.prog-hero{grid-template-columns:1fr}.buy-card{position:static}}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
+    <nav><ul class="nav-links">
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="customer-service.html">Customer Service</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Articles</a></li>
+    </ul></nav>
+    <div class="nav-cta"><span data-account-cta></span><button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+
+<main class="page-pad section" id="prog-root">
+  <div class="container"><p class="muted">Loading program…</p></div>
+</main>
+
+<!-- Checkout modal -->
+<div class="modal-bg" id="checkout">
+  <div class="modal">
+    <div id="pay-view">
+      <div class="eyebrow">Secure checkout</div>
+      <h3 id="pay-title">Enroll</h3>
+      <p class="muted" id="pay-sub" style="font-size:.9rem"></p>
+      <div class="field"><label>Cardholder name</label><input id="cc-name" placeholder="Your name"></div>
+      <div class="field"><label>Card number</label><input id="cc-num" placeholder="4242 4242 4242 4242" inputmode="numeric"></div>
+      <div class="pay-row">
+        <div class="field"><label>Expiry</label><input id="cc-exp" placeholder="MM/YY"></div>
+        <div class="field"><label>CVC</label><input id="cc-cvc" placeholder="123" inputmode="numeric"></div>
+      </div>
+      <button class="btn btn-gold btn-block" id="pay-btn">Pay $79 &amp; Enroll</button>
+      <p class="demo-note">🔒 Demo checkout — no real card is charged. Enrollment is recorded instantly.</p>
+    </div>
+    <div id="pay-success" class="hide center">
+      <div style="font-size:3rem">🎉</div>
+      <h3>You're enrolled!</h3>
+      <p class="muted">Taking you to your dashboard, where Ruth will share your access link and instructions…</p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><div class="container"><div class="footer-bottom" style="border:0">
+  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="programs.html">All programs</a> · <a href="tel:+254714458530">+254 714 458530</a></span>
+</div></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chat.js"></script>
+<script>
+(function(){
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  const p = Store.programById(id);
+  const root = document.getElementById("prog-root");
+  if(!p){ root.innerHTML = `<div class="container center"><h2>Program not found</h2><p class="muted">It may have moved.</p><a class="btn btn-gold" href="programs.html">Back to programs</a></div>`; return; }
+
+  const free = !p.price;
+  root.innerHTML = `<div class="container">
+    <a href="programs.html" class="muted" style="font-size:.9rem">← All programs</a>
+    <div class="prog-hero" style="margin-top:20px">
+      <div>
+        <div class="program-ico" style="width:64px;height:64px;font-size:1.8rem;margin-bottom:18px">${p.icon}</div>
+        <div class="eyebrow">${free ? "Custom Training" : "$"+p.price+" · Certificate Course"}</div>
+        <h1 style="font-size:clamp(2rem,4vw,3.2rem)">${p.title}</h1>
+        <p class="muted" style="font-size:1.1rem">${p.short}</p>
+        <div class="tags" style="margin:18px 0">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+        <p>${p.summary}</p>
+        <h3 style="margin-top:34px">What you'll be able to do</h3>
+        <ul class="cred-list">${p.outcomes.map(o=>`<li><span class="ck">✓</span><span>${o}</span></li>`).join("")}</ul>
+        ${free?"":`
+        <h3 style="margin-top:30px">How it works</h3>
+        <div class="steps" style="grid-template-columns:repeat(3,1fr);margin-top:16px">
+          <div class="card step"><h3>Enroll</h3><p class="muted">Pay $${p.price} &amp; create your account.</p></div>
+          <div class="card step"><h3>Get access</h3><p class="muted">Ruth sends your link in your dashboard.</p></div>
+          <div class="card step"><h3>Learn &amp; certify</h3><p class="muted">Finish at your pace, earn your certificate.</p></div>
+        </div>`}
+      </div>
+      <aside class="buy-card">
+        ${free
+          ? `<div class="buy-price" style="font-size:2rem">Custom quote</div>
+             <p class="muted" style="font-size:.9rem;margin-top:6px">Tailored to your team &amp; needs</p>
+             <ul class="incl"><li>Live, personal training by Ruth</li><li>Built around your customers</li><li>Team workshops available</li><li>Scripts &amp; standards you keep</li></ul>
+             <a class="btn btn-azure btn-block" href="customer-service.html">Request custom training</a>
+             <a class="btn btn-ghost btn-block" href="https://wa.me/254714458530" target="_blank" rel="noopener" style="margin-top:10px">WhatsApp Ruth</a>`
+          : `<div class="buy-price">$${p.price}</div>
+             <p class="muted" style="font-size:.9rem;margin-top:6px">One-time · lifetime access</p>
+             <ul class="incl"><li>${p.lessons} lessons · ${p.hours} hours</li><li>Self-paced — learn anytime</li><li>Certificate of completion</li><li>Templates you keep forever</li><li>Direct chat with Ruth</li></ul>
+             <button class="btn btn-gold btn-block" id="enroll-btn">Enroll — $${p.price}</button>
+             <a class="btn btn-ghost btn-block" data-open-chat="Tell me about ${p.title}" style="margin-top:10px">Ask a question</a>`}
+      </aside>
+    </div>
+  </div>`;
+  document.querySelectorAll("[data-open-chat]").forEach(el=>el.addEventListener("click",e=>{e.preventDefault();window.openRuthie(el.dataset.openChat);}));
+  document.querySelector("[data-year]") && (document.querySelector("[data-year]").textContent=new Date().getFullYear());
+
+  if(free) return;
+
+  const modal = document.getElementById("checkout");
+  function openCheckout(){
+    const u = Store.currentUser();
+    if(!u){ // need account first
+      localStorage.setItem("rj_next", `program.html?id=${id}&enroll=1`);
+      location.href = `login.html?next=${encodeURIComponent("program.html?id="+id+"&enroll=1")}`;
+      return;
+    }
+    document.getElementById("pay-title").textContent = "Enroll: " + p.title;
+    document.getElementById("pay-sub").textContent = `You'll be charged $${p.price} (demo). Logged in as ${u.email}.`;
+    modal.classList.add("open");
+  }
+  document.getElementById("enroll-btn").addEventListener("click", openCheckout);
+  modal.addEventListener("click", e=>{ if(e.target===modal) modal.classList.remove("open"); });
+
+  document.getElementById("pay-btn").addEventListener("click", ()=>{
+    const u = Store.currentUser(); if(!u){ openCheckout(); return; }
+    const r = Store.enroll(u.id, id);
+    document.getElementById("pay-view").classList.add("hide");
+    document.getElementById("pay-success").classList.remove("hide");
+    setTimeout(()=>location.href="dashboard.html", 1800);
+  });
+
+  // auto-open after login redirect
+  if(params.get("enroll")==="1" && Store.currentUser()) setTimeout(openCheckout, 300);
+})();
+</script>
+</body>
+</html>

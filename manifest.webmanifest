@@ -1,0 +1,12 @@
+{
+  "name": "Ruth Jackson — AI Coach",
+  "short_name": "Ruth Jackson",
+  "description": "Practical AI & digital skills for women entrepreneurs and youth.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050a20",
+  "theme_color": "#070e29",
+  "icons": [
+    { "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

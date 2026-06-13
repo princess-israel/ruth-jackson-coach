@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Dashboard — Ruth Jackson AI Coach</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070e29">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<div class="dash">
+  <aside class="dash-side" id="side">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>Customer</small></span></a>
+    <ul class="dash-nav">
+      <li><a data-view="courses" class="active">📚 My Courses</a></li>
+      <li><a data-view="messages">💬 Messages <span id="msg-badge"></span></a></li>
+      <li><a data-view="browse">✨ Explore more</a></li>
+      <li><a data-view="profile">👤 Profile</a></li>
+      <li><a href="index.html">🏠 Back to site</a></li>
+      <li><a id="logout" style="color:var(--rose)">↩ Log out</a></li>
+    </ul>
+  </aside>
+
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div>
+        <button class="btn btn-ghost btn-sm" id="menu-btn" style="display:none">☰ Menu</button>
+        <h1 id="view-title">My Courses</h1>
+        <p class="muted" id="welcome" style="margin:0"></p>
+      </div>
+      <a class="btn btn-gold btn-sm" href="programs.html">+ Enroll in a course</a>
+    </div>
+
+    <!-- COURSES -->
+    <section data-pane="courses">
+      <div class="kpis" id="kpis"></div>
+      <div class="panel"><h3>Your enrolled programs</h3><div id="courses-list"></div></div>
+    </section>
+
+    <!-- MESSAGES -->
+    <section data-pane="messages" class="hide">
+      <div class="panel">
+        <h3>💬 Chat with Ruth</h3>
+        <p class="muted" style="font-size:.88rem;margin-top:-8px">This is where Ruth shares your course access links &amp; instructions. Replies usually within a few hours.</p>
+        <div class="chat-thread" id="thread"></div>
+        <form class="composer" id="composer">
+          <input class="field" style="margin:0" id="msg-input" placeholder="Type a message to Ruth…" autocomplete="off">
+          <button class="btn btn-gold" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- BROWSE -->
+    <section data-pane="browse" class="hide">
+      <div class="panel"><h3>Continue building your skills</h3>
+        <div class="grid grid-3" data-programs data-limit="3" style="margin-top:10px"></div>
+        <div style="margin-top:20px"><a class="btn btn-ghost" href="programs.html">See all programs →</a></div>
+      </div>
+    </section>
+
+    <!-- PROFILE -->
+    <section data-pane="profile" class="hide">
+      <div class="panel" style="max-width:520px">
+        <h3>Your profile</h3>
+        <div class="field"><label>Name</label><input id="pf-name"></div>
+        <div class="field"><label>Email</label><input id="pf-email" disabled></div>
+        <button class="btn btn-gold" id="save-profile">Save changes</button>
+        <p id="pf-note" class="muted" style="font-size:.85rem;margin-top:10px"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  const user = Store.currentUser();
+  if(!user){ location.href="login.html?next="+encodeURIComponent("dashboard.html"); return; }
+  if(user.role==="admin"){ location.href="admin.html"; return; }
+
+  document.getElementById("welcome").textContent = `Welcome back, ${user.name.split(" ")[0]} 👋`;
+  document.getElementById("logout").onclick = ()=>{ Store.logout(); location.href="index.html"; };
+  // mobile menu
+  const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
+  if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
+
+  // view switching
+  const titles={courses:"My Courses",messages:"Messages",browse:"Explore more",profile:"Profile"};
+  document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
+    a.onclick=()=>{
+      document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
+      a.classList.add("active");
+      const v=a.dataset.view;
+      document.querySelectorAll("[data-pane]").forEach(p=>p.classList.toggle("hide",p.dataset.pane!==v));
+      document.getElementById("view-title").textContent=titles[v];
+      side.classList.remove("open");
+      if(v==="messages"){ Store.markRead(user.id); renderThread(); updateBadge(); }
+    };
+  });
+
+  function renderCourses(){
+    const enrolls = Store.enrollments(user.id);
+    const active = enrolls.filter(e=>e.status==="active").length;
+    const kpis=[
+      {v:enrolls.length,l:"Programs enrolled"},
+      {v:active,l:"Active now"},
+      {v:enrolls.filter(e=>e.status==="pending").length,l:"Awaiting access"},
+      {v:Math.round(enrolls.reduce((s,e)=>s+(e.progress||0),0)/(enrolls.length||1))+"%",l:"Avg progress"}
+    ];
+    document.getElementById("kpis").innerHTML=kpis.map(k=>`<div class="kpi"><div class="v">${k.v}</div><div class="l">${k.l}</div></div>`).join("");
+
+    const list=document.getElementById("courses-list");
+    if(!enrolls.length){ list.innerHTML=`<p class="muted">You haven't enrolled yet. <a href="programs.html" class="gold">Browse programs →</a></p>`; return; }
+    list.innerHTML=enrolls.map(e=>{
+      const p=Store.programById(e.programId)||{title:e.programId,icon:"📘"};
+      return `<div style="display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)">
+        <div class="program-ico" style="flex:none">${p.icon}</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <b>${p.title}</b>
+            <span class="badge-status ${e.status}">${e.status==="active"?"Active":"Awaiting access"}</span>
+          </div>
+          <div class="progress"><i style="width:${e.progress||0}%"></i></div>
+          <div class="muted" style="font-size:.8rem;margin-top:6px">${e.status==="active"?`${e.progress||0}% complete`:"Ruth is preparing your access link — check Messages 💬"}</div>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
+  function renderThread(){
+    const msgs=Store.messages(user.id);
+    const t=document.getElementById("thread");
+    t.innerHTML = msgs.length? msgs.map(m=>`<div class="thread-msg ${m.from==="customer"?"me":"them"}">${m.text}<div class="meta">${m.from==="customer"?"You":"Ruth"} · ${timeAgo(m.ts)}</div></div>`).join("")
+      : `<p class="muted">No messages yet. Say hello to Ruth! 👋</p>`;
+    t.scrollTop=t.scrollHeight;
+  }
+  function updateBadge(){
+    const unread=Store.messages(user.id).filter(m=>m.from==="ruth"&&!m.read).length;
+    document.getElementById("msg-badge").innerHTML = unread?`<span class="badge-status pending" style="font-size:.66rem">${unread}</span>`:"";
+  }
+  document.getElementById("composer").onsubmit=e=>{
+    e.preventDefault();
+    const inp=document.getElementById("msg-input"); const v=inp.value.trim(); if(!v)return;
+    Store.addMessage(user.id,"customer",v); inp.value=""; renderThread();
+  };
+
+  // profile
+  document.getElementById("pf-name").value=user.name;
+  document.getElementById("pf-email").value=user.email;
+  document.getElementById("save-profile").onclick=()=>{
+    const users=Store.users(); const u=users.find(x=>x.id===user.id);
+    u.name=document.getElementById("pf-name").value.trim();
+    localStorage.setItem(Store.KEYS.users,JSON.stringify(users));
+    document.getElementById("pf-note").textContent="Saved ✓";
+  };
+
+  function timeAgo(ts){const s=(Date.now()-ts)/1000;if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m ago";if(s<86400)return Math.floor(s/3600)+"h ago";return Math.floor(s/86400)+"d ago";}
+
+  renderCourses(); renderThread(); updateBadge();
+})();
+</script>
+</body>
+</html>
