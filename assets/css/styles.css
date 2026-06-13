@@ -104,7 +104,33 @@ section{position:relative}
 .hamburger span{width:24px;height:2px;background:var(--text);transition:.3s}
 
 /* ---------- Hero ---------- */
-.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;background:var(--grad-hero);overflow:hidden}
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px;background:var(--grad-hero);overflow:hidden;isolation:isolate}
+/* animated aurora background — subtle, GPU-friendly */
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;filter:blur(72px);pointer-events:none;z-index:0;will-change:transform,opacity}
+.hero::before{
+  width:46vw;height:46vw;max-width:640px;max-height:640px;top:-14%;right:-6%;
+  background:radial-gradient(circle at 35% 35%,rgba(78,168,255,.5),transparent 70%);
+  animation:heroDriftA 19s ease-in-out infinite alternate;
+}
+.hero::after{
+  width:42vw;height:42vw;max-width:580px;max-height:580px;bottom:-18%;left:-8%;
+  background:radial-gradient(circle at 50% 50%,rgba(232,182,90,.34),transparent 70%);
+  animation:heroDriftB 24s ease-in-out infinite alternate;
+}
+.hero>.container{position:relative;z-index:2}
+@keyframes heroDriftA{
+  0%{transform:translate3d(0,0,0) scale(1);opacity:.55}
+  50%{transform:translate3d(-5%,6%,0) scale(1.12);opacity:.8}
+  100%{transform:translate3d(3%,-4%,0) scale(1.04);opacity:.6}
+}
+@keyframes heroDriftB{
+  0%{transform:translate3d(0,0,0) scale(1.05);opacity:.45}
+  50%{transform:translate3d(7%,-5%,0) scale(.92);opacity:.7}
+  100%{transform:translate3d(-4%,5%,0) scale(1.1);opacity:.5}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero::before,.hero::after{animation:none}
+}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
 .hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
 .pill{
