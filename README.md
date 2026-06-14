@@ -16,11 +16,12 @@ A modern, dark-blue marketing + e-learning site for **Ruth Wanjohi ("Ruth Jackso
 - GSAP + ScrollTrigger via CDN.
 - Demo "backend" is `localStorage` (`assets/js/store.js`) — users, enrollments, messages. **Passwords are plain-text for demo only.**
 
-## Demo logins
-| Role | Email | Password |
-|------|-------|----------|
-| Customer | `demo@student.com` | `demo123` |
-| Admin (Ruth) | `ruth@coachruthjackson.com` | `ruth123` |
+## Access
+- **Customers** self-register at `login.html` (localStorage demo store).
+- **Admin** is a single, exclusive login at `admin.html`, verified server-side against
+  `admin_token` in `api/pesapal/config.php` (via `api/admin-login.php`). There is no admin
+  account in the client store and no signup path to admin. The Programs/Articles write APIs
+  also require this secret. Set it once in `config.php`.
 
 ## Structure
 ```

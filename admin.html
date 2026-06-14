@@ -13,7 +13,22 @@
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<div class="dash">
+<!-- Admin login gate -->
+<div class="auth-wrap" id="admin-login" style="display:none;position:fixed;inset:0;z-index:500">
+  <div class="auth-card">
+    <a class="brand" href="index.html" style="justify-content:center;margin-bottom:20px"><span class="logo">RJ</span><span>Ruth Jackson<small>Admin</small></span></a>
+    <h2 style="text-align:center;font-size:1.5rem">Admin access</h2>
+    <p class="muted center" style="margin-bottom:22px">Enter your admin password to continue.</p>
+    <form id="al-form">
+      <div class="field"><label>Admin password</label><input type="password" id="al-pass" autocomplete="current-password" required placeholder="••••••••"></div>
+      <div id="al-note" class="muted" style="font-size:.85rem;min-height:1.2em;margin-bottom:10px"></div>
+      <button class="btn btn-gold btn-block" type="submit">Sign in</button>
+    </form>
+    <p class="auth-switch"><a href="index.html">← Back to site</a></p>
+  </div>
+</div>
+
+<div class="dash" id="dash-root" style="display:none">
   <aside class="dash-side" id="side">
     <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>Admin</small></span></a>
     <ul class="dash-nav">
@@ -84,10 +99,6 @@
           <button class="btn btn-gold btn-sm" id="add-prog">+ Add program</button>
         </div>
         <p class="muted" style="font-size:.86rem">Add, edit, delete or re-price courses. Changes apply to the live site instantly. Set a price of <b>0</b> for a contact-only course.</p>
-        <div class="field" style="max-width:340px">
-          <label>Admin password <span class="muted" style="font-weight:400">(set in config.php)</span></label>
-          <input id="prog-token" type="password" placeholder="Required to save changes">
-        </div>
         <div id="prog-notice"></div>
         <div style="overflow-x:auto"><table class="table" id="programs-table"></table></div>
       </div>
@@ -126,10 +137,6 @@
           <button class="btn btn-gold btn-sm" id="add-art">+ Write article</button>
         </div>
         <p class="muted" style="font-size:.86rem">Write, edit or delete blog articles. Each one publishes instantly as a search-friendly page at <code>/article.php?slug=…</code> and appears on the site.</p>
-        <div class="field" style="max-width:340px">
-          <label>Admin password <span class="muted" style="font-weight:400">(same as Programs)</span></label>
-          <input id="art-token" type="password" placeholder="Required to save changes">
-        </div>
         <div id="art-notice"></div>
         <div style="overflow-x:auto"><table class="table" id="articles-table"></table></div>
       </div>
@@ -165,11 +172,31 @@
 <script src="assets/js/store.js"></script>
 <script>
 (function(){
-  const user = Store.currentUser();
-  if(!user){ location.href="login.html?next="+encodeURIComponent("admin.html"); return; }
-  if(user.role!=="admin"){ location.href="dashboard.html"; return; }
+  const SESSION="rj_admin_session";
+  const adminToken = localStorage.getItem(SESSION) || "";
 
-  document.getElementById("logout").onclick=()=>{ Store.logout(); location.href="index.html"; };
+  // --- Admin login gate (server-verified single password) ---
+  if(!adminToken){
+    const ov=document.getElementById("admin-login");
+    ov.style.display="grid";
+    document.getElementById("al-form").onsubmit=async e=>{
+      e.preventDefault();
+      const note=document.getElementById("al-note");
+      const pw=document.getElementById("al-pass").value;
+      note.style.color="var(--muted)"; note.textContent="Checking…";
+      try{
+        const r=await fetch("/api/admin-login.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});
+        const d=await r.json().catch(()=>({}));
+        if(!r.ok||!d.ok){ note.style.color="#ffb3b3"; note.textContent=d.error||"Incorrect password."; return; }
+        localStorage.setItem(SESSION, d.token);
+        location.reload();
+      }catch(err){ note.style.color="#ffb3b3"; note.textContent="Couldn't reach the server. Admin login needs the live site (coachruthjackson.com)."; }
+    };
+    return; // stop here until logged in
+  }
+  document.getElementById("dash-root").style.display="grid";
+
+  document.getElementById("logout").onclick=()=>{ localStorage.removeItem(SESSION); location.href="index.html"; };
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
@@ -279,11 +306,6 @@
   /* ---------- Programs manager ---------- */
   let catalog = [];
   const pn = msg => document.getElementById("prog-notice").innerHTML = msg ? `<div class="notice ${msg.ok?"ok":"err"}">${msg.text}</div>` : "";
-  const tokenEl = () => document.getElementById("prog-token");
-
-  // remember the admin password between visits (this browser only)
-  tokenEl().value = localStorage.getItem("rj_admin_token") || "";
-  tokenEl().addEventListener("change", () => localStorage.setItem("rj_admin_token", tokenEl().value));
 
   async function loadCatalog(){
     try{
@@ -337,8 +359,9 @@
   function slugify(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40); }
 
   async function post(body){
-    body.token = tokenEl().value.trim();
+    body.token = adminToken;
     const r = await fetch("/api/programs.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    if(r.status===401){ localStorage.removeItem(SESSION); pn({ok:false,text:"Session expired. Reloading login…"}); setTimeout(()=>location.reload(),1200); }
     return { ok:r.ok, data: await r.json().catch(()=>({})) };
   }
 
@@ -376,9 +399,6 @@
   /* ---------- Articles manager ---------- */
   let articles = [];
   const an = msg => document.getElementById("art-notice").innerHTML = msg ? `<div class="notice ${msg.ok?"ok":"err"}">${msg.text}</div>` : "";
-  const artTokenEl = () => document.getElementById("art-token");
-  artTokenEl().value = localStorage.getItem("rj_admin_token") || "";
-  artTokenEl().addEventListener("change", () => localStorage.setItem("rj_admin_token", artTokenEl().value));
 
   async function loadArticles(){
     try{
@@ -445,8 +465,9 @@
   }
 
   async function postArt(body){
-    body.token = artTokenEl().value.trim();
+    body.token = adminToken;
     const r = await fetch("/api/articles.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    if(r.status===401){ localStorage.removeItem(SESSION); an({ok:false,text:"Session expired. Reloading login…"}); setTimeout(()=>location.reload(),1200); }
     return { ok:r.ok, data: await r.json().catch(()=>({})) };
   }
   document.getElementById("af-save").onclick = async ()=>{

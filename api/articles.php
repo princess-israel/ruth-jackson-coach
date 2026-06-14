@@ -6,6 +6,7 @@
  *   body: { token, action:"save"|"delete", article?:{...}, slug?:"..." }
  */
 require __DIR__ . '/_articles.php';
+require __DIR__ . '/_admin.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -24,20 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $body = json_decode(file_get_contents('php://input'), true);
 if (!is_array($body)) $body = $_POST;
 
-// --- auth (shares the Programs admin token) ---
-$adminToken = '';
-$cfgFile = __DIR__ . '/pesapal/config.php';
-if (file_exists($cfgFile)) {
-  $cfg = require $cfgFile;
-  if (is_array($cfg) && !empty($cfg['admin_token'])) $adminToken = (string)$cfg['admin_token'];
-}
-if ($adminToken === '') {
+// --- auth (single admin secret) ---
+if (admin_secret() === '') {
   http_response_code(403);
-  echo json_encode(['error' => "No admin token configured. Add  'admin_token' => 'your-secret'  to api/pesapal/config.php."]);
+  echo json_encode(['error' => "No admin secret configured. Add  'admin_token' => 'your-secret'  to api/pesapal/config.php."]);
   exit;
 }
-if (!hash_equals($adminToken, (string)(isset($body['token']) ? $body['token'] : ''))) {
-  http_response_code(401); echo json_encode(['error' => 'Invalid admin token.']); exit;
+if (!admin_token_valid(isset($body['token']) ? $body['token'] : '')) {
+  http_response_code(401); echo json_encode(['error' => 'Not authorised. Please log in to the admin again.']); exit;
 }
 
 $articles = articles_load();

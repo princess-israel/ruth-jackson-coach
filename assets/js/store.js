@@ -15,26 +15,11 @@
   const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
   function seed() {
-    let users = read(K.users, null);
-    if (!users) {
-      users = [
-        { id: "admin-ruth", name: "Ruth Jackson", email: "ruth@coachruthjackson.com", password: "ruth123", role: "admin", createdAt: Date.now() },
-        { id: "demo-user", name: "Amina Demo", email: "demo@student.com", password: "demo123", role: "customer", createdAt: Date.now() }
-      ];
-      write(K.users, users);
-    }
-    if (!read(K.enroll, null)) {
-      write(K.enroll, [
-        { id: uid(), userId: "demo-user", programId: "ai-women-entrepreneurs", status: "active", progress: 35, purchasedAt: Date.now() - 86400000 * 4 },
-        { id: uid(), userId: "demo-user", programId: "digital-marketing-social", status: "pending", progress: 0, purchasedAt: Date.now() - 3600000 }
-      ]);
-    }
-    if (!read(K.msgs, null)) {
-      write(K.msgs, [
-        { id: uid(), userId: "demo-user", from: "ruth", text: "Welcome aboard, Amina! 🎉 Your AI for Women Entrepreneurs course is ready. I'll send your access link here within the hour.", ts: Date.now() - 86400000 * 4 + 3600000, read: true },
-        { id: uid(), userId: "demo-user", from: "customer", text: "Thank you Ruth! Looking forward to starting.", ts: Date.now() - 86400000 * 4 + 5400000, read: true }
-      ]);
-    }
+    // Start clean: real customer accounts are created by signup. Admin no longer
+    // lives here — it is gated by a server-verified password (api/admin-login.php).
+    if (!read(K.users, null)) write(K.users, []);
+    if (!read(K.enroll, null)) write(K.enroll, []);
+    if (!read(K.msgs, null)) write(K.msgs, []);
   }
   seed();
 
