@@ -8,7 +8,26 @@ Payments are **live Pesapal**, charged in **USD ($79)**. Your keys stay on your 
 - cPanel with **PHP 7.4+** and the **cURL** extension (both are on by default).
 - **HTTPS** on your domain (cPanel → *SSL/TLS Status* → run AutoSSL). Pesapal callbacks need https.
 
-## Step 1 — Get the files onto the server
+## This account's specifics (Bluegift / irelandcollection.com)
+- cPanel home: `/home/irelandc`
+- Live domain: **coachruthjackson.com**, document root **`/home/irelandc/coachruthjackson.com`**
+  (NOT `public_html` — that belongs to the main domain `irelandcollection.com`).
+- `.cpanel.yml` in this repo auto-copies files into that docroot on a Git deploy.
+
+## Easiest deploy — cPanel Git Version Control (recommended)
+1. cPanel → **Git™ Version Control → Create**.
+2. Turn **Clone a Repository** ON.
+   - **Clone URL:** `https://github.com/kenikiara/ruth-jackson-coach.git`
+   - **Repository Path:** `/home/irelandc/repositories/ruth-jackson-coach`
+   - **Name:** `ruth-jackson-coach` → **Create**.
+3. Open the repo → **Manage → Pull or Deploy** tab → click **Update from Remote**, then
+   **Deploy HEAD Commit**. The `.cpanel.yml` copies everything into
+   `/home/irelandc/coachruthjackson.com`.
+4. Future updates: I `git push`, you click **Update from Remote → Deploy HEAD Commit** again.
+
+(If `Deploy` errors, open the deploy log and send it to me — usually just the rsync path.)
+
+## Step 1 (manual alternative) — Get the files onto the server
 **Option A — Upload a zip (simplest):**
 1. On GitHub open `kenikiara/ruth-jackson-coach` → **Code ▾ → Download ZIP**.
 2. cPanel → **File Manager** → open **public_html**.
