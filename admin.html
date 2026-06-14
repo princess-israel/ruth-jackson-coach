@@ -20,6 +20,7 @@
     <h2 style="text-align:center;font-size:1.5rem">Admin access</h2>
     <p class="muted center" style="margin-bottom:22px">Enter your admin password to continue.</p>
     <form id="al-form">
+      <div class="field"><label>Admin email</label><input type="email" id="al-email" autocomplete="username" required placeholder="info@coachruthjackson.com"></div>
       <div class="field"><label>Admin password</label><input type="password" id="al-pass" autocomplete="current-password" required placeholder="••••••••"></div>
       <div id="al-note" class="muted" style="font-size:.85rem;min-height:1.2em;margin-bottom:10px"></div>
       <button class="btn btn-gold btn-block" type="submit">Sign in</button>
@@ -183,9 +184,10 @@
       e.preventDefault();
       const note=document.getElementById("al-note");
       const pw=document.getElementById("al-pass").value;
+      const email=document.getElementById("al-email").value;
       note.style.color="var(--muted)"; note.textContent="Checking…";
       try{
-        const r=await fetch("/api/admin-login.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({password:pw})});
+        const r=await fetch("/api/admin-login.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,password:pw})});
         const d=await r.json().catch(()=>({}));
         if(!r.ok||!d.ok){ note.style.color="#ffb3b3"; note.textContent=d.error||"Incorrect password."; return; }
         localStorage.setItem(SESSION, d.token);

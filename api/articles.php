@@ -8,6 +8,9 @@
 require __DIR__ . '/_articles.php';
 require __DIR__ . '/_admin.php';
 header('Content-Type: application/json');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('X-LiteSpeed-Cache-Control: no-cache');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
