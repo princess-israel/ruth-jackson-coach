@@ -89,7 +89,8 @@
 
     <!-- STUDENTS -->
     <section data-pane="students" class="hide">
-      <div class="panel"><h3>Students</h3><div style="overflow-x:auto"><table class="table" id="students-table"></table></div></div>
+      <div class="panel"><h3>Students</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">Click a student to see full details.</p><div style="overflow-x:auto"><table class="table" id="students-table"></table></div></div>
+      <div class="panel hide" id="student-detail"></div>
     </section>
 
     <!-- PROGRAMS -->
@@ -198,6 +199,16 @@
   }
   document.getElementById("dash-root").style.display="grid";
 
+  // Purge any leftover demo data (Amina Demo etc.) regardless of cached store.js
+  (function purgeDemo(){
+    try{
+      const K=Store.KEYS;
+      localStorage.setItem(K.users, JSON.stringify(JSON.parse(localStorage.getItem(K.users)||"[]").filter(x=>x.id!=="demo-user"&&x.id!=="admin-ruth")));
+      localStorage.setItem(K.enroll, JSON.stringify(JSON.parse(localStorage.getItem(K.enroll)||"[]").filter(x=>x.userId!=="demo-user")));
+      localStorage.setItem(K.msgs, JSON.stringify(JSON.parse(localStorage.getItem(K.msgs)||"[]").filter(x=>x.userId!=="demo-user")));
+    }catch(e){}
+  })();
+
   document.getElementById("logout").onclick=()=>{ localStorage.removeItem(SESSION); location.href="index.html"; };
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
@@ -266,8 +277,44 @@
   function renderStudents(){
     const us=Store.users().filter(u=>u.role==="customer");
     const t=document.getElementById("students-table");
-    t.innerHTML=`<thead><tr><th>Name</th><th>Email</th><th>Programs</th><th>Joined</th></tr></thead><tbody>${
-      us.map(u=>`<tr><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar-sm">${u.name[0]}</div>${u.name}</div></td><td class="muted">${u.email}</td><td>${Store.enrollments(u.id).length}</td><td class="muted">${fmt(u.createdAt)}</td></tr>`).join("")}</tbody>`;
+    if(!us.length){ t.innerHTML=`<tbody><tr><td class="muted">No students yet. They'll appear here when customers register.</td></tr></tbody>`; document.getElementById("student-detail").classList.add("hide"); return; }
+    t.innerHTML=`<thead><tr><th>Name</th><th>Email</th><th>Programs</th><th>Joined</th><th></th></tr></thead><tbody>${
+      us.map(u=>`<tr data-student="${u.id}" style="cursor:pointer"><td><div style="display:flex;align-items:center;gap:10px"><div class="avatar-sm">${(u.name||"?")[0]}</div>${u.name||""}</div></td><td class="muted">${u.email}</td><td>${Store.enrollments(u.id).length}</td><td class="muted">${fmt(u.createdAt)}</td><td><span class="btn btn-ghost btn-sm">View →</span></td></tr>`).join("")}</tbody>`;
+    t.querySelectorAll("[data-student]").forEach(r=>r.onclick=()=>openStudent(r.dataset.student));
+  }
+  function openStudent(id){
+    const u=Store.userById(id); if(!u) return;
+    const ens=Store.enrollments(id);
+    const msgs=Store.messages(id);
+    const box=document.getElementById("student-detail");
+    box.classList.remove("hide");
+    box.innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:14px">
+          <div class="avatar-sm" style="width:52px;height:52px;font-size:1.2rem">${(u.name||"?")[0]}</div>
+          <div><h3 style="margin:0">${u.name||"Unnamed"}</h3><div class="muted" style="font-size:.9rem">${u.email}</div></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="sd-close">Close ✕</button>
+      </div>
+      <div class="kpis" style="margin-top:20px">
+        <div class="kpi"><div class="v">${ens.length}</div><div class="l">Programs</div></div>
+        <div class="kpi"><div class="v">${ens.filter(e=>e.status==="active").length}</div><div class="l">Active</div></div>
+        <div class="kpi"><div class="v">${msgs.length}</div><div class="l">Messages</div></div>
+        <div class="kpi"><div class="v" style="font-size:1rem">${fmt(u.createdAt)}</div><div class="l">Joined</div></div>
+      </div>
+      <div style="margin-top:18px"><b>Contact</b><div class="muted" style="font-size:.9rem;margin-top:6px">✉️ ${u.email}${u.phone?`<br>📞 ${u.phone}`:`<br><span style="opacity:.6">Phone: collected at checkout once the customer database is live</span>`}</div></div>
+      <div style="margin-top:18px"><b>Enrolled programs</b>${
+        ens.length?ens.map(e=>{const p=Store.programById(e.programId)||{title:e.programId,icon:"📘"};
+          return `<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)"><span style="font-size:1.2rem">${p.icon}</span><div style="flex:1">${p.title}</div><span class="badge-status ${e.status}">${e.status}</span></div>`;}).join("")
+          :`<div class="muted" style="font-size:.9rem;margin-top:6px">No programs yet.</div>`}
+      </div>
+      <button class="btn btn-gold btn-sm" id="sd-msg" style="margin-top:16px">Open conversation →</button>`;
+    document.getElementById("sd-close").onclick=()=>box.classList.add("hide");
+    document.getElementById("sd-msg").onclick=()=>{
+      [...document.querySelectorAll(".dash-nav a[data-view]")].find(a=>a.dataset.view==="inbox")?.click();
+      setTimeout(()=>{ activeThread=id; if(typeof renderInbox==="function") renderInbox(); },50);
+    };
+    box.scrollIntoView({behavior:"smooth"});
   }
 
   let activeThread=null;
@@ -311,7 +358,7 @@
 
   async function loadCatalog(){
     try{
-      const r = await fetch("/api/programs.php", {cache:"no-store"});
+      const r = await fetch("/api/programs.php?_=" + Date.now(), {cache:"no-store"});
       const d = await r.json();
       catalog = Array.isArray(d.programs) ? d.programs : [];
     }catch(e){ catalog = []; pn({ok:false,text:"Couldn't reach the catalog API. (Programs management needs the live PHP server — it won't work on a local/static preview.)"}); }
@@ -404,7 +451,7 @@
 
   async function loadArticles(){
     try{
-      const r = await fetch("/api/articles.php", {cache:"no-store"});
+      const r = await fetch("/api/articles.php?_=" + Date.now(), {cache:"no-store"});
       const d = await r.json();
       articles = Array.isArray(d.articles) ? d.articles : [];
     }catch(e){ articles = []; an({ok:false,text:"Couldn't reach the articles API. (Needs the live PHP server — won't work on a local/static preview.)"}); }

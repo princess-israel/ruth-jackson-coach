@@ -9,11 +9,17 @@ AddType application/manifest+json .webmanifest
   Require all denied
 </FilesMatch>
 
-# Light caching for static assets
+# HTML, JS and CSS: always revalidate so deploys take effect immediately.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|html)$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Images can cache (they rarely change)
 <IfModule mod_expires.c>
   ExpiresActive On
-  ExpiresByType text/css "access plus 7 days"
-  ExpiresByType application/javascript "access plus 7 days"
   ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
   ExpiresByType image/svg+xml "access plus 30 days"
 </IfModule>

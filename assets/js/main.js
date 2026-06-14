@@ -152,7 +152,7 @@
   (function loadServerCatalog() {
     if (!document.querySelector("[data-programs]")) return;
     const sig = list => JSON.stringify((list || []).map(p => [p.id, p.price]));
-    fetch("/api/programs.php", { cache: "no-store" })
+    fetch("/api/programs.php?_=" + Date.now(), { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
       .then(d => {
         if (!d || !Array.isArray(d.programs) || !d.programs.length) return;
@@ -177,7 +177,7 @@
   const artGrid = document.querySelector("[data-articles]");
   if (artGrid) {
     const limit = parseInt(artGrid.dataset.limit) || 99;
-    fetch("/api/articles.php", { cache: "no-store" })
+    fetch("/api/articles.php?_=" + Date.now(), { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
       .then(d => {
         if (!d || !Array.isArray(d.articles) || !d.articles.length) return;
