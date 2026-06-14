@@ -18,7 +18,7 @@
     let users = read(K.users, null);
     if (!users) {
       users = [
-        { id: "admin-ruth", name: "Ruth Jackson", email: "ruth@ruthjackson.coach", password: "ruth123", role: "admin", createdAt: Date.now() },
+        { id: "admin-ruth", name: "Ruth Jackson", email: "ruth@coachruthjackson.com", password: "ruth123", role: "admin", createdAt: Date.now() },
         { id: "demo-user", name: "Amina Demo", email: "demo@student.com", password: "demo123", role: "customer", createdAt: Date.now() }
       ];
       write(K.users, users);

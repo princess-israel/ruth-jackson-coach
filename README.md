@@ -20,7 +20,7 @@ A modern, dark-blue marketing + e-learning site for **Ruth Wanjohi ("Ruth Jackso
 | Role | Email | Password |
 |------|-------|----------|
 | Customer | `demo@student.com` | `demo123` |
-| Admin (Ruth) | `ruth@ruthjackson.coach` | `ruth123` |
+| Admin (Ruth) | `ruth@coachruthjackson.com` | `ruth123` |
 
 ## Structure
 ```

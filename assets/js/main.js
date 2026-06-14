@@ -165,6 +165,29 @@
       .catch(() => {});
   })();
 
+  // ---------- Articles (blog) ----------
+  function articleCardHTML(a) {
+    return `<a class="card post-card" href="article.php?slug=${encodeURIComponent(a.slug)}">
+      <div class="cat">${a.category || "Article"}</div>
+      <h3>${a.title || ""}</h3>
+      <p class="desc">${a.excerpt || ""}</p>
+      ${a.readMins ? `<span class="muted" style="font-size:.8rem;margin-top:12px;display:block">${a.readMins} min read</span>` : ""}
+    </a>`;
+  }
+  const artGrid = document.querySelector("[data-articles]");
+  if (artGrid) {
+    const limit = parseInt(artGrid.dataset.limit) || 99;
+    fetch("/api/articles.php", { cache: "no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d || !Array.isArray(d.articles) || !d.articles.length) return;
+        artGrid.innerHTML = d.articles.slice(0, limit).map(articleCardHTML).join("");
+        if (window.gsap) gsap.from(artGrid.querySelectorAll(".post-card"),
+          { opacity: 0, y: 20, duration: 0.5, ease: "power2.out", stagger: 0.08, clearProps: "all" });
+      })
+      .catch(() => {});
+  }
+
   // Partner marquee
   const mq = document.querySelector("[data-partners]");
   if (mq && window.RJ_PARTNERS) {

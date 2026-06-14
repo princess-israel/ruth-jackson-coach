@@ -5,3 +5,4 @@ node_modules/
 .vercel
 api/pesapal/config.php
 data/programs.json
+data/articles.json

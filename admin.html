@@ -20,6 +20,7 @@
       <li><a data-view="overview" class="active">📊 Overview</a></li>
       <li><a data-view="enrollments">🎓 Enrollments</a></li>
       <li><a data-view="programs">📚 Programs</a></li>
+      <li><a data-view="articles">✍️ Articles</a></li>
       <li><a data-view="inbox">💬 Inbox <span id="inbox-badge"></span></a></li>
       <li><a data-view="students">👥 Students</a></li>
       <li><a href="index.html">🏠 Back to site</a></li>
@@ -91,7 +92,7 @@
         <div style="overflow-x:auto"><table class="table" id="programs-table"></table></div>
       </div>
 
-      <!-- Add/Edit form -->
+      <!-- Add/Edit program form -->
       <div class="panel hide" id="prog-form-panel">
         <h3 id="prog-form-title">Add program</h3>
         <div class="pay-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
@@ -116,6 +117,47 @@
         </div>
       </div>
     </section>
+
+    <!-- ARTICLES -->
+    <section data-pane="articles" class="hide">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+          <h3 style="margin:0">✍️ SEO Articles</h3>
+          <button class="btn btn-gold btn-sm" id="add-art">+ Write article</button>
+        </div>
+        <p class="muted" style="font-size:.86rem">Write, edit or delete blog articles. Each one publishes instantly as a search-friendly page at <code>/article.php?slug=…</code> and appears on the site.</p>
+        <div class="field" style="max-width:340px">
+          <label>Admin password <span class="muted" style="font-weight:400">(same as Programs)</span></label>
+          <input id="art-token" type="password" placeholder="Required to save changes">
+        </div>
+        <div id="art-notice"></div>
+        <div style="overflow-x:auto"><table class="table" id="articles-table"></table></div>
+      </div>
+
+      <!-- Write/Edit article form -->
+      <div class="panel hide" id="art-form-panel">
+        <h3 id="art-form-title">Write article</h3>
+        <div class="pay-row" style="display:grid;grid-template-columns:2fr 1fr;gap:14px">
+          <div class="field"><label>Headline / title</label><input id="af-title" placeholder="e.g. How AI helps you sell more this week"></div>
+          <div class="field"><label>Category</label><input id="af-category" placeholder="Artificial Intelligence"></div>
+        </div>
+        <div class="pay-row" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+          <div class="field"><label>Slug <span class="muted" style="font-weight:400">(URL, auto if blank)</span></label><input id="af-slug" placeholder="how-ai-helps-you-sell"></div>
+          <div class="field"><label>Date</label><input id="af-date" type="date"></div>
+          <div class="field"><label>Read time (mins)</label><input id="af-read" type="number" min="1" placeholder="6"></div>
+        </div>
+        <div class="field"><label>Excerpt <span class="muted" style="font-weight:400">(short summary on the cards)</span></label><textarea id="af-excerpt" style="min-height:70px"></textarea></div>
+        <div class="field"><label>Meta description <span class="muted" style="font-weight:400">(for Google, ~155 chars)</span></label><textarea id="af-meta" style="min-height:70px"></textarea></div>
+        <div class="field"><label>Keywords <span class="muted" style="font-weight:400">(comma separated)</span></label><input id="af-keywords" placeholder="AI, small business, marketing"></div>
+        <div class="field"><label>Body <span class="muted" style="font-weight:400">(write paragraphs; blank line = new paragraph. Basic HTML like &lt;h2&gt;, &lt;b&gt;, &lt;ul&gt;&lt;li&gt; is allowed)</span></label><textarea id="af-body" style="min-height:280px;font-family:inherit"></textarea></div>
+        <input type="hidden" id="af-orig-slug">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="btn btn-gold" id="af-save">Publish</button>
+          <button class="btn btn-ghost" id="af-cancel">Cancel</button>
+          <a class="btn btn-ghost btn-sm" id="af-preview" target="_blank" style="display:none">Preview ↗</a>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -131,7 +173,7 @@
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
-  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",inbox:"Inbox",students:"Students"};
+  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
     a.onclick=()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
@@ -183,7 +225,7 @@
       </tr>`;}).join("")}</tbody>`;
     t.querySelectorAll("[data-grant]").forEach(b=>b.onclick=()=>{
       Store.setEnrollStatus(b.dataset.grant,"active");
-      Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.ruthjackson.coach/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
+      Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.coachruthjackson.com/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
       renderAll();
     });
     t.querySelectorAll("[data-prog]").forEach(b=>b.onclick=()=>{
@@ -331,7 +373,110 @@
     pn({ok:true,text:"Program deleted."});
   }
 
-  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); loadCatalog(); }
+  /* ---------- Articles manager ---------- */
+  let articles = [];
+  const an = msg => document.getElementById("art-notice").innerHTML = msg ? `<div class="notice ${msg.ok?"ok":"err"}">${msg.text}</div>` : "";
+  const artTokenEl = () => document.getElementById("art-token");
+  artTokenEl().value = localStorage.getItem("rj_admin_token") || "";
+  artTokenEl().addEventListener("change", () => localStorage.setItem("rj_admin_token", artTokenEl().value));
+
+  async function loadArticles(){
+    try{
+      const r = await fetch("/api/articles.php", {cache:"no-store"});
+      const d = await r.json();
+      articles = Array.isArray(d.articles) ? d.articles : [];
+    }catch(e){ articles = []; an({ok:false,text:"Couldn't reach the articles API. (Needs the live PHP server — won't work on a local/static preview.)"}); }
+    renderArticlesTable();
+  }
+  function renderArticlesTable(){
+    const t = document.getElementById("articles-table");
+    if(!articles.length){ t.innerHTML = `<tbody><tr><td class="muted">No articles yet. Click “Write article”.</td></tr></tbody>`; return; }
+    t.innerHTML = `<thead><tr><th>Title</th><th>Category</th><th>Date</th><th></th></tr></thead><tbody>${
+      articles.map(a=>`<tr>
+        <td><b>${a.title||"(untitled)"}</b><div class="muted" style="font-size:.78rem">/article.php?slug=${a.slug}</div></td>
+        <td>${a.category||""}</td>
+        <td class="muted" style="font-size:.82rem">${a.date||""}</td>
+        <td style="white-space:nowrap">
+          <a class="btn btn-ghost btn-sm" href="article.php?slug=${a.slug}" target="_blank">View</a>
+          <button class="btn btn-ghost btn-sm" data-aedit="${a.slug}">Edit</button>
+          <button class="btn btn-ghost btn-sm" data-adel="${a.slug}" style="color:var(--rose)">Delete</button>
+        </td></tr>`).join("")}</tbody>`;
+    t.querySelectorAll("[data-aedit]").forEach(b=>b.onclick=()=>openArt(articles.find(a=>a.slug===b.dataset.aedit)));
+    t.querySelectorAll("[data-adel]").forEach(b=>b.onclick=()=>delArt(b.dataset.adel));
+  }
+
+  const afPanel = document.getElementById("art-form-panel");
+  function openArt(a){
+    a = a || {};
+    document.getElementById("art-form-title").textContent = a.slug ? "Edit article" : "Write article";
+    document.getElementById("af-orig-slug").value = a.slug || "";
+    document.getElementById("af-title").value = a.title || "";
+    document.getElementById("af-category").value = a.category || "";
+    document.getElementById("af-slug").value = a.slug || "";
+    document.getElementById("af-date").value = a.date || new Date().toISOString().slice(0,10);
+    document.getElementById("af-read").value = a.readMins || "";
+    document.getElementById("af-excerpt").value = a.excerpt || "";
+    document.getElementById("af-meta").value = a.metaDescription || "";
+    document.getElementById("af-keywords").value = (a.keywords||[]).join(", ");
+    document.getElementById("af-body").value = htmlToPlain(a.body || "");
+    const pv = document.getElementById("af-preview");
+    if(a.slug){ pv.href = "article.php?slug="+a.slug; pv.style.display="inline-flex"; } else pv.style.display="none";
+    afPanel.classList.remove("hide");
+    afPanel.scrollIntoView({behavior:"smooth"});
+  }
+  document.getElementById("add-art").onclick = ()=>openArt(null);
+  document.getElementById("af-cancel").onclick = ()=>afPanel.classList.add("hide");
+
+  // Body helpers: store as HTML, edit as readable text. If the author writes plain
+  // paragraphs (blank-line separated), wrap them in <p>. If they write HTML tags, keep as-is.
+  function plainToHtml(s){
+    s = (s||"").trim();
+    if(/<(p|h2|h3|ul|ol|blockquote|br)\b/i.test(s)) return s; // already HTML
+    return s.split(/\n\s*\n/).map(p=>`<p>${p.trim().replace(/\n/g,"<br>")}</p>`).join("");
+  }
+  function htmlToPlain(h){
+    return (h||"")
+      .replace(/<\/(p|h2|h3|li|blockquote)>/gi,"\n\n")
+      .replace(/<li[^>]*>/gi,"• ")
+      .replace(/<br\s*\/?>/gi,"\n")
+      .replace(/<[^>]+>/g,"")
+      .replace(/\n{3,}/g,"\n\n")
+      .trim();
+  }
+
+  async function postArt(body){
+    body.token = artTokenEl().value.trim();
+    const r = await fetch("/api/articles.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    return { ok:r.ok, data: await r.json().catch(()=>({})) };
+  }
+  document.getElementById("af-save").onclick = async ()=>{
+    const title = document.getElementById("af-title").value.trim();
+    if(!title){ an({ok:false,text:"A headline is required."}); return; }
+    const article = {
+      slug: document.getElementById("af-slug").value.trim() || document.getElementById("af-orig-slug").value,
+      title,
+      category: document.getElementById("af-category").value.trim() || "Article",
+      date: document.getElementById("af-date").value || new Date().toISOString().slice(0,10),
+      readMins: parseInt(document.getElementById("af-read").value)||null,
+      excerpt: document.getElementById("af-excerpt").value.trim(),
+      metaDescription: document.getElementById("af-meta").value.trim(),
+      keywords: document.getElementById("af-keywords").value.split(",").map(s=>s.trim()).filter(Boolean),
+      body: plainToHtml(document.getElementById("af-body").value)
+    };
+    const {ok,data} = await postArt({action:"save", article});
+    if(!ok){ an({ok:false,text:data.error||"Publish failed."}); return; }
+    articles = data.articles; renderArticlesTable(); afPanel.classList.add("hide");
+    an({ok:true,text:`Published “${title}”. It's live on your blog now.`});
+  };
+  async function delArt(slug){
+    if(!confirm("Delete this article from the live site?")) return;
+    const {ok,data} = await postArt({action:"delete", slug});
+    if(!ok){ an({ok:false,text:data.error||"Delete failed."}); return; }
+    articles = data.articles; renderArticlesTable();
+    an({ok:true,text:"Article deleted."});
+  }
+
+  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); loadCatalog(); loadArticles(); }
   renderAll();
 })();
 </script>
