@@ -23,6 +23,18 @@
   }
   seed();
 
+  // One-time cleanup: purge the old demo seed (admin-ruth / Amina Demo) from any
+  // browser that loaded an earlier build, so the dashboard shows real data only.
+  (function migrate() {
+    const users = read(K.users, null);
+    if (users && users.some(u => u.id === "admin-ruth" || u.id === "demo-user")) {
+      write(K.users, users.filter(u => u.id !== "admin-ruth" && u.id !== "demo-user"));
+      write(K.enroll, read(K.enroll, []).filter(e => e.userId !== "demo-user"));
+      write(K.msgs, read(K.msgs, []).filter(m => m.userId !== "demo-user"));
+      if (read(K.session, null) === "admin-ruth" || read(K.session, null) === "demo-user") localStorage.removeItem(K.session);
+    }
+  })();
+
   const Store = {
     KEYS: K,
     /* ---- auth ---- */
