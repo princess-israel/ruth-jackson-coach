@@ -129,6 +129,21 @@ window.RJ_SIGNATURE = {
   summary: "This one is personal. Before coaching, Ruth spent years on the front line of banking customer service, it is her strongest craft. She designs each session around your team and your customers. There is no fixed price; reach out and Ruth will tailor a quote to your needs."
 };
 
+/* Image maps (so cards/pages show art regardless of the saved catalog data) */
+window.RJ_PROGRAM_IMG = {
+  "ai-women-entrepreneurs":   "assets/img/program-ai.jpg",
+  "digital-marketing-social": "assets/img/program-marketing.jpg",
+  "website-development":      "assets/img/program-website.jpg",
+  "seo-online-visibility":    "assets/img/program-seo.jpg",
+  "data-analysis-growth":     "assets/img/program-data.jpg",
+  "ecommerce-selling-online": "assets/img/program-ecommerce.jpg"
+};
+window.RJ_ARTICLE_IMG = {
+  "ai-for-small-business":       "assets/img/article-ai.jpg",
+  "customer-service-that-sells": "assets/img/article-customer-service.jpg",
+  "women-digital-economy":       "assets/img/article-women.jpg"
+};
+
 /* Partner organisations (real WIDB ecosystem) */
 window.RJ_PARTNERS = [
   "Microsoft", "Women in Digital Business", "ITC · International Training Centre",

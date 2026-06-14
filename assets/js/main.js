@@ -116,9 +116,11 @@
     const cta = isFree
       ? `<a class="btn btn-ghost btn-block" href="customer-service.html">Talk to Ruth</a>`
       : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Enroll, $${p.price}</a>`;
+    const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
     return `
       <article class="card program-card">
         <span class="card-glow"></span>
+        ${img ? `<div class="card-img" style="background-image:url(${img})"></div>` : ""}
         <div class="program-top">
           <div class="program-ico">${p.icon || "📘"}</div>
           ${price}
@@ -167,7 +169,9 @@
 
   // ---------- Articles (blog) ----------
   function articleCardHTML(a) {
+    const img = a.image || (window.RJ_ARTICLE_IMG && RJ_ARTICLE_IMG[a.slug]);
     return `<a class="card post-card" href="article.php?slug=${encodeURIComponent(a.slug)}">
+      ${img ? `<div class="post-img" style="background-image:url(${img})"></div>` : ""}
       <div class="cat">${a.category || "Article"}</div>
       <h3>${a.title || ""}</h3>
       <p class="desc">${a.excerpt || ""}</p>

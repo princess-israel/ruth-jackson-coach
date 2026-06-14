@@ -6,6 +6,12 @@ $a = $slug !== '' ? articles_find($slug) : null;
 
 $base = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'coachruthjackson.com');
 function e($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
+$ARTICLE_IMG = [
+  'ai-for-small-business'       => 'assets/img/article-ai.jpg',
+  'customer-service-that-sells' => 'assets/img/article-customer-service.jpg',
+  'women-digital-economy'       => 'assets/img/article-women.jpg',
+];
+$artImg = $a ? (!empty($a['image']) ? $a['image'] : ($ARTICLE_IMG[$slug] ?? '')) : '';
 
 if (!$a) {
   http_response_code(404);
@@ -31,7 +37,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 <meta property="og:title" content="<?= e($a['title']) ?>">
 <meta property="og:description" content="<?= e($desc) ?>">
 <meta property="og:url" content="<?= e($canonical) ?>">
-<meta property="og:image" content="<?= e($base) ?>/assets/img/ruth-photo.jpg">
+<meta property="og:image" content="<?= e($base) ?>/<?= e($artImg ?: 'assets/img/og-default.jpg') ?>">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article",
  "headline":<?= json_encode($a['title']) ?>,
@@ -84,6 +90,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
         <?php if (!empty($a['date'])): ?><span>· <?= e(date('M j, Y', strtotime($a['date']))) ?></span><?php endif; ?>
         <?php if (!empty($a['readMins'])): ?><span>· <?= e($a['readMins']) ?> min read</span><?php endif; ?>
       </div>
+      <?php if ($artImg): ?><img class="article-hero-img" src="<?= e($artImg) ?>" alt="<?= e($a['title']) ?>"><?php endif; ?>
       <div class="article-body"><?= $a['body'] ?? '' ?></div>
 
       <div class="cta-band reveal" style="margin-top:50px">

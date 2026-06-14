@@ -103,10 +103,12 @@
   p.summary = p.summary || "";
 
   const free = !p.price;
+  const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
   root.innerHTML = `<div class="container">
     <a href="programs.html" class="muted" style="font-size:.9rem">← All programs</a>
     <div class="prog-hero" style="margin-top:20px">
       <div>
+        ${img ? `<img class="prog-detail-img" src="${img}" alt="${p.title}">` : ""}
         <div class="program-ico" style="width:64px;height:64px;font-size:1.8rem;margin-bottom:18px">${p.icon}</div>
         <div class="eyebrow">${free ? "Custom Training" : "$"+p.price+" · Certificate Course"}</div>
         <h1 style="font-size:clamp(2rem,4vw,3.2rem)">${p.title}</h1>
