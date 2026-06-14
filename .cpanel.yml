@@ -4,3 +4,7 @@ deployment:
     - export DEPLOYPATH=/home/irelandc/coachruthjackson.com
     - /bin/mkdir -p "$DEPLOYPATH"
     - /usr/bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' ./ "$DEPLOYPATH/"
+    # Force LiteSpeed to reload this folder's config (clears the stale-file/404 cache
+    # that otherwise required a manual document-root toggle after every deploy).
+    - /bin/echo "# litespeed reload $(date +%s)" >> "$DEPLOYPATH/.htaccess"
+    - /usr/bin/touch "$DEPLOYPATH/.htaccess" "$DEPLOYPATH" "$DEPLOYPATH/index.html"
