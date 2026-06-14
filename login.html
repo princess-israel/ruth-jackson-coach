@@ -62,11 +62,18 @@
   document.getElementById("to-login").onclick = e=>{e.preventDefault();signF.classList.add("hide");loginF.classList.remove("hide");notice.innerHTML="";};
 
   const $ = id => document.getElementById(id);
-  loginF.onsubmit = e=>{
+  loginF.onsubmit = async e=>{
     e.preventDefault();
-    const r = Store.login({email:$("li-email").value.trim(), password:$("li-pass").value});
-    if(r.error) return show(r.error);
-    redirect(r.user);
+    const email = $("li-email").value.trim();
+    const password = $("li-pass").value;
+    // Customers log in instantly (local). If it's not a customer, try admin.
+    const r = Store.login({email, password});
+    if(!r.error){ redirect(r.user); return; }
+    try{
+      const ar = await fetch("/api/admin-login.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email, password})});
+      if(ar.ok){ const d = await ar.json(); if(d.ok && d.token){ localStorage.setItem("rj_admin_session", d.token); location.href="admin.html"; return; } }
+    }catch(err){}
+    show(r.error);
   };
   signF.onsubmit = e=>{
     e.preventDefault();
