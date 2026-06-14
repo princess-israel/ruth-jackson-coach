@@ -195,7 +195,7 @@ section{position:relative}
 .prog-detail-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);margin-bottom:22px;aspect-ratio:16/9;object-fit:cover}
 .article-hero-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);margin:18px 0 30px;aspect-ratio:16/9;object-fit:cover}
 .post-card .post-img{height:160px;margin:-28px -28px 18px;border-radius:var(--radius) var(--radius) 0 0;background-size:cover;background-position:center}
-.cs-feature-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);aspect-ratio:4/3;object-fit:cover}
+.cs-feature-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);aspect-ratio:4/5;object-fit:cover;object-position:center 22%}
 .empower-band{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line-strong);min-height:280px;display:flex;align-items:center;padding:54px;background-size:cover;background-position:center;box-shadow:var(--shadow)}
 .empower-band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,10,32,.92),rgba(5,10,32,.55) 60%,rgba(5,10,32,.3))}
 .empower-band>*{position:relative;z-index:1;max-width:34em}
