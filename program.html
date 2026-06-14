@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Program, Ruth Jackson AI Coach</title>
 <meta name="description" content="Enroll in a self-paced $79 certificate course by Ruth Jackson.">
+<link rel="canonical" id="prog-canonical" href="https://coachruthjackson.com/programs.html">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#070e29">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -103,6 +104,15 @@
   p.summary = p.summary || "";
 
   const free = !p.price;
+  // dynamic SEO for this program (Google renders JS)
+  document.title = `${p.title} ${free ? "(Custom training)" : "($" + p.price + " certificate course)"} | Ruth Jackson`;
+  const _md = document.querySelector('meta[name="description"]'); if (_md) _md.setAttribute("content", p.short || p.summary || "");
+  const _can = document.getElementById("prog-canonical"); if (_can) _can.href = "https://coachruthjackson.com/program.html?id=" + encodeURIComponent(id);
+  if (!free) {
+    const _ld = document.createElement("script"); _ld.type = "application/ld+json";
+    _ld.textContent = JSON.stringify({ "@context": "https://schema.org", "@type": "Course", name: p.title, description: p.short || p.summary || "", provider: { "@type": "Person", name: "Ruth Jackson", url: "https://coachruthjackson.com" }, offers: { "@type": "Offer", price: p.price, priceCurrency: "USD", category: "Paid" } });
+    document.head.appendChild(_ld);
+  }
   const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
   root.innerHTML = `<div class="container">
     <a href="programs.html" class="muted" style="font-size:.9rem">← All programs</a>

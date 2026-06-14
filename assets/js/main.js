@@ -28,6 +28,16 @@
 
   const yr = document.querySelector("[data-year]"); if (yr) yr.textContent = new Date().getFullYear();
 
+  // Footer policy links + credit (added on every page)
+  document.querySelectorAll(".footer-bottom").forEach(fb => {
+    if (!fb.querySelector(".made-by")) {
+      const s = document.createElement("span");
+      s.className = "made-by";
+      s.innerHTML = '<a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a>';
+      fb.appendChild(s);
+    }
+  });
+
   /* ---------- GSAP animations ---------- */
   function initGSAP() {
     if (!window.gsap) return;
