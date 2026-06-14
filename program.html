@@ -150,7 +150,7 @@
     const phone = document.getElementById("pp-phone").value.trim();
     payBtn.disabled = true; payBtn.textContent = "Connecting to Pesapal…";
     try {
-      const resp = await fetch("/api/pesapal/pay", {
+      const resp = await fetch("/api/pesapal/pay.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ programId: id, email: u.email, name: u.name, phone })
@@ -167,7 +167,7 @@
       location.href = data.redirect_url;
     } catch (e) {
       payBtn.disabled = false; payBtn.textContent = `Pay $${p.price} with Pesapal`;
-      errEl.textContent = e.message + " (Payments run on the Vercel deployment — see PESAPAL-SETUP.md.)";
+      errEl.textContent = e.message + " (If this persists, the Pesapal config may not be set — see CPANEL-SETUP.md.)";
       errEl.style.display = "block";
     }
   });

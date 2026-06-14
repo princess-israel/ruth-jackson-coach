@@ -1,0 +1,19 @@
+# Custom error page
+ErrorDocument 404 /404.html
+
+# Correct MIME type for the web manifest
+AddType application/manifest+json .webmanifest
+
+# Never serve secret/config files as plain text
+<FilesMatch "(^\.env|config\.php|\.json)$">
+  Require all denied
+</FilesMatch>
+
+# Light caching for static assets
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/javascript "access plus 7 days"
+  ExpiresByType image/jpeg "access plus 30 days"
+  ExpiresByType image/svg+xml "access plus 30 days"
+</IfModule>
