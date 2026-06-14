@@ -13,4 +13,8 @@ return [
   // Leave blank. After visiting /api/pesapal/setup.php once, paste the
   // returned ipn_id here so the IPN isn't re-registered on every payment.
   'ipn_id'          => '',
+
+  // Password that protects the admin "Programs" editor. Choose any strong
+  // secret; you'll type it once in the admin dashboard to add/edit courses.
+  'admin_token'     => 'change-this-to-a-strong-secret',
 ];

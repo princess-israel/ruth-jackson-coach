@@ -4,3 +4,4 @@ node_modules/
 .env.local
 .vercel
 api/pesapal/config.php
+data/programs.json

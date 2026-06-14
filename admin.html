@@ -19,6 +19,7 @@
     <ul class="dash-nav">
       <li><a data-view="overview" class="active">📊 Overview</a></li>
       <li><a data-view="enrollments">🎓 Enrollments</a></li>
+      <li><a data-view="programs">📚 Programs</a></li>
       <li><a data-view="inbox">💬 Inbox <span id="inbox-badge"></span></a></li>
       <li><a data-view="students">👥 Students</a></li>
       <li><a href="index.html">🏠 Back to site</a></li>
@@ -73,6 +74,48 @@
     <section data-pane="students" class="hide">
       <div class="panel"><h3>Students</h3><div style="overflow-x:auto"><table class="table" id="students-table"></table></div></div>
     </section>
+
+    <!-- PROGRAMS -->
+    <section data-pane="programs" class="hide">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+          <h3 style="margin:0">📚 Programs &amp; pricing</h3>
+          <button class="btn btn-gold btn-sm" id="add-prog">+ Add program</button>
+        </div>
+        <p class="muted" style="font-size:.86rem">Add, edit, delete or re-price courses. Changes apply to the live site instantly. Set a price of <b>0</b> for a contact-only course.</p>
+        <div class="field" style="max-width:340px">
+          <label>Admin password <span class="muted" style="font-weight:400">(set in config.php)</span></label>
+          <input id="prog-token" type="password" placeholder="Required to save changes">
+        </div>
+        <div id="prog-notice"></div>
+        <div style="overflow-x:auto"><table class="table" id="programs-table"></table></div>
+      </div>
+
+      <!-- Add/Edit form -->
+      <div class="panel hide" id="prog-form-panel">
+        <h3 id="prog-form-title">Add program</h3>
+        <div class="pay-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field"><label>Title</label><input id="pf-title" placeholder="e.g. $1 Test Course"></div>
+          <div class="field"><label>Price (USD)</label><input id="pf-price" type="number" min="0" step="1" placeholder="79"></div>
+        </div>
+        <div class="pay-row" style="display:grid;grid-template-columns:120px 1fr 1fr 1fr;gap:14px">
+          <div class="field"><label>Icon (emoji)</label><input id="pf-icon" placeholder="🧪" maxlength="4"></div>
+          <div class="field"><label>Level</label><input id="pf-level" placeholder="Beginner"></div>
+          <div class="field"><label>Hours</label><input id="pf-hours" type="number" min="0" placeholder="6"></div>
+          <div class="field"><label>Lessons</label><input id="pf-lessons" type="number" min="0" placeholder="18"></div>
+        </div>
+        <div class="field"><label>Short tagline</label><input id="pf-short" placeholder="One line shown on the card"></div>
+        <div class="field"><label>Tags <span class="muted" style="font-weight:400">(comma separated)</span></label><input id="pf-tags" placeholder="AI, Marketing, Beginner"></div>
+        <div class="field"><label>What you'll be able to do <span class="muted" style="font-weight:400">(one per line)</span></label><textarea id="pf-outcomes" placeholder="Outcome one&#10;Outcome two"></textarea></div>
+        <div class="field"><label>Summary <span class="muted" style="font-weight:400">(paragraph on the detail page)</span></label><textarea id="pf-summary"></textarea></div>
+        <input type="hidden" id="pf-id">
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-gold" id="pf-save">Save program</button>
+          <button class="btn btn-ghost" id="pf-cancel">Cancel</button>
+          <span id="pf-id-note" class="muted" style="align-self:center;font-size:.82rem"></span>
+        </div>
+      </div>
+    </section>
   </main>
 </div>
 
@@ -88,7 +131,7 @@
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
-  const titles={overview:"Overview",enrollments:"Enrollments",inbox:"Inbox",students:"Students"};
+  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",inbox:"Inbox",students:"Students"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
     a.onclick=()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
@@ -191,7 +234,104 @@
     Store.addMessage(activeThread,"ruth",v); inp.value=""; renderActiveThread();
   };
 
-  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); }
+  /* ---------- Programs manager ---------- */
+  let catalog = [];
+  const pn = msg => document.getElementById("prog-notice").innerHTML = msg ? `<div class="notice ${msg.ok?"ok":"err"}">${msg.text}</div>` : "";
+  const tokenEl = () => document.getElementById("prog-token");
+
+  // remember the admin password between visits (this browser only)
+  tokenEl().value = localStorage.getItem("rj_admin_token") || "";
+  tokenEl().addEventListener("change", () => localStorage.setItem("rj_admin_token", tokenEl().value));
+
+  async function loadCatalog(){
+    try{
+      const r = await fetch("/api/programs.php", {cache:"no-store"});
+      const d = await r.json();
+      catalog = Array.isArray(d.programs) ? d.programs : [];
+    }catch(e){ catalog = []; pn({ok:false,text:"Couldn't reach the catalog API. (Programs management needs the live PHP server — it won't work on a local/static preview.)"}); }
+    renderProgramsTable();
+  }
+  function renderProgramsTable(){
+    const t = document.getElementById("programs-table");
+    if(!catalog.length){ t.innerHTML = `<tbody><tr><td class="muted">No programs found yet.</td></tr></tbody>`; return; }
+    t.innerHTML = `<thead><tr><th>Program</th><th>Price</th><th>ID</th><th></th></tr></thead><tbody>${
+      catalog.map(p=>`<tr>
+        <td><div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.2rem">${p.icon||"📘"}</span>${p.title||"(untitled)"}</div></td>
+        <td>${Number(p.price)>0?("$"+p.price):'<span class="muted">Contact</span>'}</td>
+        <td class="muted" style="font-size:.8rem">${p.id}</td>
+        <td style="white-space:nowrap">
+          <button class="btn btn-ghost btn-sm" data-edit="${p.id}">Edit</button>
+          <button class="btn btn-ghost btn-sm" data-del="${p.id}" style="color:var(--rose)">Delete</button>
+        </td></tr>`).join("")}</tbody>`;
+    t.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>openForm(catalog.find(p=>p.id===b.dataset.edit)));
+    t.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>delProgram(b.dataset.del));
+  }
+
+  const fp = {
+    panel: document.getElementById("prog-form-panel"),
+    show(v){ this.panel.classList.toggle("hide", !v); }
+  };
+  function openForm(p){
+    p = p || {};
+    document.getElementById("prog-form-title").textContent = p.id ? "Edit program" : "Add program";
+    document.getElementById("pf-id").value = p.id || "";
+    document.getElementById("pf-id-note").textContent = p.id ? `id: ${p.id} (fixed)` : "id is created from the title";
+    document.getElementById("pf-title").value = p.title || "";
+    document.getElementById("pf-price").value = (p.price!=null) ? p.price : "";
+    document.getElementById("pf-icon").value = p.icon || "";
+    document.getElementById("pf-level").value = p.level || "";
+    document.getElementById("pf-hours").value = p.hours || "";
+    document.getElementById("pf-lessons").value = p.lessons || "";
+    document.getElementById("pf-short").value = p.short || "";
+    document.getElementById("pf-tags").value = (p.tags||[]).join(", ");
+    document.getElementById("pf-outcomes").value = (p.outcomes||[]).join("\n");
+    document.getElementById("pf-summary").value = p.summary || "";
+    fp.show(true);
+    fp.panel.scrollIntoView({behavior:"smooth"});
+  }
+  document.getElementById("add-prog").onclick = ()=>openForm(null);
+  document.getElementById("pf-cancel").onclick = ()=>fp.show(false);
+
+  function slugify(s){ return (s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,40); }
+
+  async function post(body){
+    body.token = tokenEl().value.trim();
+    const r = await fetch("/api/programs.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+    return { ok:r.ok, data: await r.json().catch(()=>({})) };
+  }
+
+  document.getElementById("pf-save").onclick = async ()=>{
+    const existingId = document.getElementById("pf-id").value;
+    const title = document.getElementById("pf-title").value.trim();
+    if(!title){ pn({ok:false,text:"Title is required."}); return; }
+    const program = {
+      id: existingId || slugify(title),
+      title,
+      price: parseFloat(document.getElementById("pf-price").value)||0,
+      icon: document.getElementById("pf-icon").value.trim() || "📘",
+      level: document.getElementById("pf-level").value.trim(),
+      hours: parseInt(document.getElementById("pf-hours").value)||0,
+      lessons: parseInt(document.getElementById("pf-lessons").value)||0,
+      short: document.getElementById("pf-short").value.trim(),
+      tags: document.getElementById("pf-tags").value.split(",").map(s=>s.trim()).filter(Boolean),
+      outcomes: document.getElementById("pf-outcomes").value.split("\n").map(s=>s.trim()).filter(Boolean),
+      summary: document.getElementById("pf-summary").value.trim()
+    };
+    const {ok,data} = await post({action:"save", program});
+    if(!ok){ pn({ok:false,text:data.error||"Save failed."}); return; }
+    catalog = data.programs; renderProgramsTable(); fp.show(false);
+    pn({ok:true,text:`Saved “${title}”. It's now live on the site.`});
+  };
+
+  async function delProgram(id){
+    if(!confirm("Delete this program? This removes it from the live site.")) return;
+    const {ok,data} = await post({action:"delete", id});
+    if(!ok){ pn({ok:false,text:data.error||"Delete failed."}); return; }
+    catalog = data.programs; renderProgramsTable();
+    pn({ok:true,text:"Program deleted."});
+  }
+
+  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); loadCatalog(); }
   renderAll();
 })();
 </script>

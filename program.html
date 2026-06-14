@@ -77,12 +77,30 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/chat.js"></script>
 <script>
-(function(){
+(async function(){
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
-  const p = Store.programById(id);
   const root = document.getElementById("prog-root");
+
+  // Pull the live catalog so admin-added programs are found & purchasable.
+  try {
+    const r = await fetch("/api/programs.php", { cache: "no-store" });
+    if (r.ok) {
+      const d = await r.json();
+      if (d && Array.isArray(d.programs) && d.programs.length) {
+        const map = {};
+        (window.RJ_PROGRAMS || []).forEach(x => map[x.id] = x);
+        d.programs.forEach(x => map[x.id] = x);
+        window.RJ_PROGRAMS = Object.values(map).filter(x => Number(x.price) > 0);
+      }
+    }
+  } catch (e) {}
+
+  const p = Store.programById(id);
   if(!p){ root.innerHTML = `<div class="container center"><h2>Program not found</h2><p class="muted">It may have moved.</p><a class="btn btn-gold" href="programs.html">Back to programs</a></div>`; return; }
+  p.tags = Array.isArray(p.tags) ? p.tags : [];
+  p.outcomes = Array.isArray(p.outcomes) ? p.outcomes : [];
+  p.summary = p.summary || "";
 
   const free = !p.price;
   root.innerHTML = `<div class="container">

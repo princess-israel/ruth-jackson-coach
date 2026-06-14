@@ -1,6 +1,7 @@
 <?php
 /** POST /api/pesapal/pay.php  { programId, email, name, phone }  -> { redirect_url, order_tracking_id, merchant_reference } */
 require __DIR__ . '/_pesapal.php';
+require __DIR__ . '/../_catalog.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(405, ['error' => 'Method not allowed']);
 
@@ -14,11 +15,13 @@ try {
   $name      = isset($body['name']) ? trim($body['name']) : 'Customer';
   $phone     = isset($body['phone']) ? trim($body['phone']) : '';
 
-  $programs = pesapal_programs();
-  if (!isset($programs[$programId])) json_out(400, ['error' => 'Unknown program.']);
+  $program = catalog_find($programId);
+  if (!$program) json_out(400, ['error' => 'Unknown program.']);
+  $program['price'] = isset($program['price']) ? (float)$program['price'] : 0;
+  if ($program['price'] <= 0) json_out(400, ['error' => 'This program is not available for online purchase.']);
+  if (!isset($program['title'])) $program['title'] = $programId;
   if ($email === '' && $phone === '') json_out(400, ['error' => 'An email or phone number is required for payment.']);
 
-  $program = $programs[$programId];
   $cfg     = pesapal_config();
   $host    = $_SERVER['HTTP_HOST'];
   $token   = pesapal_token($cfg);

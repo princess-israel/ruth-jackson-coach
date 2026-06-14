@@ -105,10 +105,11 @@
 
   /* ---------- Program card renderer ---------- */
   window.programCardHTML = function (p, opts = {}) {
-    const isFree = !p.price;
+    const isFree = !p.price || Number(p.price) <= 0;
+    const tags = Array.isArray(p.tags) ? p.tags : [];
     const meta = isFree
-      ? `<span>👥 ${p.level}</span>`
-      : `<span>⏱ ${p.hours}h</span><span>📚 ${p.lessons} lessons</span><span>📈 ${p.level}</span>`;
+      ? `<span>👥 ${p.level || "All levels"}</span>`
+      : `<span>⏱ ${p.hours || 0}h</span><span>📚 ${p.lessons || 0} lessons</span><span>📈 ${p.level || "Beginner"}</span>`;
     const price = isFree
       ? `<div class="price-tag">Custom<small>by enquiry</small></div>`
       : `<div class="price-tag">$${p.price}<small>certificate included</small></div>`;
@@ -116,28 +117,53 @@
       ? `<a class="btn btn-ghost btn-block" href="customer-service.html">Talk to Ruth</a>`
       : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Enroll, $${p.price}</a>`;
     return `
-      <article class="card program-card reveal">
+      <article class="card program-card">
         <span class="card-glow"></span>
         <div class="program-top">
-          <div class="program-ico">${p.icon}</div>
+          <div class="program-ico">${p.icon || "📘"}</div>
           ${price}
         </div>
-        <h3>${p.title}</h3>
-        <p class="desc">${p.short}</p>
-        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <h3>${p.title || ""}</h3>
+        <p class="desc">${p.short || ""}</p>
+        <div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
         <div class="program-meta">${meta}</div>
         ${cta}
       </article>`;
   };
 
-  // Render into [data-programs] grids
-  const grid = document.querySelector("[data-programs]");
-  if (grid && window.RJ_PROGRAMS) {
-    const limit = parseInt(grid.dataset.limit) || RJ_PROGRAMS.length;
-    grid.innerHTML = RJ_PROGRAMS.slice(0, limit).map(p => programCardHTML(p)).join("");
+  // Render into [data-programs] grids (+ optional [data-signature])
+  function renderPrograms(animate) {
+    const grid = document.querySelector("[data-programs]");
+    if (grid && window.RJ_PROGRAMS) {
+      const limit = parseInt(grid.dataset.limit) || RJ_PROGRAMS.length;
+      grid.innerHTML = RJ_PROGRAMS.slice(0, limit).map(p => programCardHTML(p)).join("");
+      if (animate && window.gsap) {
+        gsap.from(grid.querySelectorAll(".program-card"),
+          { opacity: 0, y: 22, duration: 0.5, ease: "power2.out", stagger: 0.08, clearProps: "all" });
+      }
+    }
+    const sig = document.querySelector("[data-signature]");
+    if (sig && window.RJ_SIGNATURE) sig.innerHTML = programCardHTML(window.RJ_SIGNATURE);
   }
-  const sig = document.querySelector("[data-signature]");
-  if (sig && window.RJ_SIGNATURE) sig.innerHTML = programCardHTML(RJ_SIGNATURE);
+  renderPrograms(false);
+
+  // Refresh the catalog from the server (so admin-added programs appear).
+  // Falls back silently to the bundled defaults if the API isn't reachable.
+  (function loadServerCatalog() {
+    if (!document.querySelector("[data-programs]")) return;
+    const sig = list => JSON.stringify((list || []).map(p => [p.id, p.price]));
+    fetch("/api/programs.php", { cache: "no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d || !Array.isArray(d.programs) || !d.programs.length) return;
+        const paid = d.programs.filter(p => Number(p.price) > 0);
+        if (paid.length && sig(paid) !== sig(window.RJ_PROGRAMS)) {
+          window.RJ_PROGRAMS = paid;
+          renderPrograms(true);
+        }
+      })
+      .catch(() => {});
+  })();
 
   // Partner marquee
   const mq = document.querySelector("[data-partners]");
