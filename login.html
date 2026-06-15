@@ -23,8 +23,8 @@
     <form id="login-form">
       <h2 style="text-align:center;font-size:1.6rem">Welcome back</h2>
       <p class="muted center" style="margin-bottom:24px">Sign in to your dashboard</p>
-      <div class="field"><label>Email</label><input type="email" id="li-email" required placeholder="you@email.com"></div>
-      <div class="field"><label>Password</label><input type="password" id="li-pass" required placeholder="••••••••"></div>
+      <div class="field"><label>Email</label><input type="email" id="li-email" name="email" autocomplete="username" required placeholder="you@email.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="li-pass" name="password" autocomplete="current-password" required placeholder="••••••••"></div>
       <button class="btn btn-gold btn-block" type="submit">Sign in</button>
       <p class="auth-switch">New here? <a href="#" id="to-signup">Create an account</a></p>
     </form>
@@ -33,9 +33,9 @@
     <form id="signup-form" class="hide">
       <h2 style="text-align:center;font-size:1.6rem">Create your account</h2>
       <p class="muted center" style="margin-bottom:24px">Start learning in minutes</p>
-      <div class="field"><label>Full name</label><input type="text" id="su-name" required placeholder="Your name"></div>
-      <div class="field"><label>Email</label><input type="email" id="su-email" required placeholder="you@email.com"></div>
-      <div class="field"><label>Password</label><input type="password" id="su-pass" required placeholder="Choose a password" minlength="5"></div>
+      <div class="field"><label>Full name</label><input type="text" id="su-name" name="name" autocomplete="name" required placeholder="Your name"></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" name="email" autocomplete="username" required placeholder="you@email.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="su-pass" name="new-password" autocomplete="new-password" required placeholder="Choose a password" minlength="5"></div>
       <button class="btn btn-gold btn-block" type="submit">Create account</button>
       <p class="auth-switch">Already have an account? <a href="#" id="to-login">Sign in</a></p>
     </form>
