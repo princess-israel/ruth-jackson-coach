@@ -57,7 +57,8 @@ function db() {
       PDO::ATTR_EMULATE_PREPARES   => false,
     ]);
   } catch (PDOException $e) {
-    json_out(500, ['error' => 'Database connection failed.']);
+    // TEMP DIAGNOSTIC: surface the real reason so we can fix credentials. Revert after.
+    json_out(500, ['error' => 'Database connection failed.', 'detail' => $e->getMessage(), 'using' => ['host' => $host, 'name' => $db['name'], 'user' => $db['user']]]);
   }
   return $pdo;
 }
