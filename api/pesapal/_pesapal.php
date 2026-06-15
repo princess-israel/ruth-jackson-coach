@@ -18,11 +18,13 @@ function pesapal_config() {
   ];
 }
 
-function json_out($code, $arr) {
-  http_response_code($code);
-  header('Content-Type: application/json');
-  echo json_encode($arr);
-  exit;
+if (!function_exists('json_out')) {
+  function json_out($code, $arr) {
+    http_response_code($code);
+    header('Content-Type: application/json');
+    echo json_encode($arr);
+    exit;
+  }
 }
 
 function pesapal_http($method, $url, $headers = [], $body = null) {
