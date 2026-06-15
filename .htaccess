@@ -4,7 +4,12 @@
   # Make the Authorization header visible to PHP (Apache/CGI often strips it),
   # so Bearer session tokens reach the API.
   RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+  # Only redirect when the request is genuinely plain HTTP. Behind a proxy/LiteSpeed,
+  # %{HTTPS} can read "off" even on a secure request, so also trust X-Forwarded-Proto
+  # to avoid an infinite redirect loop that breaks SSL.
   RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteCond %{HTTP:X-Forwarded-SSL} !on
   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 # CGI/FastCGI fallback for the Authorization header.
