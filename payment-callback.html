@@ -51,15 +51,11 @@
     return;
   }
 
-  function enrollAndFinish(confirmation){
-    const user = Store.currentUser();
-    if(user && pending.programId){
-      const r = Store.enroll(user.id, pending.programId);
-      if(r && r.rec && confirmation){
-        Store.addMessage(user.id, "ruth", `💳 Payment received (ref: ${confirmation}). Thank you! I'm preparing your access link now and will share it here shortly.`);
-      }
-    }
+  async function enrollAndFinish(confirmation){
+    // Enrollment was created SERVER-SIDE by status.php after verifying the payment.
+    // Here we just refresh the local cache and send the customer on.
     localStorage.removeItem("rj_pending_payment");
+    try { await Store.reload(); } catch(e){}
     const prog = Store.programById(pending.programId);
     done("🎉","Payment successful!",
       `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will send your access link and instructions in your dashboard.`,

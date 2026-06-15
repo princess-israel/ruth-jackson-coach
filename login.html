@@ -55,8 +55,7 @@
   const signF = document.getElementById("signup-form");
 
   // already logged in?
-  const cu = Store.currentUser();
-  if(cu) redirect(cu);
+  Store.ready().then(()=>{ const cu = Store.currentUser(); if(cu) redirect(cu); });
 
   document.getElementById("to-signup").onclick = e=>{e.preventDefault();loginF.classList.add("hide");signF.classList.remove("hide");notice.innerHTML="";};
   document.getElementById("to-login").onclick = e=>{e.preventDefault();signF.classList.add("hide");loginF.classList.remove("hide");notice.innerHTML="";};
@@ -66,18 +65,18 @@
     e.preventDefault();
     const email = $("li-email").value.trim();
     const password = $("li-pass").value;
-    // Customers log in instantly (local). If it's not a customer, try admin.
-    const r = Store.login({email, password});
-    if(!r.error){ redirect(r.user); return; }
+    // Try admin first (server-verified). If not admin, log in as a customer.
     try{
       const ar = await fetch("/api/admin-login.php", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email, password})});
       if(ar.ok){ const d = await ar.json(); if(d.ok && d.token){ localStorage.setItem("rj_admin_session", d.token); location.href="admin.html"; return; } }
     }catch(err){}
+    const r = await Store.login({email, password});
+    if(!r.error){ redirect(r.user); return; }
     show(r.error);
   };
-  signF.onsubmit = e=>{
+  signF.onsubmit = async e=>{
     e.preventDefault();
-    const r = Store.signup({name:$("su-name").value.trim(), email:$("su-email").value.trim(), password:$("su-pass").value});
+    const r = await Store.signup({name:$("su-name").value.trim(), email:$("su-email").value.trim(), password:$("su-pass").value});
     if(r.error) return show(r.error);
     redirect(r.user);
   };

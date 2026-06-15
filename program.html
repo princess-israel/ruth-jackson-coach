@@ -83,6 +83,8 @@
   const id = params.get("id");
   const root = document.getElementById("prog-root");
 
+  await Store.ready(); // load session so checkout knows who's logged in
+
   // Pull the live catalog so admin-added programs are found & purchasable.
   try {
     const r = await fetch("/api/programs.php?_=" + Date.now(), { cache: "no-store" });
@@ -182,7 +184,7 @@
     try {
       const resp = await fetch("/api/pesapal/pay.php", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + (Store.token() || "") },
         body: JSON.stringify({ programId: id, email: u.email, name: u.name, phone })
       });
       const data = await resp.json();

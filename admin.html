@@ -173,7 +173,7 @@
 <script src="assets/js/data.js"></script>
 <script src="assets/js/store.js"></script>
 <script>
-(function(){
+(async function(){
   const SESSION="rj_admin_session";
   const adminToken = localStorage.getItem(SESSION) || "";
 
@@ -199,15 +199,39 @@
   }
   document.getElementById("dash-root").style.display="grid";
 
-  // Purge any leftover demo data (Amina Demo etc.) regardless of cached store.js
-  (function purgeDemo(){
-    try{
-      const K=Store.KEYS;
-      localStorage.setItem(K.users, JSON.stringify(JSON.parse(localStorage.getItem(K.users)||"[]").filter(x=>x.id!=="demo-user"&&x.id!=="admin-ruth")));
-      localStorage.setItem(K.enroll, JSON.stringify(JSON.parse(localStorage.getItem(K.enroll)||"[]").filter(x=>x.userId!=="demo-user")));
-      localStorage.setItem(K.msgs, JSON.stringify(JSON.parse(localStorage.getItem(K.msgs)||"[]").filter(x=>x.userId!=="demo-user")));
-    }catch(e){}
-  })();
+  // --- Server-backed data layer for the admin (real customers from the DB) ---
+  const AUTH = { headers: { "Authorization": "Bearer " + adminToken } };
+  const AUTHJSON = { headers: { "Content-Type": "application/json", "Authorization": "Bearer " + adminToken } };
+  const toMs = s => s ? (new Date(String(s).replace(" ", "T")).getTime() || 0) : 0;
+  const DB = { users: [], usersById: {}, enrolls: [], threads: [], msgs: {} };
+
+  async function loadData(){
+    const [od, en, th] = await Promise.all([
+      fetch("/api/admin/orders.php", AUTH).then(r=>r.json()).catch(()=>({users:[]})),
+      fetch("/api/enrollments.php?all=1", AUTH).then(r=>r.json()).catch(()=>({enrollments:[]})),
+      fetch("/api/messages.php?threads=1", AUTH).then(r=>r.json()).catch(()=>({threads:[]})),
+    ]);
+    DB.users = (od.users||[]).map(u=>({id:u.id,name:u.name,email:u.email,role:u.role||"customer",createdAt:toMs(u.created_at)}));
+    DB.usersById = {}; DB.users.forEach(u=>DB.usersById[u.id]=u);
+    DB.enrolls = (en.enrollments||[]).map(e=>({id:e.id,userId:e.user_id,programId:e.program_id,status:e.status,progress:Number(e.progress)||0,purchasedAt:toMs(e.created_at)}));
+    (en.enrollments||[]).forEach(e=>{ if(!DB.usersById[e.user_id]){ const u={id:e.user_id,name:e.user_name||e.user_email||"Customer",email:e.user_email||"",role:"customer",createdAt:0}; DB.usersById[e.user_id]=u; DB.users.push(u);} });
+    DB.threads = (th.threads||[]).map(t=>({userId:t.user_id,user:{name:t.name,email:t.email},last:{text:t.last_body||"",ts:toMs(t.last_at)},unread:Number(t.unread)||0}));
+  }
+  async function loadThread(uid){
+    const d = await fetch("/api/messages.php?userId=" + encodeURIComponent(uid), AUTH).then(r=>r.json()).catch(()=>({messages:[]}));
+    DB.msgs[uid] = (d.messages||[]).map(m=>({from:m.sender==="ruth"?"ruth":"customer",text:m.body,ts:toMs(m.created_at),read:String(m.read_flag)==="1"}));
+  }
+
+  // Override the Store data methods (the admin reads/writes the DB, not localStorage).
+  Store.users         = () => DB.users;
+  Store.userById      = id => DB.usersById[id] || null;
+  Store.enrollments   = id => id ? DB.enrolls.filter(e=>e.userId===id) : DB.enrolls;
+  Store.threads       = () => DB.threads;
+  Store.messages      = id => DB.msgs[id] || [];
+  Store.markRead      = async id => { await loadThread(id); const t=DB.threads.find(x=>x.userId===id); if(t) t.unread=0; };
+  Store.addMessage    = async (uid, _from, text) => { await fetch("/api/messages.php",{method:"POST",...AUTHJSON,body:JSON.stringify({userId:uid,body:text})}); await loadThread(uid); };
+  Store.setEnrollStatus = async (id, status) => { await fetch("/api/enrollments.php",{method:"POST",...AUTHJSON,body:JSON.stringify({action:"status",id,value:status})}); const e=DB.enrolls.find(x=>x.id===id); if(e){ e.status=status; if(status==="active"&&!e.progress) e.progress=5; } };
+  Store.setProgress   = async (id, p) => { p=Math.max(0,Math.min(100,p)); await fetch("/api/enrollments.php",{method:"POST",...AUTHJSON,body:JSON.stringify({action:"progress",id,value:p})}); const e=DB.enrolls.find(x=>x.id===id); if(e) e.progress=p; };
 
   document.getElementById("logout").onclick=()=>{ localStorage.removeItem(SESSION); location.href="index.html"; };
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
@@ -263,14 +287,15 @@
         <td class="muted">${fmt(e.purchasedAt)}</td>
         <td>${e.status==="pending"?`<button class="btn btn-gold btn-sm" data-grant="${e.id}" data-user="${e.userId}">Grant access</button>`:`<button class="btn btn-ghost btn-sm" data-prog="${e.id}">+ Progress</button>`}</td>
       </tr>`;}).join("")}</tbody>`;
-    t.querySelectorAll("[data-grant]").forEach(b=>b.onclick=()=>{
-      Store.setEnrollStatus(b.dataset.grant,"active");
-      Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.coachruthjackson.com/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
-      renderAll();
+    t.querySelectorAll("[data-grant]").forEach(b=>b.onclick=async ()=>{
+      b.disabled=true;
+      await Store.setEnrollStatus(b.dataset.grant,"active");
+      await Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.coachruthjackson.com/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
+      await loadData(); renderAll();
     });
-    t.querySelectorAll("[data-prog]").forEach(b=>b.onclick=()=>{
+    t.querySelectorAll("[data-prog]").forEach(b=>b.onclick=async ()=>{
       const cur=Store.enrollments().find(x=>x.id===b.dataset.prog);
-      Store.setProgress(b.dataset.prog,(cur.progress||0)+15); renderAll();
+      await Store.setProgress(b.dataset.prog,(cur.progress||0)+15); renderAll();
     });
   }
 
@@ -333,7 +358,7 @@
     list.querySelectorAll("[data-thread]").forEach(a=>a.onclick=()=>openThread(a.dataset.thread));
     if(activeThread) renderActiveThread();
   }
-  function openThread(uid){ activeThread=uid; Store.markRead(uid); renderInbox(); }
+  async function openThread(uid){ activeThread=uid; await Store.markRead(uid); renderInbox(); }
   function renderActiveThread(){
     const u=Store.userById(activeThread)||{name:"?"};
     document.getElementById("thread-head").innerHTML=`<b style="color:var(--text)">${u.name}</b> · <span class="muted">${u.email}</span>`;
@@ -346,10 +371,10 @@
     document.getElementById("quick-replies").innerHTML=qr.map(q=>`<button type="button" class="btn btn-ghost btn-sm" data-qr="${q}">${q}</button>`).join("");
     document.querySelectorAll("[data-qr]").forEach(b=>b.onclick=()=>{document.getElementById("admin-msg").value=b.dataset.qr;});
   }
-  document.getElementById("admin-composer").onsubmit=e=>{
+  document.getElementById("admin-composer").onsubmit=async e=>{
     e.preventDefault(); if(!activeThread)return;
     const inp=document.getElementById("admin-msg"); const v=inp.value.trim(); if(!v)return;
-    Store.addMessage(activeThread,"ruth",v); inp.value=""; renderActiveThread();
+    inp.value=""; await Store.addMessage(activeThread,"ruth",v); renderActiveThread();
   };
 
   /* ---------- Programs manager ---------- */
@@ -547,7 +572,7 @@
   }
 
   function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); loadCatalog(); loadArticles(); }
-  renderAll();
+  await loadData(); renderAll();
 })();
 </script>
 </body>

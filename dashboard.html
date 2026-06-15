@@ -80,13 +80,14 @@
 <script src="assets/js/store.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
-(function(){
+(async function(){
+  await Store.ready();
   const user = Store.currentUser();
   if(!user){ location.href="login.html?next="+encodeURIComponent("dashboard.html"); return; }
   if(user.role==="admin"){ location.href="admin.html"; return; }
 
   document.getElementById("welcome").textContent = `Welcome back, ${user.name.split(" ")[0]} 👋`;
-  document.getElementById("logout").onclick = ()=>{ Store.logout(); location.href="index.html"; };
+  document.getElementById("logout").onclick = async ()=>{ await Store.logout(); location.href="index.html"; };
   // mobile menu
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
@@ -94,19 +95,19 @@
   // view switching
   const titles={courses:"My Courses",messages:"Messages",browse:"Explore more",profile:"Profile"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
-    a.onclick=()=>{
+    a.onclick=async ()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
       a.classList.add("active");
       const v=a.dataset.view;
       document.querySelectorAll("[data-pane]").forEach(p=>p.classList.toggle("hide",p.dataset.pane!==v));
       document.getElementById("view-title").textContent=titles[v];
       side.classList.remove("open");
-      if(v==="messages"){ Store.markRead(user.id); renderThread(); updateBadge(); }
+      if(v==="messages"){ await Store.markRead(); renderThread(); updateBadge(); }
     };
   });
 
   function renderCourses(){
-    const enrolls = Store.enrollments(user.id);
+    const enrolls = Store.enrollments();
     const active = enrolls.filter(e=>e.status==="active").length;
     const kpis=[
       {v:enrolls.length,l:"Programs enrolled"},
@@ -135,30 +136,28 @@
   }
 
   function renderThread(){
-    const msgs=Store.messages(user.id);
+    const msgs=Store.messages();
     const t=document.getElementById("thread");
     t.innerHTML = msgs.length? msgs.map(m=>`<div class="thread-msg ${m.from==="customer"?"me":"them"}">${m.text}<div class="meta">${m.from==="customer"?"You":"Ruth"} · ${timeAgo(m.ts)}</div></div>`).join("")
       : `<p class="muted">No messages yet. Say hello to Ruth! 👋</p>`;
     t.scrollTop=t.scrollHeight;
   }
   function updateBadge(){
-    const unread=Store.messages(user.id).filter(m=>m.from==="ruth"&&!m.read).length;
+    const unread=Store.unread();
     document.getElementById("msg-badge").innerHTML = unread?`<span class="badge-status pending" style="font-size:.66rem">${unread}</span>`:"";
   }
-  document.getElementById("composer").onsubmit=e=>{
+  document.getElementById("composer").onsubmit=async e=>{
     e.preventDefault();
     const inp=document.getElementById("msg-input"); const v=inp.value.trim(); if(!v)return;
-    Store.addMessage(user.id,"customer",v); inp.value=""; renderThread();
+    inp.value=""; try{ await Store.sendMessage(v); }catch(err){} renderThread();
   };
 
-  // profile
+  // profile (read-only for now — name/email are managed server-side)
   document.getElementById("pf-name").value=user.name;
   document.getElementById("pf-email").value=user.email;
+  document.getElementById("pf-name").setAttribute("readonly","");
   document.getElementById("save-profile").onclick=()=>{
-    const users=Store.users(); const u=users.find(x=>x.id===user.id);
-    u.name=document.getElementById("pf-name").value.trim();
-    localStorage.setItem(Store.KEYS.users,JSON.stringify(users));
-    document.getElementById("pf-note").textContent="Saved ✓";
+    document.getElementById("pf-note").textContent="To change your name, message Ruth in the Messages tab.";
   };
 
   function timeAgo(ts){const s=(Date.now()-ts)/1000;if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m ago";if(s<86400)return Math.floor(s/3600)+"h ago";return Math.floor(s/86400)+"d ago";}

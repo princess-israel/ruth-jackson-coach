@@ -1,124 +1,107 @@
 /* ============================================================
-   RJ Store, localStorage data layer (demo backend)
-   Users, sessions, enrollments, messages.
-   Note: passwords are stored in plain text for DEMO only.
+   RJ Store — server-backed data layer (MySQL via /api/*).
+   Replaces the old localStorage demo store. Auth uses an opaque
+   session token (localStorage "rj_token"); accounts, enrollments
+   and messages all live in the database now.
+
+   Usage on a page:
+     await Store.ready();          // loads session + data once
+     const u = Store.currentUser();// sync getter over the cache
    ============================================================ */
 (function () {
-  const K = {
-    users: "rj_users",
-    session: "rj_session",
-    enroll: "rj_enrollments",
-    msgs: "rj_messages",
+  const TOKEN_KEY = "rj_token";
+  const api = (path, opts = {}) => {
+    const headers = Object.assign({ "Content-Type": "application/json" }, opts.headers || {});
+    const t = localStorage.getItem(TOKEN_KEY);
+    if (t) headers["Authorization"] = "Bearer " + t;
+    return fetch(path, Object.assign({}, opts, { headers, cache: "no-store" }))
+      .then(async r => {
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(d.error || "Request failed");
+        return d;
+      });
   };
-  const read = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } };
-  const write = (k, v) => localStorage.setItem(k, JSON.stringify(v));
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
-  function seed() {
-    // Start clean: real customer accounts are created by signup. Admin no longer
-    // lives here — it is gated by a server-verified password (api/admin-login.php).
-    if (!read(K.users, null)) write(K.users, []);
-    if (!read(K.enroll, null)) write(K.enroll, []);
-    if (!read(K.msgs, null)) write(K.msgs, []);
+  // in-memory cache populated by ready()/reload()
+  let _user = null, _enrollments = [], _messages = [], _ready = null;
+
+  function normalizeMsg(m) {
+    // map DB shape -> the shape pages already expect
+    return {
+      id: m.id, userId: m.user_id, from: m.sender === "ruth" ? "ruth" : "customer",
+      text: m.body, ts: new Date((m.created_at || "").replace(" ", "T")).getTime() || Date.now(),
+      read: String(m.read_flag) === "1",
+    };
   }
-  seed();
 
-  // One-time cleanup: purge the old demo seed (admin-ruth / Amina Demo) from any
-  // browser that loaded an earlier build, so the dashboard shows real data only.
-  (function migrate() {
-    const users = read(K.users, null);
-    if (users && users.some(u => u.id === "admin-ruth" || u.id === "demo-user")) {
-      write(K.users, users.filter(u => u.id !== "admin-ruth" && u.id !== "demo-user"));
-      write(K.enroll, read(K.enroll, []).filter(e => e.userId !== "demo-user"));
-      write(K.msgs, read(K.msgs, []).filter(m => m.userId !== "demo-user"));
-      if (read(K.session, null) === "admin-ruth" || read(K.session, null) === "demo-user") localStorage.removeItem(K.session);
+  async function refresh() {
+    if (!localStorage.getItem(TOKEN_KEY)) { _user = null; _enrollments = []; _messages = []; return; }
+    try {
+      const me = await api("/api/auth/me.php");
+      _user = me.user;
+      const [en, ms] = await Promise.all([
+        api("/api/enrollments.php").catch(() => ({ enrollments: [] })),
+        api("/api/messages.php").catch(() => ({ messages: [] })),
+      ]);
+      _enrollments = en.enrollments || [];
+      _messages = (ms.messages || []).map(normalizeMsg);
+    } catch (e) {
+      localStorage.removeItem(TOKEN_KEY);   // invalid/expired token
+      _user = null; _enrollments = []; _messages = [];
     }
-  })();
+  }
 
   const Store = {
-    KEYS: K,
-    /* ---- auth ---- */
-    signup({ name, email, password }) {
-      const users = read(K.users, []);
-      if (users.some(u => u.email.toLowerCase() === email.toLowerCase()))
-        return { error: "An account with that email already exists. Try logging in." };
-      const user = { id: uid(), name, email, password, role: "customer", createdAt: Date.now() };
-      users.push(user); write(K.users, users);
-      this.setSession(user.id);
-      return { user };
-    },
-    login({ email, password }) {
-      const users = read(K.users, []);
-      const u = users.find(x => x.email.toLowerCase() === email.toLowerCase() && x.password === password);
-      if (!u) return { error: "Incorrect email or password." };
-      this.setSession(u.id);
-      return { user: u };
-    },
-    setSession(id) { write(K.session, id); },
-    logout() { localStorage.removeItem(K.session); },
-    currentUser() {
-      const id = read(K.session, null);
-      if (!id) return null;
-      return read(K.users, []).find(u => u.id === id) || null;
-    },
-    users() { return read(K.users, []); },
-    userById(id) { return read(K.users, []).find(u => u.id === id) || null; },
+    /* ---- lifecycle ---- */
+    ready() { return _ready || (_ready = refresh()); },
+    async reload() { _ready = refresh(); return _ready; },
 
-    /* ---- enrollments ---- */
-    enrollments(userId) {
-      const all = read(K.enroll, []);
-      return userId ? all.filter(e => e.userId === userId) : all;
+    /* ---- auth ---- */
+    async signup({ name, email, password }) {
+      try {
+        const d = await api("/api/auth/signup.php", { method: "POST", body: JSON.stringify({ name, email, password }) });
+        localStorage.setItem(TOKEN_KEY, d.token); await this.reload();
+        return { user: d.user };
+      } catch (e) { return { error: e.message }; }
     },
-    enroll(userId, programId) {
-      const all = read(K.enroll, []);
-      if (all.some(e => e.userId === userId && e.programId === programId))
-        return { error: "You are already enrolled in this program." };
-      const rec = { id: uid(), userId, programId, status: "pending", progress: 0, purchasedAt: Date.now() };
-      all.push(rec); write(K.enroll, all);
-      // auto welcome message from Ruth
-      this.addMessage(userId, "ruth",
-        "🎉 Thank you for enrolling! Your payment is confirmed. I'm preparing your private access link and getting-started guide, you'll receive it right here in this chat shortly. Reply anytime with questions!");
-      return { rec };
+    async login({ email, password }) {
+      try {
+        const d = await api("/api/auth/login.php", { method: "POST", body: JSON.stringify({ email, password }) });
+        localStorage.setItem(TOKEN_KEY, d.token); await this.reload();
+        return { user: d.user };
+      } catch (e) { return { error: e.message }; }
     },
-    setEnrollStatus(id, status) {
-      const all = read(K.enroll, []);
-      const e = all.find(x => x.id === id); if (e) { e.status = status; if (status === "active" && e.progress === 0) e.progress = 5; }
-      write(K.enroll, all);
+    async logout() {
+      try { await api("/api/auth/logout.php", { method: "POST" }); } catch (e) {}
+      localStorage.removeItem(TOKEN_KEY); _user = null; _enrollments = []; _messages = [];
     },
-    setProgress(id, progress) {
-      const all = read(K.enroll, []);
-      const e = all.find(x => x.id === id); if (e) e.progress = Math.max(0, Math.min(100, progress));
-      write(K.enroll, all);
+    currentUser() { return _user; },
+
+    /* ---- enrollments (read-only on the client; created server-side on payment) ---- */
+    enrollments() {
+      return _enrollments.map(e => ({
+        id: e.id, userId: e.user_id, programId: e.program_id,
+        status: e.status, progress: Number(e.progress) || 0,
+      }));
     },
 
     /* ---- messages ---- */
-    messages(userId) { return read(K.msgs, []).filter(m => m.userId === userId).sort((a, b) => a.ts - b.ts); },
-    threads() {
-      const msgs = read(K.msgs, []);
-      const map = {};
-      msgs.forEach(m => { (map[m.userId] ??= []).push(m); });
-      return Object.entries(map).map(([userId, list]) => {
-        list.sort((a, b) => a.ts - b.ts);
-        return { userId, user: this.userById(userId), last: list[list.length - 1], unread: list.filter(x => x.from === "customer" && !x.read).length };
-      });
+    messages() { return _messages.slice().sort((a, b) => a.ts - b.ts); },
+    async sendMessage(text) {
+      const d = await api("/api/messages.php", { method: "POST", body: JSON.stringify({ body: text }) });
+      await this.reload(); return d;
     },
-    addMessage(userId, from, text) {
-      const all = read(K.msgs, []);
-      all.push({ id: uid(), userId, from, text, ts: Date.now(), read: from === "ruth" });
-      write(K.msgs, all);
-    },
-    markRead(userId) {
-      const all = read(K.msgs, []);
-      all.forEach(m => { if (m.userId === userId) m.read = true; });
-      write(K.msgs, all);
-    },
+    unread() { return _messages.filter(m => m.from === "ruth" && !m.read).length; },
+    async markRead() { await this.reload(); }, // server marks Ruth's msgs read on GET
 
-    /* ---- helpers ---- */
+    /* ---- catalog helper (unchanged) ---- */
     programById(id) {
       const list = (window.RJ_PROGRAMS || []).concat(window.RJ_SIGNATURE ? [window.RJ_SIGNATURE] : []);
       return list.find(p => p.id === id);
     },
-    reset() { Object.values(K).forEach(k => localStorage.removeItem(k)); seed(); }
+
+    token() { return localStorage.getItem(TOKEN_KEY); },
   };
+
   window.Store = Store;
 })();

@@ -12,9 +12,23 @@ A modern, dark-blue marketing + e-learning site for **Ruth Wanjohi ("Ruth Jackso
 - **Design**: GSAP scroll reveals, parallax, 3D portrait tilt, count-ups, glassmorphism.
 
 ## Tech
-- No build step. Pure static files.
+- No build step. Static front end + thin PHP API on cPanel.
 - GSAP + ScrollTrigger via CDN.
-- Demo "backend" is `localStorage` (`assets/js/store.js`) — users, enrollments, messages. **Passwords are plain-text for demo only.**
+- **Real backend: MySQL/MariaDB** via `api/*.php`. Accounts, sessions, orders,
+  enrollments and messages live in the database. Passwords are hashed
+  (`password_hash`). `assets/js/store.js` is a thin async wrapper over the API —
+  no business data lives in the browser anymore.
+
+## Backend setup (one time, on cPanel)
+1. **Create a database + user** in cPanel → MySQL Databases (e.g. `irelandc_ruth`);
+   add the user to the DB with ALL PRIVILEGES.
+2. **Import the schema:** phpMyAdmin → select the DB → Import → `db/schema.sql`.
+3. **Configure:** copy `api/pesapal/config.sample.php` → `api/pesapal/config.php`,
+   fill in the Pesapal keys, `site_url`, `admin_email`, `admin_token`, and the `db`
+   block. `config.php` is gitignored.
+4. **Register the IPN once:** visit `/api/pesapal/setup.php`, paste the returned
+   `ipn_id` into `config.php`.
+5. Test a sandbox payment end-to-end (see PESAPAL-SETUP.md).
 
 ## Access
 - **Customers** self-register at `login.html` (localStorage demo store).

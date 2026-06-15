@@ -1,10 +1,20 @@
 <?php
-/** Pesapal IPN endpoint — acknowledges status-change notifications. */
-$orderTrackingId        = isset($_GET['OrderTrackingId']) ? $_GET['OrderTrackingId'] : (isset($_GET['orderTrackingId']) ? $_GET['orderTrackingId'] : '');
-$orderMerchantReference = isset($_GET['OrderMerchantReference']) ? $_GET['OrderMerchantReference'] : (isset($_GET['orderMerchantReference']) ? $_GET['orderMerchantReference'] : '');
-$orderNotificationType  = isset($_GET['OrderNotificationType']) ? $_GET['OrderNotificationType'] : 'IPNCHANGE';
+/**
+ * Pesapal IPN endpoint — Pesapal calls this on every status change.
+ * We verify the transaction server-side, persist the result, and fulfill
+ * (create the enrollment) when COMPLETED. Then we ACK in the format Pesapal expects.
+ */
+require __DIR__ . '/../_orders.php';
 
-// In a full system with a database you would verify and persist the order here.
+$orderTrackingId        = $_GET['OrderTrackingId']        ?? $_GET['orderTrackingId']        ?? '';
+$orderMerchantReference = $_GET['OrderMerchantReference'] ?? $_GET['orderMerchantReference'] ?? '';
+$orderNotificationType  = $_GET['OrderNotificationType']  ?? 'IPNCHANGE';
+
+if ($orderTrackingId !== '') {
+  try { order_verify_and_fulfill($orderTrackingId); }
+  catch (Exception $e) { /* swallow — still ACK so Pesapal stops retrying this notice */ }
+}
+
 header('Content-Type: application/json');
 echo json_encode([
   'orderNotificationType'  => $orderNotificationType,

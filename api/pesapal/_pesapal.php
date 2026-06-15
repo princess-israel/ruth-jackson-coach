@@ -64,9 +64,9 @@ function pesapal_token($cfg) {
   return $data['token'];
 }
 
-function pesapal_register_ipn($cfg, $token, $host) {
+function pesapal_register_ipn($cfg, $token, $base) {
   if (!empty($cfg['ipn_id'])) return $cfg['ipn_id'];
-  $url = 'https://' . $host . '/api/pesapal/ipn.php';
+  $url = rtrim($base, '/') . '/api/pesapal/ipn.php';
   $data = pesapal_http('POST', rtrim($cfg['base_url'], '/') . '/api/URLSetup/RegisterIPN',
     ['Authorization: Bearer ' . $token],
     ['url' => $url, 'ipn_notification_type' => 'GET']);

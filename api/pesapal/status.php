@@ -1,27 +1,24 @@
 <?php
-/** GET /api/pesapal/status.php?orderTrackingId=...  -> verified transaction status */
-require __DIR__ . '/_pesapal.php';
+/** GET /api/pesapal/status.php?orderTrackingId=...  -> verified, persisted transaction status.
+ *  This is the authoritative fulfillment path the callback page polls. */
+require __DIR__ . '/../_orders.php';
 
 try {
   $id = isset($_GET['orderTrackingId']) ? $_GET['orderTrackingId'] : '';
   if ($id === '') json_out(400, ['error' => 'Missing orderTrackingId']);
 
-  $cfg   = pesapal_config();
-  $token = pesapal_token($cfg);
-  $data  = pesapal_http('GET',
-    rtrim($cfg['base_url'], '/') . '/api/Transactions/GetTransactionStatus?orderTrackingId=' . urlencode($id),
-    ['Authorization: Bearer ' . $token]);
+  $res = order_verify_and_fulfill($id);
+  if (isset($res['error'])) json_out(404, ['error' => $res['error']]);
 
-  // status_code: 0 INVALID, 1 COMPLETED, 2 FAILED, 3 REVERSED
+  // status_code kept for backward-compat with the callback page (1 = COMPLETED).
+  $codeMap = ['COMPLETED' => 1, 'FAILED' => 2, 'REVERSED' => 3, 'INVALID' => 0, 'PENDING' => null];
   json_out(200, [
-    'status_code'               => isset($data['status_code']) ? $data['status_code'] : null,
-    'payment_status_description'=> isset($data['payment_status_description']) ? $data['payment_status_description'] : null,
-    'amount'                    => isset($data['amount']) ? $data['amount'] : null,
-    'currency'                  => isset($data['currency']) ? $data['currency'] : null,
-    'confirmation_code'         => isset($data['confirmation_code']) ? $data['confirmation_code'] : null,
-    'payment_method'            => isset($data['payment_method']) ? $data['payment_method'] : null,
-    'merchant_reference'        => isset($data['merchant_reference']) ? $data['merchant_reference'] : null,
-    'message'                   => isset($data['message']) ? $data['message'] : null,
+    'status'                     => $res['status'],
+    'status_code'                => $codeMap[$res['status']] ?? null,
+    'payment_status_description' => $res['status'],
+    'amount'                     => $res['amount'] ?? null,
+    'currency'                   => $res['currency'] ?? null,
+    'confirmation_code'          => $res['confirmation_code'] ?? null,
   ]);
 } catch (Exception $e) {
   json_out(500, ['error' => $e->getMessage()]);

@@ -1,6 +1,6 @@
 <?php
 /**
- * Copy this file to  config.php  (same folder) and fill in your real Pesapal keys.
+ * Copy this file to  config.php  (same folder) and fill in your real values.
  * config.php is gitignored so your secrets are never committed.
  */
 return [
@@ -14,7 +14,20 @@ return [
   // returned ipn_id here so the IPN isn't re-registered on every payment.
   'ipn_id'          => '',
 
-  // Password that protects the admin "Programs" editor. Choose any strong
-  // secret; you'll type it once in the admin dashboard to add/edit courses.
+  // Canonical public URL of the site. Used to build the callback + IPN URLs
+  // instead of trusting the (spoofable) Host header.
+  'site_url'        => 'https://coachruthjackson.com',
+
+  // Admin login (admin.html / write APIs).
+  'admin_email'     => 'info@coachruthjackson.com',
   'admin_token'     => 'change-this-to-a-strong-secret',
+
+  // MySQL (cPanel -> MySQL Databases). Use the prefixed names cPanel shows you,
+  // e.g. irelandc_ruth. The DB user must be added to the DB with ALL PRIVILEGES.
+  'db' => [
+    'host' => 'localhost',
+    'name' => 'irelandc_ruth',
+    'user' => 'irelandc_ruth',
+    'pass' => 'STRONG_DB_PASSWORD',
+  ],
 ];
