@@ -244,7 +244,10 @@ section{position:relative}
 .article-hero-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);margin:18px 0 30px;aspect-ratio:16/9;object-fit:cover}
 .post-card .post-img{height:160px;margin:-28px -28px 18px;border-radius:var(--radius) var(--radius) 0 0;background-size:cover;background-position:center}
 .cs-feature-img{width:100%;border-radius:18px;border:1px solid var(--line-strong);box-shadow:var(--shadow);aspect-ratio:4/5;object-fit:cover;object-position:center 22%}
-.empower-band{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line-strong);min-height:280px;display:flex;align-items:center;padding:54px;background-size:cover;background-position:center;box-shadow:var(--shadow)}
+.empower-band{position:relative;border-radius:28px;overflow:hidden;border:1px solid var(--line-strong);min-height:280px;display:flex;align-items:center;padding:54px;background-size:cover;background-position:center;box-shadow:var(--shadow);
+  /* always sits on a dark image overlay → force a light text context on both themes */
+  color:#ffffff;--text:#ffffff;--muted:#d8e1f7;--gold:#f0c46a}
+.empower-band h2{color:#fff}
 .empower-band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,10,32,.92),rgba(5,10,32,.55) 60%,rgba(5,10,32,.3))}
 .empower-band>*{position:relative;z-index:1;max-width:34em}
 .program-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
@@ -288,13 +291,26 @@ section{position:relative}
 
 /* ---------- CTA band ---------- */
 .cta-band{
-  background:linear-gradient(135deg,rgba(78,168,255,.16),rgba(232,182,90,.1));
-  border:1px solid var(--line-strong);border-radius:28px;padding:60px;text-align:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(700px 320px at 50% -10%,rgba(78,168,255,.28),transparent 70%),
+    radial-gradient(600px 360px at 100% 120%,rgba(232,182,90,.18),transparent 65%),
+    linear-gradient(135deg,#0a1330,#14245e);
+  border:1px solid rgba(140,170,240,.30);border-radius:28px;padding:64px 60px;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 30px 70px -28px rgba(8,20,55,.5);
+  /* premium dark spotlight on both themes → light text + dark ghost-button context */
+  color:#ffffff;--text:#ffffff;--muted:#c2cdec;--gold:#f0c46a;
+  --glass:rgba(255,255,255,.06);--glass-2:rgba(255,255,255,.12);--line-strong:rgba(160,185,255,.42);
 }
-.cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% -20%,rgba(78,168,255,.3),transparent);pointer-events:none}
+.cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(600px 300px at 50% -20%,rgba(78,168,255,.22),transparent);pointer-events:none}
+.cta-band h2,.cta-band p,.cta-band .eyebrow{position:relative;z-index:1}
+.cta-band h2{color:#fff}
 
 /* ---------- Footer ---------- */
-.footer{padding:70px 0 36px;border-top:1px solid var(--line);background:var(--navy-850)}
+.footer{padding:70px 0 36px;border-top:1px solid rgba(140,170,240,.18);background:#070e29;
+  /* dark-blue footer on both themes → run a dark text context inside it */
+  color:#9fb0d8;--text:#eef3ff;--muted:#9fb0d8;--muted-2:#7c8cbb;--gold:#e8b65a;--gold-soft:#f3d292;
+  --line:rgba(120,150,220,.16)}
+.footer .brand{color:var(--text)}
 .footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
 .footer h4{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:18px}
 .footer a{display:block;color:var(--muted);font-size:.92rem;margin-bottom:10px;transition:color .2s}
