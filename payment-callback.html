@@ -58,9 +58,9 @@
     try { await Store.reload(); } catch(e){}
     const prog = Store.programById(pending.programId);
     done("🎉","Payment successful!",
-      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. One quick 2-minute check-in and your lessons are ready — we'll walk you through it step by step.<br><br><span style="font-size:.85rem;color:var(--muted)">Note: your payment was received by <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered training institute via Pesapal) — that's us, so you're all set. ✅</span>`,
-      `<a class="btn btn-gold" href="onboarding.html">Access your course →</a> <a class="btn btn-ghost" href="dashboard.html">My dashboard</a>`);
-    setTimeout(()=>{ if(Store.currentUser()) location.href="onboarding.html"; }, 4000);
+      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will confirm your spot and send your course check-in guide in your dashboard <b>Messages</b> shortly — keep an eye out for it there.<br><br><span style="font-size:.85rem;color:var(--muted)">Note: your payment was received by <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered training institute via Pesapal) — that's us, so you're all set. ✅</span>`,
+      `<a class="btn btn-gold" href="dashboard.html">Go to my dashboard</a>`);
+    setTimeout(()=>{ if(Store.currentUser()) location.href="dashboard.html"; }, 4000);
   }
 
   async function check(){

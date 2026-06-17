@@ -418,6 +418,8 @@ section{position:relative}
 .thread-msg.them{background:var(--navy-700);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
 .thread-msg.me{background:linear-gradient(135deg,var(--azure),var(--azure-deep));color:#04122e;align-self:flex-end;border-bottom-right-radius:4px}
 .thread-msg .meta{font-size:.7rem;opacity:.7;margin-top:5px}
+.thread-msg a{color:var(--gold);text-decoration:underline;font-weight:600}
+.thread-msg.me a{color:#06203f}
 .composer{display:flex;gap:10px;margin-top:16px}
 .composer input{flex:1}
 

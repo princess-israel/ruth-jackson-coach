@@ -290,7 +290,7 @@
     t.querySelectorAll("[data-grant]").forEach(b=>b.onclick=async ()=>{
       b.disabled=true;
       await Store.setEnrollStatus(b.dataset.grant,"active");
-      await Store.addMessage(b.dataset.user,"ruth","✅ Your access is now live! Here is your private course link: https://learn.coachruthjackson.com/access/"+b.dataset.grant.slice(0,6)+", log in with this email. Watch lesson 1 first, then reply here if you have any questions. So glad to have you!, Ruth");
+      await Store.addMessage(b.dataset.user,"ruth","✅ You're all set — your payment is confirmed and your spot is reserved! Follow this quick 2-minute guide to check yourself in and open your course: <a href='/onboarding.html'>Open your self check-in guide →</a>. Any trouble on a step, just reply here and I'll help. So glad to have you! — Ruth");
       await loadData(); renderAll();
     });
     t.querySelectorAll("[data-prog]").forEach(b=>b.onclick=async ()=>{
