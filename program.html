@@ -57,7 +57,11 @@
       <div class="field"><label>Phone number <span class="muted" style="font-weight:400">(for your payment receipt)</span></label><input id="pp-phone" placeholder="+254 7XX XXX XXX" inputmode="tel"></div>
       <p id="pay-error" class="notice err" style="display:none"></p>
       <button class="btn btn-gold btn-block" id="pay-btn">Pay with Pesapal</button>
-      <p class="demo-note">🔒 Secure payment via <b>Pesapal</b> — cards &amp; M-Pesa. You'll be redirected to complete payment, then brought back here.</p>
+      <p class="demo-note" style="margin-top:14px;color:var(--text);background:var(--glass);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.8rem">
+        ℹ️ Your payment is processed securely via <b>Pesapal</b>. On your receipt and statement the charge appears as
+        <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> — Ruth's registered training institute. This is correct; you are in the right place. ✅
+      </p>
+      <p class="demo-note">🔒 Cards &amp; M-Pesa accepted. You'll be redirected to Pesapal to complete payment, then brought back here.</p>
     </div>
     <div id="pay-success" class="hide center">
       <div style="font-size:3rem">↗</div>
@@ -129,6 +133,10 @@
         <p>${p.summary}</p>
         <h3 style="margin-top:34px">What you'll be able to do</h3>
         <ul class="cred-list">${p.outcomes.map(o=>`<li><span class="ck">✓</span><span>${o}</span></li>`).join("")}</ul>
+        ${(window.RJ_PROGRAM_TOPICS && RJ_PROGRAM_TOPICS[p.id]) ? `
+        <h3 style="margin-top:34px">Topics you'll cover</h3>
+        <ul class="topics-grid">${RJ_PROGRAM_TOPICS[p.id].map(t=>`<li>${t}</li>`).join("")}</ul>` : ""}
+        ${window.accreditationHTML ? window.accreditationHTML() : ""}
         ${free?"":`
         <h3 style="margin-top:30px">How it works</h3>
         <div class="steps" style="grid-template-columns:repeat(3,1fr);margin-top:16px">

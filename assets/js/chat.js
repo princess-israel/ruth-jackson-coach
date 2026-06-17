@@ -108,10 +108,10 @@
 
     const has = (...w) => w.some(x => q.includes(x));
 
-    if (has("hi", "hello", "hey", "hallo")) {
-      reply = "Hello! 😊 Happy to help. Are you interested in a specific skill, like AI, digital marketing, SEO, or our customer service training?";
+    if (has("timshi", "wrong place", "statement", "who charged", "charged me", "different name", "receipt say", "receipt name", "is this safe", "scam")) {
+      reply = `Good question, and you're in the right place ✅ Payments are handled securely by <b>Pesapal</b>, and on your receipt/statement the charge shows as <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> — that's Ruth's registered training institute. So if you see that name, your payment reached us correctly. Any worries? Message Ruth on <a href="${WHATSAPP}" target="_blank">WhatsApp</a>.`;
     } else if (has("price", "cost", "how much", "fee", "pay", "$")) {
-      reply = `Each self-paced certificate course is just <b>$79</b>, that includes lifetime access and a certificate on completion. The <b>Customer Service Excellence</b> training is custom-priced because Ruth tailors it to your team. Want me to point you to a course? <a href="${BASE}programs.html">See all programs →</a>`;
+      reply = `Each self-paced certificate course is just <b>$79</b>, that includes lifetime access and a certificate on completion. The <b>Customer Service Excellence</b> training is custom-priced because Ruth tailors it to your team.<br><br>💳 Payments go through <b>Pesapal</b> and appear on your statement as <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered institute) — so that's the right place. <a href="${BASE}programs.html">See all programs →</a>`;
     } else if (has("certificate", "certified", "accredit")) {
       reply = `Yes! Every $79 course gives you a <b>certificate of completion</b> you can share on LinkedIn or with employers. Ruth herself is Microsoft-certified and a certified WIDB Lead Trainer. 🎓`;
     } else if (has("customer service", "banking", "service training", "team training")) {

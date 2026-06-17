@@ -58,7 +58,7 @@
     try { await Store.reload(); } catch(e){}
     const prog = Store.programById(pending.programId);
     done("🎉","Payment successful!",
-      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will send your access link and instructions in your dashboard.`,
+      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will send your access link and instructions in your dashboard.<br><br><span style="font-size:.85rem;color:var(--muted)">Note: your payment was received by <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered training institute via Pesapal) — that's us, so you're all set. ✅</span>`,
       `<a class="btn btn-gold" href="dashboard.html">Go to my dashboard</a>`);
     setTimeout(()=>{ if(Store.currentUser()) location.href="dashboard.html"; }, 3500);
   }

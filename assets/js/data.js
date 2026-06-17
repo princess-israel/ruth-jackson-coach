@@ -149,3 +149,77 @@ window.RJ_PARTNERS = [
   "Microsoft", "Women in Digital Business", "ITC · International Training Centre",
   "International Labour Organization", "Microsoft Elevate", "EY"
 ];
+
+/* Topics covered in each course (syllabus shown on the course page).
+   Kept as a separate map so it survives the admin/server catalog merge. */
+window.RJ_PROGRAM_TOPICS = {
+  "ai-women-entrepreneurs": [
+    "What AI is (and isn't) for a small business",
+    "Writing with ChatGPT: content, emails & proposals",
+    "AI prompts that get usable results every time",
+    "Creating images & graphics with AI tools",
+    "Automating admin, replies & scheduling",
+    "Building a simple AI workflow for your business",
+    "Using AI safely & responsibly",
+    "Your 30-day practical AI action plan"
+  ],
+  "digital-marketing-social": [
+    "Knowing your audience & ideal customer",
+    "Building a recognisable brand voice & look",
+    "A content calendar that posts consistently",
+    "Writing captions & hooks that convert",
+    "Growing on Instagram, Facebook & TikTok",
+    "Running affordable Meta & TikTok ads",
+    "Reading your analytics & doubling down",
+    "Turning followers into paying customers"
+  ],
+  "website-development": [
+    "Planning a website that sells",
+    "Choosing the right no-code platform",
+    "Pages every business site needs",
+    "Connecting a domain & business email",
+    "Adding payment & WhatsApp buttons",
+    "Making it fast & mobile-friendly",
+    "Basic on-page SEO for your pages",
+    "Publishing & maintaining it yourself"
+  ],
+  "seo-online-visibility": [
+    "How Google search actually works",
+    "Finding keywords your customers type",
+    "Writing pages & articles that rank",
+    "On-page SEO essentials",
+    "Setting up Google Business Profile",
+    "Getting found for local searches",
+    "Free tools to track rankings & traffic",
+    "A monthly SEO routine you can keep"
+  ],
+  "data-analysis-growth": [
+    "The numbers every business should track",
+    "Organising your data in spreadsheets",
+    "Building simple, clear dashboards",
+    "Reading sales, costs & profit with confidence",
+    "Spotting trends & seasonality",
+    "Using AI to summarise & explain data",
+    "Turning insights into decisions",
+    "Pricing & margin basics"
+  ],
+  "ecommerce-selling-online": [
+    "Choosing the right platform for your products",
+    "Setting up your online store",
+    "Taking payments (cards & M-Pesa)",
+    "Delivery, shipping & order tracking",
+    "Photographing & listing products that sell",
+    "Writing product descriptions that convert",
+    "Launch promotions that drive first sales",
+    "Handling orders & customer follow-up"
+  ],
+  "customer-service-excellence": [
+    "The mindset of world-class service",
+    "Turning complaints into loyalty",
+    "Communication frameworks that calm any situation",
+    "Phone, chat & in-person service standards",
+    "Handling difficult customers with confidence",
+    "Building a service culture for your team",
+    "Scripts & standards your team keeps"
+  ]
+};

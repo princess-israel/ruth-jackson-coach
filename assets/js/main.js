@@ -4,6 +4,58 @@
 (function () {
   "use strict";
 
+  /* ---------- Theme (light default, dark opt-in) ---------- */
+  const THEME_KEY = "rj_theme";
+  function applyTheme(t) {
+    if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
+    else document.documentElement.removeAttribute("data-theme");
+  }
+  // set as early as possible to reduce flash
+  applyTheme(localStorage.getItem(THEME_KEY) || "light");
+  function currentTheme() { return localStorage.getItem(THEME_KEY) || "light"; }
+  function toggleTheme() {
+    const next = currentTheme() === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_KEY, next); applyTheme(next); paintToggle();
+  }
+  function paintToggle() {
+    const b = document.querySelector(".theme-toggle");
+    if (!b) return;
+    const dark = currentTheme() === "dark";
+    b.textContent = dark ? "☀️" : "🌙";
+    b.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
+    b.setAttribute("title", dark ? "Light mode" : "Dark mode");
+  }
+  // inject the toggle button into the nav CTA area on every page
+  document.querySelectorAll(".nav-cta").forEach(cta => {
+    if (cta.querySelector(".theme-toggle")) return;
+    const btn = document.createElement("button");
+    btn.type = "button"; btn.className = "theme-toggle";
+    btn.addEventListener("click", toggleTheme);
+    cta.insertBefore(btn, cta.firstChild);
+  });
+  paintToggle();
+
+  /* ---------- Accreditation (WIDB / Microsoft / ILO / ITC) ---------- */
+  function msLogo() {
+    return '<svg width="15" height="15" viewBox="0 0 23 23" aria-hidden="true"><rect width="10" height="10" fill="#f25022"/><rect x="12" width="10" height="10" fill="#7fba00"/><rect y="12" width="10" height="10" fill="#00a4ef"/><rect x="12" y="12" width="10" height="10" fill="#ffb900"/></svg>';
+  }
+  window.accreditationHTML = function () {
+    return `<div class="accred">
+      <span class="accred-label">Certified programme by</span>
+      <span class="accred-logos">
+        <span class="org">${msLogo()} Microsoft</span>
+        <span class="org">ILO</span>
+        <span class="org">ITC</span>
+      </span>
+      <span class="accred-sub">Delivered under <b>Women in Digital Business (WIDB)</b> — an initiative of Microsoft, the International Labour Organization (ILO) &amp; the International Trade Centre (ITC). Certificate of completion included.</span>
+    </div>`;
+  };
+  window.cardAccredHTML = function () {
+    return `<div class="card-accred"><span class="ca-txt">WIDB certified ·</span><span class="org">${msLogo()} Microsoft</span><span class="org">ILO</span><span class="org">ITC</span></div>`;
+  };
+  // drop the full strip into any [data-accred] placeholder
+  document.querySelectorAll("[data-accred]").forEach(el => { el.innerHTML = window.accreditationHTML(); });
+
   /* ---------- Navbar ---------- */
   const nav = document.querySelector(".nav");
   if (nav) {
@@ -137,6 +189,7 @@
         <p class="desc">${p.short || ""}</p>
         <div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
         <div class="program-meta">${meta}</div>
+        ${window.cardAccredHTML ? window.cardAccredHTML() : ""}
         ${cta}
       </article>`;
   };

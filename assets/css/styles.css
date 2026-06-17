@@ -2,7 +2,46 @@
    Ruth Jackson, AI Coach  |  Design System
    Dark-blue, modern, professional
    ========================================================= */
+/* ---------- LIGHT THEME (default) ----------
+   Bright, high-contrast palette so the site never looks dull on dim/cheap
+   displays. Dark theme below is the original look, opt-in via the toggle. */
 :root{
+  --navy-900:#e8eef9;   /* page background */
+  --navy-850:#ffffff;   /* cards / nav / panels */
+  --navy-800:#f2f6fd;
+  --navy-700:#e6edfa;
+  --navy-600:#d7e3f8;
+  --navy-500:#c4d4f1;
+  --line:rgba(22,44,104,.16);
+  --line-strong:rgba(22,44,104,.28);
+
+  --gold:#9a6b15;        /* deepened for readable text on light bg */
+  --gold-soft:#c79a3f;
+  --azure:#1f6fe0;
+  --azure-deep:#1559c0;
+  --rose:#c2453b;
+
+  --text:#0c1633;
+  --muted:#475479;
+  --muted-2:#6a78a0;
+
+  --grad-hero:radial-gradient(1200px 700px at 75% -10%,rgba(31,111,224,.16),transparent 60%),
+              radial-gradient(900px 600px at 10% 10%,rgba(232,182,90,.16),transparent 55%),
+              linear-gradient(180deg,#f5f9ff 0%,#e7eefb 100%);
+  --glass:rgba(20,45,110,.038);
+  --glass-2:rgba(20,45,110,.065);
+  --shadow:0 24px 60px -24px rgba(20,40,90,.24);
+  --nav-scrolled:rgba(255,255,255,.88);
+
+  --radius:18px;
+  --radius-sm:12px;
+  --maxw:1200px;
+  --font-head:'Sora',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+}
+
+/* ---------- DARK THEME (opt-in, original design) ---------- */
+html[data-theme="dark"]{
   --navy-900:#050a20;
   --navy-850:#070e29;
   --navy-800:#0a1330;
@@ -28,11 +67,7 @@
   --glass:rgba(255,255,255,.045);
   --glass-2:rgba(255,255,255,.07);
   --shadow:0 24px 60px -20px rgba(0,0,0,.65);
-  --radius:18px;
-  --radius-sm:12px;
-  --maxw:1200px;
-  --font-head:'Sora',system-ui,sans-serif;
-  --font-body:'Inter',system-ui,sans-serif;
+  --nav-scrolled:rgba(7,13,38,.82);
 }
 
 *{box-sizing:border-box}
@@ -85,7 +120,7 @@ section{position:relative}
   transition:background .35s,backdrop-filter .35s,border-color .35s,padding .35s;
   border-bottom:1px solid transparent;padding:18px 0;
 }
-.nav.scrolled{background:rgba(7,13,38,.82);backdrop-filter:blur(16px) saturate(140%);border-color:var(--line);padding:12px 0}
+.nav.scrolled{background:var(--nav-scrolled);backdrop-filter:blur(16px) saturate(140%);border-color:var(--line);padding:12px 0}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-head);font-weight:700;font-size:1.1rem;letter-spacing:-.01em}
 .brand .logo{
@@ -396,3 +431,33 @@ section{position:relative}
   .kpis{grid-template-columns:1fr 1fr}
   .section{padding:64px 0}
 }
+
+/* ---------- Theme toggle ---------- */
+.theme-toggle{
+  width:40px;height:40px;border-radius:999px;border:1px solid var(--line-strong);
+  background:var(--glass);color:var(--text);cursor:pointer;display:inline-grid;place-items:center;
+  font-size:1.05rem;line-height:1;transition:background .25s,transform .25s,border-color .25s;backdrop-filter:blur(8px);
+}
+.theme-toggle:hover{background:var(--glass-2);transform:translateY(-2px)}
+
+/* ---------- Accreditation strip + badges ---------- */
+.accred{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;
+  background:var(--glass);border:1px solid var(--line);border-radius:14px;
+  padding:14px 18px;margin:18px 0;
+}
+.accred .accred-label{font-family:var(--font-head);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.accred .accred-logos{display:flex;flex-wrap:wrap;align-items:center;gap:14px}
+.accred .org{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-head);font-weight:700;font-size:.86rem;color:var(--text)}
+.accred .org svg{display:block}
+.accred .accred-sub{flex-basis:100%;font-size:.78rem;color:var(--muted)}
+/* compact badge row on course cards */
+.card-accred{display:flex;align-items:center;gap:8px;margin:14px 0 4px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
+.card-accred .ca-txt{font-size:.7rem;color:var(--muted);font-weight:600;letter-spacing:.02em}
+.card-accred .org{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-head);font-weight:700;font-size:.74rem;color:var(--text)}
+
+/* ---------- Course topics list ---------- */
+.topics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 22px;margin:14px 0 0;padding:0;list-style:none}
+.topics-grid li{position:relative;padding-left:22px;font-size:.94rem;color:var(--muted)}
+.topics-grid li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+@media(max-width:680px){.topics-grid{grid-template-columns:1fr}}
