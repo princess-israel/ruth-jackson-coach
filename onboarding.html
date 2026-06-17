@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access your course — Self check-in guide | Ruth Jackson</title>
+<meta name="description" content="Step-by-step guide to check yourself in on the WIDB Network learning platform and open your paid program.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070e29">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+  /* ----- Onboarding self check-in (scoped page styles) ----- */
+  .ob-wrap{max-width:920px;margin:0 auto}
+  .ob-intro{
+    background:linear-gradient(135deg,rgba(31,111,224,.12),rgba(232,182,90,.10));
+    border:1px solid var(--line-strong);border-radius:24px;padding:38px;margin-bottom:14px;
+  }
+  .ob-intro h1{font-size:clamp(2rem,4.4vw,3rem);margin-bottom:.4em}
+  .ob-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .ob-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--line);font-size:.82rem;color:var(--muted);font-weight:500}
+  /* progress rail of steps */
+  .ob-steps{counter-reset:obs;margin:34px 0 0;display:flex;flex-direction:column;gap:20px}
+  .ob-step{
+    position:relative;background:var(--glass);border:1px solid var(--line);border-radius:20px;
+    padding:26px 26px 26px 30px;display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:center;
+    transition:border-color .3s,transform .3s,background .3s;
+  }
+  .ob-step:hover{border-color:var(--line-strong);transform:translateY(-3px);background:var(--glass-2)}
+  .ob-step::before{
+    counter-increment:obs;content:counter(obs);position:absolute;top:-14px;left:24px;
+    width:38px;height:38px;border-radius:12px;display:grid;place-items:center;
+    font-family:var(--font-head);font-weight:800;font-size:1.05rem;color:#04122e;
+    background:linear-gradient(135deg,var(--azure),var(--azure-deep));
+    box-shadow:0 10px 24px -10px rgba(31,111,224,.7);
+  }
+  .ob-step h3{margin:6px 0 8px;font-size:1.2rem}
+  .ob-step p{color:var(--muted);font-size:.98rem;margin:0}
+  .ob-step .ob-tip{margin-top:12px;font-size:.86rem;color:var(--gold)}
+  .ob-shot{
+    border-radius:14px;border:1px solid var(--line-strong);box-shadow:var(--shadow);
+    width:100%;aspect-ratio:9/16;object-fit:cover;object-position:top center;background:var(--navy-800);
+  }
+  .ob-step.flagged{border-color:var(--gold);background:linear-gradient(135deg,rgba(232,182,90,.12),var(--glass))}
+  .ob-step.flagged::before{background:linear-gradient(135deg,var(--gold),#caa24a)}
+  /* trainer-email callout */
+  .ob-email{
+    margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+    background:var(--navy-850);border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;
+  }
+  .ob-email code{font-family:var(--font-head);font-weight:700;font-size:1.05rem;color:var(--text);letter-spacing:.01em}
+  .ob-copy{background:var(--glass);border:1px solid var(--line-strong);color:var(--text);
+    border-radius:999px;padding:8px 16px;font-size:.84rem;font-weight:600;cursor:pointer;font-family:var(--font-head);transition:.2s}
+  .ob-copy:hover{border-color:var(--gold);color:var(--gold)}
+  .ob-done{
+    text-align:center;background:linear-gradient(135deg,rgba(78,168,255,.16),rgba(232,182,90,.1));
+    border:1px solid var(--line-strong);border-radius:24px;padding:46px 30px;margin-top:34px;
+  }
+  .ob-done .hero-actions{justify-content:center;margin-top:22px}
+  @media(max-width:720px){
+    .ob-step{grid-template-columns:1fr;gap:18px}
+    .ob-shot{max-width:300px;margin:0 auto;aspect-ratio:9/16}
+    .ob-intro{padding:28px 22px}
+  }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
+    <nav><ul class="nav-links">
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="customer-service.html">Customer Service</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Articles</a></li>
+    </ul></nav>
+    <div class="nav-cta">
+      <span data-account-cta></span>
+      <a class="btn btn-gold btn-sm" href="dashboard.html">My Dashboard</a>
+      <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<section class="section page-pad">
+  <div class="container">
+    <div class="ob-wrap">
+
+      <div class="ob-intro reveal">
+        <div class="eyebrow">You're enrolled 🎉</div>
+        <h1>Let's get you into your course</h1>
+        <p class="muted" style="font-size:1.08rem;max-width:42em">
+          Your payment is confirmed and your seat is reserved. Your lessons live on the
+          <b>WIDB Network</b> learning platform — the official Women in Digital Business hub.
+          This one-time check-in takes about <b>2 minutes</b> and links your paid enrollment
+          to your own learning account. Do it once, and your course is yours for life.
+        </p>
+        <div class="ob-meta">
+          <span class="ob-chip">⏱ ~2 minutes</span>
+          <span class="ob-chip">📱 Works on phone or laptop</span>
+          <span class="ob-chip">🔑 You only do this once</span>
+        </div>
+      </div>
+
+      <div class="ob-steps">
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Open the WIDB learning platform</h3>
+            <p>Go to <a href="https://www.widb.network" target="_blank" rel="noopener" class="gold"><b>www.widb.network</b></a>
+               and tap <b>Log in</b> in the top-right corner.</p>
+            <div class="ob-tip">💡 Tip: bookmark this page — it's where you'll return for every lesson.</div>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/01-open-site.jpg" alt="WIDB Network home page with the Log in button highlighted" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Start your free account</h3>
+            <p>Since it's your first time here, tap <b>REGISTER</b> under
+               “First time using this site.” (No extra payment — your course is already paid for.)</p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/02-register.jpg" alt="Login screen with the REGISTER button highlighted" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Fill in your details</h3>
+            <p>Add your <b>city/town</b>, <b>country</b>, <b>gender</b> and <b>organization name</b>.
+               Use an email and password you'll remember — this becomes your learning login.</p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/03-fill-info.jpg" alt="Registration form fields to fill in" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Tell them who you are</h3>
+            <p>At the <b>“Who are you?”</b> question, choose
+               <b>“I am an entrepreneur, and a trainer invited me to join WIDB.”</b></p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/04-who-are-you.jpg" alt="Who are you dropdown with the entrepreneur option selected" loading="lazy">
+        </div>
+
+        <div class="ob-step flagged reveal">
+          <div>
+            <h3>Enter your trainer's email — the important step</h3>
+            <p>A new box appears: <b>“Email address of the Trainer.”</b> Type Ruth's training email
+               exactly as below. This is what connects you to your program, so double-check it.</p>
+            <div class="ob-email">
+              <code id="trainer-email">suuupooi@gmail.com</code>
+              <button class="ob-copy" type="button" id="copy-email">Copy email</button>
+            </div>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/05-trainer-email.jpg" alt="Trainer email field with suuupooi@gmail.com entered" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Create your account</h3>
+            <p>Tick <b>“I'm not a robot,”</b> then tap <b>CREATE MY NEW ACCOUNT</b>.
+               You're now a member of the WIDB Network. 🎓</p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/06-create-account.jpg" alt="Create my new account button highlighted" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Open the menu</h3>
+            <p>Once you're signed in, tap the <b>menu icon (☰)</b> at the top-left of the page.</p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/07-open-menu.jpg" alt="WIDB dashboard with the menu icon highlighted" loading="lazy">
+        </div>
+
+        <div class="ob-step reveal">
+          <div>
+            <h3>Open your courses &amp; enjoy 🚀</h3>
+            <p>Tap <b>Training Programmes</b> in the menu. Your program is waiting there —
+               start with lesson one and learn at your own pace.</p>
+          </div>
+          <img class="ob-shot" src="assets/img/onboarding/08-training-programmes.jpg" alt="Side menu with Training Programmes highlighted" loading="lazy">
+        </div>
+
+      </div>
+
+      <div class="ob-done reveal">
+        <div style="font-size:2.6rem;margin-bottom:6px">🎉</div>
+        <h2>That's it — you're checked in!</h2>
+        <p class="muted" style="max-width:34em;margin:0 auto">
+          Stuck on any step? Ruth is one message away and happy to walk you through it.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="https://www.widb.network" target="_blank" rel="noopener">Open WIDB Network →</a>
+          <a class="btn btn-ghost" href="https://wa.me/254714458530" target="_blank" rel="noopener">💬 Message Ruth on WhatsApp</a>
+        </div>
+        <p style="margin-top:18px"><a href="dashboard.html" class="muted" style="font-size:.9rem">← Back to my dashboard</a></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer"><div class="container">
+  <div class="footer-bottom" style="border:0">
+    <span>© <span data-year></span> Ruth Jackson (Ruth Wanjohi).</span>
+    <span><a href="tel:+254714458530">+254 714 458530</a> · <a href="about.html">About</a> · <a href="dashboard.html">Dashboard</a></span>
+  </div>
+</div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+  // copy trainer email
+  var cp = document.getElementById("copy-email");
+  if (cp) cp.addEventListener("click", function () {
+    var email = document.getElementById("trainer-email").textContent.trim();
+    navigator.clipboard.writeText(email).then(function () {
+      var t = cp.textContent; cp.textContent = "Copied ✓";
+      setTimeout(function () { cp.textContent = t; }, 1800);
+    }).catch(function () { cp.textContent = "Copy: " + email; });
+  });
+</script>
+</body>
+</html>
