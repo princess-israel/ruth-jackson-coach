@@ -202,7 +202,7 @@ section{position:relative}
   background:linear-gradient(160deg,rgba(78,168,255,.16),rgba(232,182,90,.08));
   box-shadow:var(--shadow);transform-style:preserve-3d;transition:transform .2s ease-out;
 }
-.portrait-card img{width:100%;display:block;aspect-ratio:4/5;object-fit:cover;object-position:50% 18%;filter:saturate(1.05) contrast(1.02)}
+.portrait-card img{width:100%;height:auto;display:block;object-fit:cover;object-position:50% 0%;filter:saturate(1.05) contrast(1.02)}
 .portrait-glow{position:absolute;inset:-40% -10% auto;height:60%;background:radial-gradient(closest-side,rgba(78,168,255,.5),transparent);filter:blur(40px);z-index:-1}
 .float-card{
   position:absolute;background:var(--float-bg);backdrop-filter:blur(12px);color:var(--text);
