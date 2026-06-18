@@ -261,6 +261,7 @@
     mq.innerHTML = set + set; // duplicate for seamless loop
   }
   function partnerLogo(name) {
+    if (/timshi/i.test(name)) return `<img src="assets/img/timshi-logo.png" alt="Timshi Universal Institute" style="width:26px;height:26px;border-radius:6px;object-fit:cover">`;
     if (/microsoft/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 23 23"><rect width="10" height="10" fill="#f25022"/><rect x="12" width="10" height="10" fill="#7fba00"/><rect y="12" width="10" height="10" fill="#00a4ef"/><rect x="12" y="12" width="10" height="10" fill="#ffb900"/></svg>`;
     if (/itc|labour|ilo/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ea8ff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>`;
     if (/ey/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#ffe600"/><text x="12" y="17" font-size="11" font-weight="800" text-anchor="middle" fill="#111">EY</text></svg>`;

@@ -10,13 +10,23 @@ function catalog_file() { return catalog_dir() . '/programs.json'; }
 function catalog_default_file() { return catalog_dir() . '/programs.default.json'; }
 
 function catalog_load() {
-  foreach ([catalog_file(), catalog_default_file()] as $f) {
-    if (file_exists($f)) {
-      $j = json_decode(file_get_contents($f), true);
-      if (is_array($j)) return $j;
-    }
+  // Merge committed defaults (base) with the admin-edited runtime catalog.
+  // Defaults provide any program not yet in the runtime file (e.g. newly added
+  // courses); runtime entries override default fields (e.g. admin price edits).
+  $read = function ($f) {
+    if (file_exists($f)) { $j = json_decode(file_get_contents($f), true); if (is_array($j)) return $j; }
+    return [];
+  };
+  $defaults = $read(catalog_default_file());
+  $runtime  = $read(catalog_file());
+
+  $byId = [];
+  foreach ($defaults as $p) { if (isset($p['id'])) $byId[$p['id']] = $p; }
+  foreach ($runtime as $p) {
+    if (!isset($p['id'])) continue;
+    $byId[$p['id']] = isset($byId[$p['id']]) ? array_merge($byId[$p['id']], $p) : $p;
   }
-  return [];
+  return array_values($byId);
 }
 
 function catalog_find($id) {

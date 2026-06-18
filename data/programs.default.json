@@ -106,5 +106,59 @@
       "Run launch promotions that drive first sales"
     ],
     "summary": "Everything between a product idea and your first online order, in one guided path."
+  },
+  {
+    "id": "cybersecurity-essentials",
+    "icon": "🛡️",
+    "title": "Cybersecurity Essentials for Business",
+    "short": "Protect your business and customers from phishing, malware and online fraud.",
+    "price": 79,
+    "level": "Beginner",
+    "hours": 6,
+    "lessons": 18,
+    "tags": ["Security", "Online Safety", "Fraud"],
+    "outcomes": [
+      "Spot phishing, scams and fake messages before they cost you",
+      "Secure your email, passwords and social accounts properly",
+      "Protect customer data and payments from theft",
+      "Recover quickly and safely if something goes wrong"
+    ],
+    "summary": "Most small businesses are one careless click away from a costly breach. This course gives you the practical habits and simple tools to keep your money, accounts and customers safe online."
+  },
+  {
+    "id": "graphic-design",
+    "icon": "🎨",
+    "title": "Graphic Design for Business",
+    "short": "Create flyers, logos and social graphics that make your brand look professional.",
+    "price": 79,
+    "level": "Beginner",
+    "hours": 7,
+    "lessons": 20,
+    "tags": ["Design", "Branding", "Canva"],
+    "outcomes": [
+      "Design flyers, posters and social posts that get noticed",
+      "Create a simple, memorable logo and brand kit",
+      "Use free tools like Canva like a pro",
+      "Keep a consistent, professional look everywhere"
+    ],
+    "summary": "You don't need a designer or expensive software. Learn to create eye-catching, on-brand visuals yourself, so your business looks as professional as the big players."
+  },
+  {
+    "id": "training-of-trainers",
+    "icon": "🎓",
+    "title": "Training of Trainers (ToT)",
+    "short": "Become a certified digital-skills trainer and earn by teaching others.",
+    "price": 79,
+    "level": "Intermediate → Advanced",
+    "hours": 10,
+    "lessons": 26,
+    "tags": ["Train the Trainer", "Facilitation", "Certification"],
+    "outcomes": [
+      "Plan and deliver engaging training sessions with confidence",
+      "Facilitate both in-person and online workshops",
+      "Assess learners and issue meaningful certificates",
+      "Build a new income stream as a recognised trainer"
+    ],
+    "summary": "This is the very pathway that certified Ruth as a WIDB Lead Trainer. Learn to train others in digital business on global platforms, earn a recognised certification, and turn your skills into a new way to earn."
   }
 ]
