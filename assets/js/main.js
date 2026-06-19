@@ -246,6 +246,17 @@
       ${a.readMins ? `<span class="muted" style="font-size:.8rem;margin-top:12px;display:block">${a.readMins} min read</span>` : ""}
     </a>`;
   }
+  // Render a module accordion into any [data-modules="programId"]
+  document.querySelectorAll("[data-modules]").forEach(el => {
+    const mods = window.RJ_PROGRAM_MODULES && RJ_PROGRAM_MODULES[el.dataset.modules];
+    if (!mods || !mods.length) return;
+    el.innerHTML = '<div class="modules">' + mods.map((m, i) => `
+      <details class="module"${i === 0 ? " open" : ""}>
+        <summary><span class="mod-num">${String(i + 1).padStart(2, "0")}</span><span class="mod-title">${m.t}</span><span class="mod-chev">▾</span></summary>
+        <div class="mod-body">${m.points ? `<ul class="mod-points">${m.points.map(pt => `<li>${pt}</li>`).join("")}</ul>` : (m.d || "")}</div>
+      </details>`).join("") + '</div>';
+  });
+
   const artGrid = document.querySelector("[data-articles]");
   if (artGrid) {
     const limit = parseInt(artGrid.dataset.limit) || 99;

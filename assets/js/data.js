@@ -212,14 +212,10 @@ window.RJ_PARTNERS = [
    keyed by program id) so it shows for any program regardless of the server catalog. */
 window.RJ_PROGRAM_MODULES = {
   "ai-women-entrepreneurs": [
-    { t: "What AI really is for a small business", d: "Cut through the hype: what AI can and can't do, and where it saves you the most time and money." },
-    { t: "Writing with ChatGPT & Copilot", d: "Draft content, emails, proposals and product descriptions in minutes instead of hours." },
-    { t: "Prompts that get usable results", d: "A simple prompting formula so the AI sounds like you and gives output you can actually use." },
-    { t: "Creating images & graphics with AI", d: "Generate logos, social posts and marketing visuals without a designer." },
-    { t: "Automating admin & replies", d: "Set up AI to handle repetitive messages, scheduling and routine tasks for you." },
-    { t: "Build a simple AI workflow", d: "Connect the tools into one repeatable system that runs part of your business." },
-    { t: "Using AI safely & responsibly", d: "Protect your data and avoid the common mistakes that get businesses into trouble." },
-    { t: "Your 30-day AI action plan", d: "Leave with a clear, week-by-week plan to put everything into practice." }
+    { t: "Module 1: AI Basics", points: ["What is Artificial Intelligence?", "Knowledge vs Intelligence", "Data Everywhere", "Finding Patterns in Data", "Machine Learning", "Types of Machine Learning", "Deep Learning", "Natural Language Processing", "AI Algorithms", "AI in Action"] },
+    { t: "Module 2: Generative AI", points: ["Introduction to Generative AI and its real-world applications", "Understanding how AI models like ChatGPT and DALL·E work", "Exploring top Generative AI tools and platforms", "Prompt engineering — how to write effective prompts", "Using AI for digital marketing and content creation", "Applying AI in graphic design and branding", "Leveraging AI for customer engagement and business automation", "Ethical and responsible use of Generative AI", "Hands-on projects — creating visuals, videos and text with AI tools", "Future trends and global opportunities in Generative AI"] },
+    { t: "Module 3: Internet Search and Beyond", points: ["Fundamentals of internet search: how search engines work", "Advanced search operators & techniques (filters, booleans, etc.)", "Evaluating source credibility and detecting misinformation", "Using specialised search tools (scholar search, market data, image search, etc.)", "Finding open-source content & public domain materials", "Keeping up with web trends & tools beyond Google", "Using browsers, extensions and tools to improve search productivity", "Privacy in search: data footprint, safe search techniques", "Extracting data and insights from search for business & marketing", "Applying search skills beyond research — content ideation, competitive analysis, automation"] },
+    { t: "Module 4: Responsible AI", points: ["Understanding Responsible AI and its importance in the digital world", "Ethical principles guiding AI use — fairness, accountability and transparency", "Identifying and reducing bias in AI tools and data", "Privacy, safety and responsible data handling in AI systems", "Building a culture of ethical innovation and responsible AI adoption in business"] }
   ],
   "digital-marketing-social": [
     { t: "Know your audience", d: "Define your ideal customer so every post speaks directly to the people who buy." },
@@ -272,42 +268,34 @@ window.RJ_PROGRAM_MODULES = {
     { t: "Orders & customer follow-up", d: "Handle orders professionally and turn buyers into repeat customers." }
   ],
   "cybersecurity-essentials": [
-    { t: "The threats facing small businesses", d: "Understand phishing, malware, scams and fraud in plain language." },
-    { t: "Spotting phishing & fake messages", d: "Learn the tell-tale signs before a bad click costs you money." },
-    { t: "Strong passwords & 2FA", d: "Lock down your accounts with a system that's secure and easy to use." },
-    { t: "Securing email & social accounts", d: "Protect the accounts that run your business and brand." },
-    { t: "Protecting customer data & payments", d: "Keep customer information and money safe, and stay trustworthy." },
-    { t: "Safe devices & networks", d: "Simple settings for your phone, laptop and Wi-Fi that block most attacks." },
-    { t: "If something goes wrong", d: "A calm, step-by-step plan to recover quickly from a hack or scam." },
-    { t: "Your security checklist", d: "Leave with a one-page routine to stay protected every week." }
+    { t: "Module 1: Introduction to Cybersecurity for Small Businesses", points: ["What is cybersecurity?", "Why it matters for small businesses", "Common myths about cybersecurity"] },
+    { t: "Module 2: Cyber Threats", points: ["Phishing", "Malware", "Ransomware", "How to identify suspicious emails and links", "Real-life examples of small business attacks"] },
+    { t: "Module 3: Protecting Your Business", points: ["Passwords", "Two-factor authentication", "Safe data storage and regular backups", "Managing customer information securely", "Cyber hygiene: daily habits for online safety", "Training staff on recognising scams", "Secure use of Wi-Fi and devices"] },
+    { t: "Module 4: Cybersecurity Tools and Resources", points: ["Introduction to cybersecurity tools", "Antivirus and anti-malware solutions", "Password managers and authentication tools", "Network and cloud security tools", "Cybersecurity learning and support resources"] },
+    { t: "Module 5: Certification", points: ["Certification by ILO, ITC and Microsoft"] }
   ],
   "graphic-design": [
-    { t: "Design principles that work", d: "The few rules of layout, balance and contrast that make designs look professional." },
-    { t: "Colour & typography basics", d: "Choose colours and fonts that fit your brand and read well everywhere." },
-    { t: "Mastering Canva (free)", d: "Work fast in Canva with templates, layers and brand kits." },
-    { t: "Flyers, posters & banners", d: "Create print and digital marketing pieces that get attention." },
-    { t: "Designing a simple logo", d: "Build a clean, memorable logo and a matching brand kit." },
-    { t: "Social media graphics", d: "Make consistent, scroll-stopping posts and stories." },
-    { t: "Visuals for your website", d: "Design headers, buttons and images that lift your site." },
-    { t: "Building a consistent brand", d: "Keep one professional look across everything you publish." }
+    { t: "Module 1: Basics of Graphic Design", points: ["Get familiar with the basics of graphic design", "Explore the most common digital tools for graphic design", "Practise creating visual outputs to better present and market your business"] },
+    { t: "Module 2: Graphic Design Fundamentals", points: ["Introduction to graphic design and visual communication", "Understanding design principles — colour, balance, contrast and typography", "Canva", "Adobe Photoshop and Illustrator mastery", "UI/UX design principles", "Typography and layout design", "Creating social media graphics, posters and brand materials", "Practical projects — designing visuals for personal and business branding"] },
+    { t: "Module 3: Crafting Your Brand Identity", points: ["Understanding the foundations of branding and brand personality", "Defining your unique value proposition and target audience", "Designing your visual identity — logo, colours and typography", "Building a consistent brand voice across digital platforms", "Hands-on project — creating a complete brand kit for your business"] },
+    { t: "Module 4: Let's Practice", points: ["How to build a website", "How to create logos"] },
+    { t: "Module 5: Certification", points: ["Certification by ILO, ITC and Microsoft"] }
   ],
   "training-of-trainers": [
-    { t: "What makes a great trainer", d: "The mindset and skills that turn an expert into an effective teacher." },
-    { t: "Designing a training session", d: "Plan clear objectives, content and timing learners actually follow." },
-    { t: "Engaging delivery techniques", d: "Keep any room energised, whether in person or online." },
-    { t: "Facilitating online workshops", d: "Run smooth, interactive sessions on global platforms." },
-    { t: "Handling questions & tough rooms", d: "Stay confident and in control with any group." },
-    { t: "Assessing learners & certifying", d: "Measure progress fairly and issue certificates that mean something." },
-    { t: "Getting certified & onboarded", d: "Earn your trainer certification and access to training platforms." },
-    { t: "Earning as a trainer", d: "Turn your new credential into a real, recurring income stream." }
+    { t: "Module 1: Meeting with the WIDB Team from Italy (Webinar)", points: ["Introduction", "Accessing the training materials", "Understanding the WIDB program and its global vision", "The role of trainers in digital transformation"] },
+    { t: "Module 2: Adult Learning Principles & Training Design", points: ["Gender-sensitive approach", "Structuring digital courses for engagement and results"] },
+    { t: "Module 3: Digital Tools for Trainers", points: ["Using Microsoft, Zoom, Canva and Learning Management Systems", "Creating digital content, presentations and resources"] },
+    { t: "Module 4: Facilitation & Communication Skills", points: ["Mastering presentation and coaching techniques", "Building confidence and engagement in online classes"] },
+    { t: "Module 5: Certification", points: ["Course evaluation", "Certification by ILO, ITC and Microsoft"] },
+    { t: "Module 6: Application of $3,000 Grant", points: ["Students are eligible to apply for a $3,000 grant after being certified as a Lead Trainer"] }
   ],
   "customer-service-excellence": [
-    { t: "The mindset of world-class service", d: "Why trust, not just politeness, is what wins loyal customers." },
-    { t: "Turning complaints into loyalty", d: "A recovery method that turns upset customers into fans." },
-    { t: "Communication frameworks", d: "Simple scripts that calm tension and build trust fast." },
-    { t: "Phone, chat & in-person standards", d: "Consistent service across every channel your team uses." },
-    { t: "Handling difficult customers", d: "Stay composed and resolve hard situations with confidence." },
-    { t: "Building a service culture", d: "Standards and habits your whole team can own, not just memorise." },
-    { t: "Scripts & standards you keep", d: "Leave with practical templates tailored to your business." }
+    { t: "Module 1: Introduction to Customer Service", points: ["What is customer service?", "Why customer service matters in every industry", "The customer journey and experience touchpoints", "Roles and expectations across different environments"] },
+    { t: "Module 2: Communication Skills for Service Excellence", points: ["Verbal vs non-verbal communication", "Active listening and building empathy", "Speaking clearly and professionally", "Email, chat and phone etiquette", "Crafting messages that reflect courtesy and confidence", "Building rapport and trust across channels"] },
+    { t: "Module 3: Emotional Intelligence in Customer Service", points: ["What is emotional intelligence (EI)?", "Recognising and managing emotions under pressure", "Reading customer cues", "Using empathy to connect and de-escalate", "Turning complaints into opportunities"] },
+    { t: "Module 4: The Four Temperaments", points: ["Sanguine", "Choleric", "Melancholic", "Phlegmatic"] },
+    { t: "Module 5: Digital Customer Service Tools", points: ["Introduction to CRM systems (e.g. HubSpot, Zoho, Freshdesk)", "Using email, live chat and social media responsibly", "Managing online reviews and feedback", "Using AI and chatbots in customer support", "Keeping customer data private and secure"] },
+    { t: "Module 6: Delivering Memorable Customer Experiences", points: ["What defines a great customer experience (CX)?", "Personalising interactions", "Building loyalty and repeat business", "Managing expectations vs overdelivering", "Following up with customers after service"] },
+    { t: "Module 7: Professionalism and Workplace Etiquette", points: ["Personal presentation and grooming", "Time management and prioritisation", "Accountability and reliability"] }
   ]
 };

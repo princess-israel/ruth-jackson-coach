@@ -138,7 +138,7 @@
         <div class="modules">${RJ_PROGRAM_MODULES[p.id].map((m,i)=>`
           <details class="module"${i===0?" open":""}>
             <summary><span class="mod-num">${String(i+1).padStart(2,"0")}</span><span class="mod-title">${m.t}</span><span class="mod-chev">▾</span></summary>
-            <div class="mod-body">${m.d}</div>
+            <div class="mod-body">${m.points ? `<ul class="mod-points">${m.points.map(pt=>`<li>${pt}</li>`).join("")}</ul>` : (m.d || "")}</div>
           </details>`).join("")}</div>` : ""}
         ${window.accreditationHTML ? window.accreditationHTML() : ""}
         ${free?"":`

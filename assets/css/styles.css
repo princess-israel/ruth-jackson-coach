@@ -520,6 +520,10 @@ section{position:relative}
 .mod-chev{flex:none;color:var(--muted-2);transition:transform .25s}
 .module[open] .mod-chev{transform:rotate(180deg);color:var(--gold)}
 .mod-body{padding:0 18px 16px 56px;color:var(--muted);font-size:.92rem;line-height:1.6}
+.mod-points{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.mod-points li{position:relative;padding-left:18px}
+.mod-points li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+@media(max-width:680px){.mod-body{padding-left:18px}}
 
 /* Timshi payment notice (in checkout) */
 .timshi-note{display:flex;gap:12px;align-items:flex-start;margin-top:14px;background:var(--glass);border:1px solid var(--line-strong);border-radius:12px;padding:12px 14px}
