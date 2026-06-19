@@ -78,8 +78,15 @@
 
   const yr = document.querySelector("[data-year]"); if (yr) yr.textContent = new Date().getFullYear();
 
-  // Footer policy links + credit (added on every page)
+  // Footer Timshi credit + policy links (added on every page)
+  const hasTimshiBadge = !!document.querySelector(".timshi-badge");
   document.querySelectorAll(".footer-bottom").forEach(fb => {
+    if (!hasTimshiBadge && !fb.querySelector(".footer-timshi")) {
+      const t = document.createElement("span");
+      t.className = "footer-timshi";
+      t.innerHTML = '<img src="/assets/img/timshi-logo.png" alt="Timshi Universal Institute"> Certification &amp; payments by <b style="color:var(--text)">Timshi Universal Institute</b>';
+      fb.appendChild(t);
+    }
     if (!fb.querySelector(".made-by")) {
       const s = document.createElement("span");
       s.className = "made-by";

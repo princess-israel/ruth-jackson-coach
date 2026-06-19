@@ -190,7 +190,10 @@ window.RJ_PROGRAM_IMG = {
   "website-development":      "assets/img/program-website.jpg",
   "seo-online-visibility":    "assets/img/program-seo.jpg",
   "data-analysis-growth":     "assets/img/program-data.jpg",
-  "ecommerce-selling-online": "assets/img/program-ecommerce.jpg"
+  "ecommerce-selling-online": "assets/img/program-ecommerce.jpg",
+  "cybersecurity-essentials": "assets/img/program-cybersecurity.jpg",
+  "graphic-design":           "assets/img/program-graphic-design.jpg",
+  "training-of-trainers":     "assets/img/program-tot.jpg"
 };
 window.RJ_ARTICLE_IMG = {
   "ai-for-small-business":       "assets/img/article-ai.jpg",

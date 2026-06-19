@@ -317,6 +317,12 @@ section{position:relative}
 .footer a{display:block;color:var(--muted);font-size:.92rem;margin-bottom:10px;transition:color .2s}
 .footer a:hover{color:var(--gold)}
 .footer-bottom{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted-2)}
+.timshi-badge{display:inline-flex;align-items:center;gap:11px;margin-top:20px;padding:10px 14px;background:var(--glass);border:1px solid var(--line-strong);border-radius:12px}
+.timshi-badge img{width:38px;height:38px;border-radius:8px;flex:none}
+.timshi-badge span{font-size:.78rem;color:var(--muted);line-height:1.35}
+.timshi-badge b{color:var(--text)}
+.footer-timshi{width:100%;text-align:center;margin-top:14px;font-size:.8rem;color:var(--muted-2);display:flex;align-items:center;justify-content:center;gap:8px}
+.footer-timshi img{width:20px;height:20px;border-radius:5px}
 .footer-bottom .made-by{width:100%;text-align:center;line-height:2;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted-2)}
 .footer-bottom .made-by a{display:inline;margin:0;padding:0 2px;color:var(--gold);white-space:nowrap}
 .footer-bottom .made-by a:hover{color:var(--gold-soft)}
