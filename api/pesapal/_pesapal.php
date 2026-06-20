@@ -67,14 +67,40 @@ function pesapal_token($cfg) {
 }
 
 function pesapal_register_ipn($cfg, $token, $base) {
+  // 1) Explicit config value always wins.
   if (!empty($cfg['ipn_id'])) return $cfg['ipn_id'];
+
   $url = rtrim($base, '/') . '/api/pesapal/ipn.php';
+
+  // 2) Reuse a previously-resolved id cached on disk (avoids an API call per checkout).
+  $cacheFile = __DIR__ . '/../../data/ipn_id.txt';
+  if (is_readable($cacheFile)) {
+    $cached = trim(file_get_contents($cacheFile));
+    if ($cached !== '') return $cached;
+  }
+
+  // 3) Reuse the IPN the merchant already registered in the Pesapal dashboard
+  //    (match our listener URL) instead of creating a new one every time.
+  $list = pesapal_http('GET', rtrim($cfg['base_url'], '/') . '/api/URLSetup/GetIpnList',
+    ['Authorization: Bearer ' . $token]);
+  if (is_array($list)) {
+    foreach ($list as $row) {
+      $rid = $row['ipn_id'] ?? $row['id'] ?? '';
+      if ($rid !== '' && isset($row['url']) && rtrim($row['url'], '/') === rtrim($url, '/')) {
+        @file_put_contents($cacheFile, $rid);
+        return $rid;
+      }
+    }
+  }
+
+  // 4) Nothing registered yet — register now (fallback).
   $data = pesapal_http('POST', rtrim($cfg['base_url'], '/') . '/api/URLSetup/RegisterIPN',
     ['Authorization: Bearer ' . $token],
     ['url' => $url, 'ipn_notification_type' => 'GET']);
   if (empty($data['ipn_id'])) {
     throw new Exception('IPN registration failed: ' . json_encode($data));
   }
+  @file_put_contents($cacheFile, $data['ipn_id']);
   return $data['ipn_id'];
 }
 
