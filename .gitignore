@@ -6,3 +6,4 @@ node_modules/
 api/pesapal/config.php
 data/programs.json
 data/articles.json
+data/affiliates.json

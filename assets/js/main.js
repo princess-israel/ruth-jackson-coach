@@ -90,7 +90,7 @@
     if (!fb.querySelector(".made-by")) {
       const s = document.createElement("span");
       s.className = "made-by";
-      s.innerHTML = '<a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a>';
+      s.innerHTML = '<a href="/affiliates.html">Become an affiliate</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a>';
       fb.appendChild(s);
     }
   });
@@ -182,7 +182,7 @@
       : `<div class="price-tag">$${p.price}<small>certificate included</small></div>`;
     const cta = isFree
       ? `<a class="btn btn-ghost btn-block" href="customer-service.html">Talk to Ruth</a>`
-      : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Enroll, $${p.price}</a>`;
+      : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Learn more</a>`;
     const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
     return `
       <article class="card program-card">

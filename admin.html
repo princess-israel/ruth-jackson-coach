@@ -39,6 +39,7 @@
       <li><a data-view="articles">✍️ Articles</a></li>
       <li><a data-view="inbox">💬 Inbox <span id="inbox-badge"></span></a></li>
       <li><a data-view="students">👥 Students</a></li>
+      <li><a data-view="affiliates">🤝 Affiliates</a></li>
       <li><a href="index.html">🏠 Back to site</a></li>
       <li><a id="logout" style="color:var(--rose)">↩ Log out</a></li>
     </ul>
@@ -91,6 +92,11 @@
     <section data-pane="students" class="hide">
       <div class="panel"><h3>Students</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">Click a student to see full details.</p><div style="overflow-x:auto"><table class="table" id="students-table"></table></div></div>
       <div class="panel hide" id="student-detail"></div>
+    </section>
+
+    <!-- AFFILIATES -->
+    <section data-pane="affiliates" class="hide">
+      <div class="panel"><h3>Affiliate partners</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">People who signed up to promote your courses. Each has a unique referral code.</p><div style="overflow-x:auto"><table class="table" id="affiliates-table"></table></div></div>
     </section>
 
     <!-- PROGRAMS -->
@@ -237,7 +243,7 @@
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
-  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students"};
+  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students",affiliates:"Affiliates"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
     a.onclick=()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
@@ -571,7 +577,23 @@
     an({ok:true,text:"Article deleted."});
   }
 
-  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); loadCatalog(); loadArticles(); }
+  async function renderAffiliates(){
+    const t=document.getElementById("affiliates-table");
+    let list=[];
+    try{ const d=await fetch("/api/affiliates.php", AUTH).then(r=>r.json()); list=d.affiliates||[]; }catch(e){}
+    if(!list.length){ t.innerHTML=`<tbody><tr><td class="muted" style="padding:18px">No affiliates have registered yet. Share <b>/affiliates.html</b> to recruit partners.</td></tr></tbody>`; return; }
+    list.sort((a,b)=>new Date(b.created)-new Date(a.created));
+    t.innerHTML=`<thead><tr><th>Name</th><th>Contact</th><th>Code</th><th>Promotes via</th><th>Joined</th></tr></thead><tbody>`+
+      list.map(a=>`<tr>
+        <td><b>${a.name||""}</b></td>
+        <td style="font-size:.85rem">✉️ ${a.email||""}${a.phone?`<br>📞 <a href="https://wa.me/${(a.phone||"").replace(/[^0-9]/g,"")}" target="_blank">${a.phone}</a>`:""}</td>
+        <td><span class="pill" style="font-weight:700">${a.code||""}</span></td>
+        <td style="font-size:.85rem">${a.reach||"<span class='muted'>—</span>"}${a.audience?`<br><span class="muted">${a.audience}</span>`:""}</td>
+        <td style="font-size:.85rem">${a.created?new Date(a.created).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):""}</td>
+      </tr>`).join("")+`</tbody>`;
+  }
+
+  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog(); loadArticles(); }
   await loadData(); renderAll();
 })();
 </script>
