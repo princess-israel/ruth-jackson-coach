@@ -104,7 +104,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 </main>
 
 <footer class="footer"><div class="container"><div class="footer-bottom" style="border:0">
-  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="about.html">About</a> · <a href="tel:+254714458530">+254 714 458530</a></span>
+  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="about.html">About</a> · <a href="tel:+254729384374">+254 729 384374</a></span>
 </div></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

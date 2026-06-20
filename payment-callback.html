@@ -46,7 +46,7 @@
   }
 
   if(!orderTrackingId){
-    done("⚠️","No transaction found","We couldn't find a payment reference. If you were charged, please contact Ruth on <a href='https://wa.me/254714458530'>WhatsApp</a>.",
+    done("⚠️","No transaction found","We couldn't find a payment reference. If you were charged, please contact Ruth on <a href='https://wa.me/254729384374'>WhatsApp</a>.",
       `<a class="btn btn-gold" href="programs.html">Back to programs</a>`);
     return;
   }
@@ -57,10 +57,10 @@
     localStorage.removeItem("rj_pending_payment");
     try { await Store.reload(); } catch(e){}
     const prog = Store.programById(pending.programId);
-    done("🎉","Payment successful!",
-      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will confirm your spot and send your course check-in guide in your dashboard <b>Messages</b> shortly — keep an eye out for it there.<br><br><span style="font-size:.85rem;color:var(--muted)">Note: your payment was received by <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered training institute via Pesapal) — that's us, so you're all set. ✅</span>`,
-      `<a class="btn btn-gold" href="dashboard.html">Go to my dashboard</a>`);
-    setTimeout(()=>{ if(Store.currentUser()) location.href="dashboard.html"; }, 4000);
+    done("🎉","Thank you & welcome aboard!",
+      `You're enrolled in <b>${prog ? prog.title : "your course"}</b>. Ruth will confirm your spot and send your course check-in guide in your dashboard <b>Messages</b> shortly, keep an eye out for it there.<br><br><span style="display:block;padding:12px 14px;border-radius:10px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);font-size:.9rem">📩 <b>One quick favour:</b> please send your payment receipt to Ruth on WhatsApp <a href="https://wa.me/254729384374" target="_blank" rel="noopener"><b>+254729384374</b></a> so she can cross-check it against her account and confirm your enrolment right away.</span><br><span style="font-size:.85rem;color:var(--muted)">Note: your payment was received by <b>TIMSHI UNIVERSAL TRAINING INSTITUTE</b> (Ruth's registered training institute via Pesapal), that's us, so you're all set. ✅</span>`,
+      `<a class="btn btn-gold" href="https://wa.me/254729384374?text=Hi%20Ruth!%20Here%20is%20my%20payment%20receipt%20for%20${encodeURIComponent(prog?prog.title:'my course')}." target="_blank" rel="noopener">📩 Send receipt on WhatsApp</a> <a class="btn btn-ghost" href="dashboard.html">Go to my dashboard</a>`);
+    setTimeout(()=>{ if(Store.currentUser()) location.href="dashboard.html"; }, 12000);
   }
 
   async function check(){
@@ -74,7 +74,7 @@
         enrollAndFinish(d.confirmation_code || d.merchant_reference || "");
       } else if(code === 2 || desc === "failed"){
         done("❌","Payment not completed","Your payment didn't go through. No enrollment was created. You can try again.",
-          `<a class="btn btn-gold" href="program.html?id=${pending.programId||''}">Try again</a> <a class="btn btn-ghost" href="https://wa.me/254714458530">WhatsApp Ruth</a>`);
+          `<a class="btn btn-gold" href="program.html?id=${pending.programId||''}">Try again</a> <a class="btn btn-ghost" href="https://wa.me/254729384374">WhatsApp Ruth</a>`);
       } else {
         // pending / invalid — let them re-check
         done("⏳","Payment pending","Pesapal hasn't confirmed this payment yet. If you've completed payment, give it a moment and check again.",
@@ -84,7 +84,7 @@
       }
     }catch(e){
       done("⚠️","Couldn't verify automatically",
-        `We hit a snag verifying your payment: ${e.message}. If Pesapal charged you, contact Ruth on <a href='https://wa.me/254714458530'>WhatsApp</a> with your reference and she'll sort it immediately.`,
+        `We hit a snag verifying your payment: ${e.message}. If Pesapal charged you, contact Ruth on <a href='https://wa.me/254729384374'>WhatsApp</a> with your reference and she'll sort it immediately.`,
         `<a class="btn btn-gold" href="dashboard.html">My dashboard</a>`);
     }
   }

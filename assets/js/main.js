@@ -274,14 +274,23 @@
   // Partner marquee
   const mq = document.querySelector("[data-partners]");
   if (mq && window.RJ_PARTNERS) {
-    const item = n => `<div class="logo-item">${partnerLogo(n)}<span>${n}</span></div>`;
+    // Real brand logos (name baked into the artwork) render as a white chip with no text label.
+    const realLogo = {
+      microsoft: "assets/img/partner-microsoft.jpg",
+      itc:       "assets/img/partner-itc.jpg",
+      labour:    "assets/img/partner-ilo.jpg",
+      "digital business": "assets/img/partner-widb.jpg"
+    };
+    const item = n => {
+      const key = Object.keys(realLogo).find(k => new RegExp(k, "i").test(n));
+      if (key) return `<div class="logo-item logo-chip"><img src="${realLogo[key]}" alt="${n}" loading="lazy"></div>`;
+      return `<div class="logo-item">${partnerLogo(n)}<span>${n}</span></div>`;
+    };
     const set = RJ_PARTNERS.map(item).join("");
     mq.innerHTML = set + set; // duplicate for seamless loop
   }
   function partnerLogo(name) {
     if (/timshi/i.test(name)) return `<img src="assets/img/timshi-logo.png" alt="Timshi Universal Institute" style="width:26px;height:26px;border-radius:6px;object-fit:cover">`;
-    if (/microsoft/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 23 23"><rect width="10" height="10" fill="#f25022"/><rect x="12" width="10" height="10" fill="#7fba00"/><rect y="12" width="10" height="10" fill="#00a4ef"/><rect x="12" y="12" width="10" height="10" fill="#ffb900"/></svg>`;
-    if (/itc|labour|ilo/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4ea8ff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>`;
     if (/ey/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#ffe600"/><text x="12" y="17" font-size="11" font-weight="800" text-anchor="middle" fill="#111">EY</text></svg>`;
     return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b65a" stroke-width="1.6"><path d="M4 18l4-9 4 6 4-10 4 13"/></svg>`;
   }

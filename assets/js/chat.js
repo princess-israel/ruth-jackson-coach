@@ -3,8 +3,8 @@
    Rule-based, self-contained. Self-injects on every page.
    ============================================================ */
 (function () {
-  const WHATSAPP = "https://wa.me/254714458530";
-  const PHONE = "+254 714 458530";
+  const WHATSAPP = "https://wa.me/254729384374";
+  const PHONE = "+254 729 384374";
   const BASE = location.pathname.includes("/blog/") ? "../" : "";
 
   // --- inject markup ---

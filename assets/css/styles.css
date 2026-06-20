@@ -223,6 +223,9 @@ section{position:relative}
 @keyframes scrollx{to{transform:translateX(-50%)}}
 .logo-item{display:flex;align-items:center;gap:12px;color:var(--muted);font-family:var(--font-head);font-weight:600;font-size:1.1rem;white-space:nowrap;opacity:.78;transition:opacity .25s}
 .logo-item:hover{opacity:1}
+.logo-chip{background:#fff;border-radius:10px;padding:9px 16px;opacity:.92}
+.logo-chip:hover{opacity:1}
+.logo-chip img{height:26px;width:auto;display:block}
 
 /* ---------- Section heading ---------- */
 .section{padding:100px 0}

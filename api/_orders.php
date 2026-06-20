@@ -92,6 +92,7 @@ function order_fulfill($order, $confirmation) {
 
   $msg = db()->prepare('INSERT INTO messages (id, user_id, sender, body, read_flag) VALUES (?, ?, "ruth", ?, 0)');
   $body = '🎉 Payment received' . ($confirmation ? " (ref: {$confirmation})" : '') .
-          ". Thank you for enrolling! I'm preparing your private access link and getting-started guide — you'll receive it right here shortly. Reply anytime with questions!";
+          ". Thank you and welcome aboard! I'm so glad to have you. I'm preparing your private access link and getting-started guide, you'll receive it right here shortly." .
+          "\n\nOne quick favour: please send me your payment receipt on WhatsApp +254729384374 so I can cross-check it against my account and confirm your enrolment right away. Reply anytime with questions!";
   $msg->execute([uuid(), $userId, $body]);
 }
