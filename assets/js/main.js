@@ -76,24 +76,50 @@
     });
   }
 
-  const yr = document.querySelector("[data-year]"); if (yr) yr.textContent = new Date().getFullYear();
+  // One canonical footer on every page (overwrites whatever markup the page shipped).
+  const footerEl = document.querySelector("footer.footer");
+  if (footerEl) {
+    footerEl.innerHTML = `
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
+          <p class="muted" style="margin-top:16px;max-width:26em">Practical AI &amp; digital skills for entrepreneurs, professionals and youth. Certified within the Women in Digital Business ecosystem.</p>
+          <div class="timshi-badge">
+            <img src="/assets/img/timshi-logo.png" alt="Timshi Universal Institute">
+            <span>Secure payments by<br><b>Timshi Universal Institute</b></span>
+          </div>
+        </div>
+        <div><h4>Programs</h4>
+          <a href="programs.html">All courses</a>
+          <a href="program.html?id=ai-women-entrepreneurs">AI for Entrepreneurs</a>
+          <a href="program.html?id=digital-marketing-social">Digital Marketing</a>
+          <a href="customer-service.html">Customer Service</a>
+        </div>
+        <div><h4>Company</h4>
+          <a href="about.html">About Ruth</a>
+          <a href="blog.html">Articles</a>
+          <a href="affiliates.html">Affiliate programme</a>
+          <a href="login.html">Customer login</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="refund.html">Refund Policy</a>
+        </div>
+        <div><h4>Contact</h4>
+          <a href="tel:+254729384374">📞 +254 729 384374</a>
+          <a href="https://wa.me/254729384374" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a data-open-chat="">🤖 AI Assistant</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Ruth Jackson (Ruth Wanjohi). All rights reserved.</span>
+        <span>Microsoft Certified · WIDB Lead Trainer</span>
+        <span class="made-by"><a href="/affiliates.html">Become an affiliate</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> · <a href="/admin.html">Admin</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a></span>
+      </div>
+    </div>`;
+  }
 
-  // Footer Timshi credit + policy links (added on every page)
-  const hasTimshiBadge = !!document.querySelector(".timshi-badge");
-  document.querySelectorAll(".footer-bottom").forEach(fb => {
-    if (!hasTimshiBadge && !fb.querySelector(".footer-timshi")) {
-      const t = document.createElement("span");
-      t.className = "footer-timshi";
-      t.innerHTML = '<img src="/assets/img/timshi-logo.png" alt="Timshi Universal Institute"> Certification &amp; payments by <b style="color:var(--text)">Timshi Universal Institute</b>';
-      fb.appendChild(t);
-    }
-    if (!fb.querySelector(".made-by")) {
-      const s = document.createElement("span");
-      s.className = "made-by";
-      s.innerHTML = '<a href="/affiliates.html">Become an affiliate</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a>';
-      fb.appendChild(s);
-    }
-  });
+  const yr = document.querySelector("[data-year]"); if (yr) yr.textContent = new Date().getFullYear();
 
   /* ---------- GSAP animations ---------- */
   function initGSAP() {

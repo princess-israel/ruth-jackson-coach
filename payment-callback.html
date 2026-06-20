@@ -63,6 +63,10 @@
     setTimeout(()=>{ if(Store.currentUser()) location.href="dashboard.html"; }, 12000);
   }
 
+  // Pesapal often settles a few seconds after the redirect (especially M-Pesa STK push),
+  // so poll automatically before falling back to the manual "pending" screen.
+  let attempts = 0;
+  const MAX_ATTEMPTS = 6, RETRY_MS = 4000;
   async function check(){
     try{
       const r = await fetch("/api/pesapal/status.php?orderTrackingId="+encodeURIComponent(orderTrackingId));
@@ -75,12 +79,18 @@
       } else if(code === 2 || desc === "failed"){
         done("❌","Payment not completed","Your payment didn't go through. No enrollment was created. You can try again.",
           `<a class="btn btn-gold" href="program.html?id=${pending.programId||''}">Try again</a> <a class="btn btn-ghost" href="https://wa.me/254729384374">WhatsApp Ruth</a>`);
+      } else if(attempts < MAX_ATTEMPTS){
+        // Still pending — keep checking quietly.
+        attempts++;
+        done("⏳","Confirming your payment…",
+          `We're confirming with Pesapal, this usually takes a few seconds. Please keep this page open… (checking ${attempts}/${MAX_ATTEMPTS})`, "");
+        setTimeout(check, RETRY_MS);
       } else {
-        // pending / invalid — let them re-check
-        done("⏳","Payment pending","Pesapal hasn't confirmed this payment yet. If you've completed payment, give it a moment and check again.",
-          `<button class="btn btn-gold" id="recheck">Check again</button> <a class="btn btn-ghost" href="dashboard.html">My dashboard</a>`);
+        // Gave Pesapal enough time — let them re-check manually.
+        done("⏳","Payment pending","Pesapal hasn't confirmed this payment yet. If you've completed payment, give it a moment and check again, or send Ruth your receipt on WhatsApp.",
+          `<button class="btn btn-gold" id="recheck">Check again</button> <a class="btn btn-ghost" href="https://wa.me/254729384374">WhatsApp Ruth</a> <a class="btn btn-ghost" href="dashboard.html">My dashboard</a>`);
         const rc = document.getElementById("recheck");
-        rc && rc.addEventListener("click", ()=>{ rc.textContent="Checking…"; setTimeout(()=>location.reload(), 200); });
+        rc && rc.addEventListener("click", ()=>{ rc.textContent="Checking…"; attempts=0; setTimeout(()=>location.reload(), 200); });
       }
     }catch(e){
       done("⚠️","Couldn't verify automatically",
