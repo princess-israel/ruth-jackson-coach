@@ -50,8 +50,14 @@ function order_verify_and_fulfill($trackingId) {
   $paidAmount = isset($data['amount']) ? (float)$data['amount'] : null;
   $confirmation = $data['confirmation_code'] ?? null;
 
-  // Amount-tampering guard: a COMPLETED payment must match the order amount.
-  if ($label === 'COMPLETED' && $paidAmount !== null && abs($paidAmount - (float)$order['amount']) > 0.01) {
+  // Under-payment guard: only reject a COMPLETED payment if the customer paid
+  // clearly LESS than the price in the SAME currency. We never reject on
+  // overpayment or a currency mismatch (Pesapal may report a converted figure).
+  $paidCurrency  = isset($data['currency']) ? strtoupper((string)$data['currency']) : null;
+  $orderCurrency = strtoupper((string)$order['currency']);
+  $sameCurrency  = ($paidCurrency === null || $paidCurrency === $orderCurrency);
+  if ($label === 'COMPLETED' && $paidAmount !== null && $sameCurrency
+      && $paidAmount + 0.01 < (float)$order['amount']) {
     $label = 'INVALID';
   }
 

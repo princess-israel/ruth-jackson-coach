@@ -605,15 +605,29 @@
     const list=(DB.orders||[]).slice();
     if(!list.length){ t.innerHTML=`<tbody><tr><td class="muted" style="padding:18px">No payments yet. Your first checkout will show here.</td></tr></tbody>`; return; }
     const badge=s=>{const c={COMPLETED:"#1c8a4e",PENDING:"#b8860b",FAILED:"var(--rose)",REVERSED:"var(--rose)",INVALID:"var(--rose)"}[s]||"var(--muted)";return `<span class="pill" style="font-weight:700;color:${c}">${s||"PENDING"}</span>`;};
-    t.innerHTML=`<thead><tr><th>Date</th><th>Customer</th><th>Course</th><th>Amount</th><th>Status</th><th>Ref</th></tr></thead><tbody>`+
-      list.map(o=>{const prog=Store.programById?Store.programById(o.program_id):null;return `<tr>
+    t.innerHTML=`<thead><tr><th>Date</th><th>Customer</th><th>Course</th><th>Amount</th><th>Status</th><th>Ref</th><th></th></tr></thead><tbody>`+
+      list.map(o=>{const prog=Store.programById?Store.programById(o.program_id):null;const open=["PENDING","INVALID"].includes(o.status);return `<tr>
         <td style="font-size:.85rem">${o.created_at?new Date(String(o.created_at).replace(" ","T")).toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):""}</td>
         <td style="font-size:.85rem">${o.email||""}${o.phone?`<br>📞 ${o.phone}`:""}</td>
         <td style="font-size:.85rem">${prog?prog.title:o.program_id}</td>
         <td><b>$${Number(o.amount).toLocaleString(undefined,{maximumFractionDigits:2})}</b></td>
         <td>${badge(o.status)}</td>
         <td style="font-size:.78rem;color:var(--muted)">${o.confirmation_code||o.merchant_reference||""}</td>
-      </tr>`;}).join("")+`</tbody>`;
+        <td>${open&&o.order_tracking_id?`<button class="btn btn-ghost btn-sm" data-recheck="${o.order_tracking_id}">Recheck</button>`:""}</td>
+      </tr>${open?`<tr class="dbg-row" data-dbg="${o.order_tracking_id}" style="display:none"><td colspan="7" style="font-size:.8rem;background:rgba(0,0,0,.03)"></td></tr>`:""}`;}).join("")+`</tbody>`;
+    t.querySelectorAll("[data-recheck]").forEach(b=>b.addEventListener("click", async ()=>{
+      const id=b.dataset.recheck; b.textContent="Checking…"; b.disabled=true;
+      const cell=t.querySelector(`.dbg-row[data-dbg="${id}"]`); const td=cell?.querySelector("td");
+      if(cell){ cell.style.display=""; td.innerHTML="Asking Pesapal…"; }
+      try{
+        // Re-run the authoritative verify+fulfill, then read Pesapal's raw answer.
+        await fetch("/api/pesapal/status.php?orderTrackingId="+encodeURIComponent(id)).catch(()=>{});
+        const d=await fetch("/api/admin/order-debug.php?orderTrackingId="+encodeURIComponent(id), AUTH).then(r=>r.json());
+        const p=d.pesapal_says||{};
+        if(td) td.innerHTML=`<b>Pesapal status:</b> ${p.payment_status_description||"(none)"} &nbsp;·&nbsp; status_code: ${p.status_code??"(none)"} &nbsp;·&nbsp; amount: ${p.amount??"?"} ${p.currency||""} &nbsp;·&nbsp; method: ${p.payment_method||"-"}${p.error&&p.error.message?`<br><span style="color:var(--rose)">error: ${p.error.message}</span>`:""}<br><span class="muted">If this says <b>COMPLETED</b> the student is now enrolled (refresh). If <b>PENDING</b>, Pesapal hasn't settled it yet. If an error shows, that's the reason.</span>`;
+        await loadData(); renderOrders(); renderOverview();
+      }catch(e){ if(td) td.textContent="Could not check: "+e.message; b.textContent="Recheck"; b.disabled=false; }
+    }));
   }
 
   function renderAll(){ renderOverview(); renderEnrollments(); renderOrders(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog(); loadArticles(); }
