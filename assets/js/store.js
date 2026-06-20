@@ -23,7 +23,7 @@
   };
 
   // in-memory cache populated by ready()/reload()
-  let _user = null, _enrollments = [], _messages = [], _ready = null;
+  let _user = null, _enrollments = [], _messages = [], _orders = [], _ready = null;
 
   function normalizeMsg(m) {
     // map DB shape -> the shape pages already expect
@@ -35,19 +35,21 @@
   }
 
   async function refresh() {
-    if (!localStorage.getItem(TOKEN_KEY)) { _user = null; _enrollments = []; _messages = []; return; }
+    if (!localStorage.getItem(TOKEN_KEY)) { _user = null; _enrollments = []; _messages = []; _orders = []; return; }
     try {
       const me = await api("/api/auth/me.php");
       _user = me.user;
-      const [en, ms] = await Promise.all([
+      const [en, ms, or] = await Promise.all([
         api("/api/enrollments.php").catch(() => ({ enrollments: [] })),
         api("/api/messages.php").catch(() => ({ messages: [] })),
+        api("/api/orders.php").catch(() => ({ orders: [] })),
       ]);
       _enrollments = en.enrollments || [];
       _messages = (ms.messages || []).map(normalizeMsg);
+      _orders = or.orders || [];
     } catch (e) {
       localStorage.removeItem(TOKEN_KEY);   // invalid/expired token
-      _user = null; _enrollments = []; _messages = [];
+      _user = null; _enrollments = []; _messages = []; _orders = [];
     }
   }
 
@@ -83,6 +85,14 @@
         id: e.id, userId: e.user_id, programId: e.program_id,
         status: e.status, progress: Number(e.progress) || 0,
       }));
+    },
+
+    /* ---- orders (read-only; pending payments awaiting Pesapal confirmation) ---- */
+    orders() { return _orders.slice(); },
+    pendingOrders() {
+      const enrolled = new Set(_enrollments.map(e => e.program_id));
+      // Show PENDING orders that haven't already turned into an enrollment.
+      return _orders.filter(o => o.status === "PENDING" && !enrolled.has(o.program_id));
     },
 
     /* ---- messages ---- */

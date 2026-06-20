@@ -211,7 +211,8 @@
       location.href = data.redirect_url;
     } catch (e) {
       payBtn.disabled = false; payBtn.textContent = `Pay $${p.price} with Pesapal`;
-      errEl.textContent = e.message + " (If this persists, the Pesapal config may not be set — see CPANEL-SETUP.md.)";
+      errEl.innerHTML = (e.message || "Could not start payment. Please try again.") +
+        ` If it keeps happening, message Ruth on <a href="https://wa.me/254729384374" target="_blank" rel="noopener">WhatsApp</a> and she'll help you enroll.`;
       errEl.style.display = "block";
     }
   });

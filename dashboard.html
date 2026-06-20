@@ -108,18 +108,37 @@
 
   function renderCourses(){
     const enrolls = Store.enrollments();
+    const pending = (Store.pendingOrders ? Store.pendingOrders() : []);
     const active = enrolls.filter(e=>e.status==="active").length;
     const kpis=[
       {v:enrolls.length,l:"Programs enrolled"},
       {v:active,l:"Active now"},
-      {v:enrolls.filter(e=>e.status==="pending").length,l:"Awaiting access"},
+      {v:enrolls.filter(e=>e.status==="pending").length + pending.length,l:"Awaiting access"},
       {v:Math.round(enrolls.reduce((s,e)=>s+(e.progress||0),0)/(enrolls.length||1))+"%",l:"Avg progress"}
     ];
     document.getElementById("kpis").innerHTML=kpis.map(k=>`<div class="kpi"><div class="v">${k.v}</div><div class="l">${k.l}</div></div>`).join("");
 
     const list=document.getElementById("courses-list");
-    if(!enrolls.length){ list.innerHTML=`<p class="muted">You haven't enrolled yet. <a href="programs.html" class="gold">Browse programs →</a></p>`; return; }
-    list.innerHTML=enrolls.map(e=>{
+    // Pending payments (Pesapal not yet confirmed) shown above enrolled courses.
+    const pendingHtml = pending.map(o=>{
+      const p=Store.programById(o.program_id)||{title:o.program_id,icon:"⏳"};
+      return `<div style="display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)">
+        <div class="program-ico" style="flex:none">${p.icon}</div>
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+            <b>${p.title}</b>
+            <span class="badge-status pending">Payment processing</span>
+          </div>
+          <div class="muted" style="font-size:.82rem;margin-top:6px">⏳ We're confirming your payment with Pesapal. Access unlocks automatically once it clears. If you've paid, you can send your receipt to Ruth on <a href="https://wa.me/254729384374" target="_blank" rel="noopener" class="gold">WhatsApp</a>.</div>
+        </div>
+      </div>`;
+    }).join("");
+
+    if(!enrolls.length){
+      list.innerHTML = pendingHtml || `<p class="muted">You haven't enrolled yet. <a href="programs.html" class="gold">Browse programs →</a></p>`;
+      return;
+    }
+    list.innerHTML = pendingHtml + enrolls.map(e=>{
       const p=Store.programById(e.programId)||{title:e.programId,icon:"📘"};
       return `<div style="display:flex;gap:16px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)">
         <div class="program-ico" style="flex:none">${p.icon}</div>

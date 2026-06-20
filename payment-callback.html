@@ -14,12 +14,17 @@
 <style>
   .spin{width:54px;height:54px;border-radius:50%;border:4px solid rgba(255,255,255,.12);border-top-color:var(--azure);animation:sp 1s linear infinite;margin:0 auto 24px}
   @keyframes sp{to{transform:rotate(360deg)}}
+  #card{max-width:460px}
+  #cb-icon{font-size:3rem;margin-bottom:8px;line-height:1}
+  #cb-title{font-size:clamp(1.35rem,5vw,1.9rem);line-height:1.2;word-break:normal}
+  #cb-actions{flex-wrap:wrap}
 </style>
 </head>
 <body>
 <div class="auth-wrap">
   <div class="auth-card center" id="card">
     <div class="spin" id="spin"></div>
+    <div id="cb-icon" style="display:none"></div>
     <h2 id="cb-title">Confirming your payment…</h2>
     <p class="muted" id="cb-msg">Please wait while we verify your transaction with Pesapal. Don't close this page.</p>
     <div id="cb-actions" class="hero-actions" style="justify-content:center;margin-top:24px"></div>
@@ -39,10 +44,18 @@
 
   function done(icon, title, msg, actions){
     $("spin").style.display = "none";
+    const ic = $("cb-icon"); ic.style.display = "block"; ic.textContent = icon;
     $("cb-title").textContent = title;
-    $("cb-title").insertAdjacentHTML("beforebegin", `<div style="font-size:3rem;margin-bottom:8px">${icon}</div>`);
     $("cb-msg").innerHTML = msg;
     $("cb-actions").innerHTML = actions || "";
+  }
+  // Keep the spinner spinning while we re-poll, without stacking icons.
+  function confirming(n, max){
+    $("spin").style.display = "block";
+    $("cb-icon").style.display = "none";
+    $("cb-title").textContent = "Confirming your payment…";
+    $("cb-msg").innerHTML = `We're confirming with Pesapal, this usually takes a few seconds. Please keep this page open. <b>(checking ${n}/${max})</b>`;
+    $("cb-actions").innerHTML = "";
   }
 
   if(!orderTrackingId){
@@ -80,10 +93,9 @@
         done("❌","Payment not completed","Your payment didn't go through. No enrollment was created. You can try again.",
           `<a class="btn btn-gold" href="program.html?id=${pending.programId||''}">Try again</a> <a class="btn btn-ghost" href="https://wa.me/254729384374">WhatsApp Ruth</a>`);
       } else if(attempts < MAX_ATTEMPTS){
-        // Still pending — keep checking quietly.
+        // Still pending — keep checking quietly (spinner stays, no icon stacking).
         attempts++;
-        done("⏳","Confirming your payment…",
-          `We're confirming with Pesapal, this usually takes a few seconds. Please keep this page open… (checking ${attempts}/${MAX_ATTEMPTS})`, "");
+        confirming(attempts, MAX_ATTEMPTS);
         setTimeout(check, RETRY_MS);
       } else {
         // Gave Pesapal enough time — let them re-check manually.
