@@ -97,8 +97,13 @@ function order_fulfill($order, $confirmation) {
   $ins->execute([uuid(), $userId, $order['program_id'], $order['id']]);
 
   $msg = db()->prepare('INSERT INTO messages (id, user_id, sender, body, read_flag) VALUES (?, ?, "ruth", ?, 0)');
+  $site = site_url();
   $body = '🎉 Payment received' . ($confirmation ? " (ref: {$confirmation})" : '') .
-          ". Thank you and welcome aboard! I'm so glad to have you. I'm preparing your private access link and getting-started guide, you'll receive it right here shortly." .
-          "\n\nOne quick favour: please send me your payment receipt on WhatsApp +254729384374 so I can cross-check it against my account and confirm your enrolment right away. Reply anytime with questions!";
+          ". Welcome aboard, I'm so glad to have you! 🎓 Your enrolment is active. Here's how to check yourself into your course:" .
+          "\n\n1) Open your step-by-step check-in guide: {$site}/onboarding.html" .
+          "\n2) Go to the learning platform: https://www.widb.network and tap Log in, then Register (first time)." .
+          "\n3) When it asks for your Trainer email, enter: suuupooi@gmail.com  (this links you to my training group, it's the key step)." .
+          "\n4) Open the menu, go to Training Programmes, and start learning." .
+          "\n\nIf you get stuck, just reply here or WhatsApp me on +254729384374. You can also send your payment receipt there so I can cross-check it against my account. Welcome again!";
   $msg->execute([uuid(), $userId, $body]);
 }

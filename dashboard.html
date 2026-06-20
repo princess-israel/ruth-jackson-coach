@@ -149,15 +149,21 @@
           </div>
           <div class="progress"><i style="width:${e.progress||0}%"></i></div>
           <div class="muted" style="font-size:.8rem;margin-top:6px">${e.status==="active"?`${e.progress||0}% complete`:"Ruth is preparing your access link, check Messages 💬"}</div>
+          ${e.status==="active"?`<a class="btn btn-azure btn-sm" href="onboarding.html" style="margin-top:10px">✅ Check in &amp; open course</a>`:""}
         </div>
       </div>`;
     }).join("");
   }
 
+  function fmtMsg(s){
+    return String(s)
+      .replace(/(https?:\/\/[^\s]+)/g,'<a href="$1" target="_blank" rel="noopener" class="gold">$1</a>')
+      .replace(/\n/g,"<br>");
+  }
   function renderThread(){
     const msgs=Store.messages();
     const t=document.getElementById("thread");
-    t.innerHTML = msgs.length? msgs.map(m=>`<div class="thread-msg ${m.from==="customer"?"me":"them"}">${m.text}<div class="meta">${m.from==="customer"?"You":"Ruth"} · ${timeAgo(m.ts)}</div></div>`).join("")
+    t.innerHTML = msgs.length? msgs.map(m=>`<div class="thread-msg ${m.from==="customer"?"me":"them"}">${fmtMsg(m.text)}<div class="meta">${m.from==="customer"?"You":"Ruth"} · ${timeAgo(m.ts)}</div></div>`).join("")
       : `<p class="muted">No messages yet. Say hello to Ruth! 👋</p>`;
     t.scrollTop=t.scrollHeight;
   }
