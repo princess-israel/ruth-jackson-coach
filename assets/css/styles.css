@@ -489,6 +489,24 @@ section{position:relative}
 }
 .theme-toggle:hover{background:var(--glass-2);transform:translateY(-2px)}
 
+/* ---------- Language switcher ---------- */
+.lang-switch{position:relative}
+.lang-btn{height:40px;padding:0 12px;border-radius:999px;border:1px solid var(--line-strong);background:var(--glass);color:var(--text);cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;line-height:1;backdrop-filter:blur(8px);transition:background .25s,transform .25s}
+.lang-btn:hover{background:var(--glass-2);transform:translateY(-2px)}
+.lang-globe{font-size:1rem}
+.lang-menu{position:absolute;top:48px;right:0;min-width:150px;background:var(--bg-card,#fff);border:1px solid var(--line-strong);border-radius:12px;box-shadow:0 14px 40px rgba(7,14,41,.18);padding:6px;display:none;flex-direction:column;z-index:120}
+.lang-switch.open .lang-menu{display:flex}
+.lang-menu button{text-align:left;padding:9px 12px;border:0;background:none;color:var(--text);font-size:.92rem;border-radius:8px;cursor:pointer;font-family:inherit}
+.lang-menu button:hover{background:var(--glass-2)}
+.lang-menu button.on{background:rgba(78,168,255,.14);font-weight:700}
+[dir="rtl"] .lang-menu{right:auto;left:0}
+/* Hide Google Translate's injected banner/tooltip + keep layout intact */
+.goog-te-banner-frame,.skiptranslate iframe{display:none!important}
+body{top:0!important}
+.goog-te-gadget{height:0;overflow:hidden}
+#goog-gt-tt,.goog-te-balloon-frame{display:none!important}
+font.goog-text-highlight{background:none!important;box-shadow:none!important}
+
 /* ---------- Accreditation strip + badges ---------- */
 .accred{
   display:flex;flex-wrap:wrap;align-items:center;gap:14px 18px;

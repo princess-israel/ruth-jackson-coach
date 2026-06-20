@@ -35,6 +35,72 @@
   });
   paintToggle();
 
+  /* ---------- Language switcher (EN / SW / AR / ES / HI via Google Translate) ---------- */
+  const LANGS = [
+    { code: "en", label: "English",   short: "EN" },
+    { code: "sw", label: "Kiswahili", short: "SW" },
+    { code: "ar", label: "العربية",   short: "AR" },
+    { code: "es", label: "Español",   short: "ES" },
+    { code: "hi", label: "हिन्दी",      short: "HI" },
+  ];
+  function currentLang() {
+    const m = document.cookie.match(/googtrans=\/[a-z-]+\/([a-z-]+)/i);
+    return (m && m[1]) || "en";
+  }
+  function setLangCookie(lang) {
+    const val = lang === "en" ? "" : "/en/" + lang;
+    const host = location.hostname;
+    const parts = host.split(".");
+    const root = parts.length > 1 ? "." + parts.slice(-2).join(".") : host;
+    const kill = d => { document.cookie = "googtrans=; path=/;" + (d ? " domain=" + d + ";" : "") + " expires=Thu, 01 Jan 1970 00:00:00 GMT"; };
+    kill(); kill(host); if (root !== host) kill(root);
+    if (val) {
+      const exp = "; expires=" + new Date(Date.now() + 180 * 864e5).toUTCString();
+      document.cookie = "googtrans=" + val + "; path=/" + exp;
+      document.cookie = "googtrans=" + val + "; path=/; domain=" + host + exp;
+      if (root !== host) document.cookie = "googtrans=" + val + "; path=/; domain=" + root + exp;
+    }
+  }
+  // Apply text direction for the active language (Arabic = RTL).
+  document.documentElement.setAttribute("dir", currentLang() === "ar" ? "rtl" : "ltr");
+
+  // Load the Google Translate engine once (hidden — we drive it with our own UI).
+  if (!document.getElementById("google_translate_element")) {
+    const holder = document.createElement("div");
+    holder.id = "google_translate_element";
+    holder.style.display = "none";
+    document.body.appendChild(holder);
+    window.googleTranslateElementInit = function () {
+      new google.translate.TranslateElement(
+        { pageLanguage: "en", includedLanguages: LANGS.map(l => l.code).join(","), autoDisplay: false },
+        "google_translate_element");
+    };
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.body.appendChild(s);
+  }
+
+  function buildLangSwitch() {
+    const cur = currentLang();
+    const wrap = document.createElement("div");
+    wrap.className = "lang-switch";
+    wrap.innerHTML =
+      `<button type="button" class="lang-btn" aria-label="Change language"><span class="lang-globe">🌐</span><span class="lang-cur">${(LANGS.find(l => l.code === cur) || LANGS[0]).short}</span></button>
+       <div class="lang-menu">${LANGS.map(l => `<button type="button" data-lang="${l.code}" class="${l.code === cur ? "on" : ""}">${l.label}</button>`).join("")}</div>`;
+    const btn = wrap.querySelector(".lang-btn"), menu = wrap.querySelector(".lang-menu");
+    btn.addEventListener("click", e => { e.stopPropagation(); wrap.classList.toggle("open"); });
+    document.addEventListener("click", () => wrap.classList.remove("open"));
+    menu.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
+      setLangCookie(b.dataset.lang);
+      location.reload();
+    }));
+    return wrap;
+  }
+  document.querySelectorAll(".nav-cta").forEach(cta => {
+    if (cta.querySelector(".lang-switch")) return;
+    cta.insertBefore(buildLangSwitch(), cta.firstChild);
+  });
+
   /* ---------- Accreditation (WIDB / Microsoft / ILO / ITC) ---------- */
   function msLogo() {
     return '<svg width="15" height="15" viewBox="0 0 23 23" aria-hidden="true"><rect width="10" height="10" fill="#f25022"/><rect x="12" width="10" height="10" fill="#7fba00"/><rect y="12" width="10" height="10" fill="#00a4ef"/><rect x="12" y="12" width="10" height="10" fill="#ffb900"/></svg>';
