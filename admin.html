@@ -35,6 +35,7 @@
     <ul class="dash-nav">
       <li><a data-view="overview" class="active">📊 Overview</a></li>
       <li><a data-view="enrollments">🎓 Enrollments</a></li>
+      <li><a data-view="orders">💳 Orders</a></li>
       <li><a data-view="programs">📚 Programs</a></li>
       <li><a data-view="articles">✍️ Articles</a></li>
       <li><a data-view="inbox">💬 Inbox <span id="inbox-badge"></span></a></li>
@@ -92,6 +93,11 @@
     <section data-pane="students" class="hide">
       <div class="panel"><h3>Students</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">Click a student to see full details.</p><div style="overflow-x:auto"><table class="table" id="students-table"></table></div></div>
       <div class="panel hide" id="student-detail"></div>
+    </section>
+
+    <!-- ORDERS -->
+    <section data-pane="orders" class="hide">
+      <div class="panel"><h3>Payments</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">Every checkout, live from Pesapal. COMPLETED means the money arrived and the student was enrolled automatically.</p><div style="overflow-x:auto"><table class="table" id="orders-table"></table></div></div>
     </section>
 
     <!-- AFFILIATES -->
@@ -209,7 +215,7 @@
   const AUTH = { headers: { "Authorization": "Bearer " + adminToken } };
   const AUTHJSON = { headers: { "Content-Type": "application/json", "Authorization": "Bearer " + adminToken } };
   const toMs = s => s ? (new Date(String(s).replace(" ", "T")).getTime() || 0) : 0;
-  const DB = { users: [], usersById: {}, enrolls: [], threads: [], msgs: {} };
+  const DB = { users: [], usersById: {}, enrolls: [], threads: [], msgs: {}, orders: [], stats: null };
 
   async function loadData(){
     const [od, en, th] = await Promise.all([
@@ -217,6 +223,7 @@
       fetch("/api/enrollments.php?all=1", AUTH).then(r=>r.json()).catch(()=>({enrollments:[]})),
       fetch("/api/messages.php?threads=1", AUTH).then(r=>r.json()).catch(()=>({threads:[]})),
     ]);
+    DB.orders = od.orders||[]; DB.stats = od.stats||null;
     DB.users = (od.users||[]).map(u=>({id:u.id,name:u.name,email:u.email,role:u.role||"customer",createdAt:toMs(u.created_at)}));
     DB.usersById = {}; DB.users.forEach(u=>DB.usersById[u.id]=u);
     DB.enrolls = (en.enrollments||[]).map(e=>({id:e.id,userId:e.user_id,programId:e.program_id,status:e.status,progress:Number(e.progress)||0,purchasedAt:toMs(e.created_at)}));
@@ -243,7 +250,7 @@
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
-  const titles={overview:"Overview",enrollments:"Enrollments",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students",affiliates:"Affiliates"};
+  const titles={overview:"Overview",enrollments:"Enrollments",orders:"Orders",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students",affiliates:"Affiliates"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
     a.onclick=()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
@@ -260,13 +267,13 @@
 
   function renderOverview(){
     const en=Store.enrollments();
-    const paid=en.filter(e=>e.programId!=="customer-service-excellence");
-    const revenue=paid.length*79;
+    const revenue = DB.stats ? Number(DB.stats.revenue)||0 : 0;
+    const paidOrders = DB.stats ? Number(DB.stats.paid)||0 : 0;
     const students=Store.users().filter(u=>u.role==="customer");
     const kpis=[
       {v:students.length,l:"Students",t:"registered"},
       {v:en.length,l:"Enrollments",t:`${en.filter(e=>e.status==="pending").length} pending`},
-      {v:"$"+revenue.toLocaleString(),l:"Revenue",t:"all-time (demo)"},
+      {v:"$"+revenue.toLocaleString(undefined,{maximumFractionDigits:2}),l:"Revenue",t:`${paidOrders} paid order${paidOrders===1?'':'s'}`},
       {v:en.filter(e=>e.status==="active").length,l:"Active courses",t:"in progress"}
     ];
     document.getElementById("kpis").innerHTML=kpis.map(k=>`<div class="kpi"><div class="v">${k.v}</div><div class="l">${k.l}</div><div class="t">${k.t}</div></div>`).join("");
@@ -593,7 +600,23 @@
       </tr>`).join("")+`</tbody>`;
   }
 
-  function renderAll(){ renderOverview(); renderEnrollments(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog(); loadArticles(); }
+  function renderOrders(){
+    const t=document.getElementById("orders-table");
+    const list=(DB.orders||[]).slice();
+    if(!list.length){ t.innerHTML=`<tbody><tr><td class="muted" style="padding:18px">No payments yet. Your first checkout will show here.</td></tr></tbody>`; return; }
+    const badge=s=>{const c={COMPLETED:"#1c8a4e",PENDING:"#b8860b",FAILED:"var(--rose)",REVERSED:"var(--rose)",INVALID:"var(--rose)"}[s]||"var(--muted)";return `<span class="pill" style="font-weight:700;color:${c}">${s||"PENDING"}</span>`;};
+    t.innerHTML=`<thead><tr><th>Date</th><th>Customer</th><th>Course</th><th>Amount</th><th>Status</th><th>Ref</th></tr></thead><tbody>`+
+      list.map(o=>{const prog=Store.programById?Store.programById(o.program_id):null;return `<tr>
+        <td style="font-size:.85rem">${o.created_at?new Date(String(o.created_at).replace(" ","T")).toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):""}</td>
+        <td style="font-size:.85rem">${o.email||""}${o.phone?`<br>📞 ${o.phone}`:""}</td>
+        <td style="font-size:.85rem">${prog?prog.title:o.program_id}</td>
+        <td><b>$${Number(o.amount).toLocaleString(undefined,{maximumFractionDigits:2})}</b></td>
+        <td>${badge(o.status)}</td>
+        <td style="font-size:.78rem;color:var(--muted)">${o.confirmation_code||o.merchant_reference||""}</td>
+      </tr>`;}).join("")+`</tbody>`;
+  }
+
+  function renderAll(){ renderOverview(); renderEnrollments(); renderOrders(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog(); loadArticles(); }
   await loadData(); renderAll();
 })();
 </script>
