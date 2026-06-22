@@ -1,0 +1,36 @@
+name: Deploy to cPanel
+
+# Auto-deploy: every push to main uploads the changed files to the live
+# server over FTP. No manual cPanel step needed.
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:   # lets you trigger a deploy by hand from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:    ${{ secrets.FTP_SERVER }}      # e.g. ftp.irelandcollection.com
+          username:  ${{ secrets.FTP_USERNAME }}    # e.g. claude@coachruthjackson.com
+          password:  ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }} # docroot path, MUST end with /  (e.g. ./ )
+          protocol:  ftps                            # change to ftp if your host has no FTPS
+          # NEVER touch these on the server (secrets + live data created at runtime):
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            api/pesapal/config.php
+            data/programs.json
+            data/articles.json
+            data/affiliates.json
+            data/ipn_id.txt
+            **/*.md
+            .cpanel.yml

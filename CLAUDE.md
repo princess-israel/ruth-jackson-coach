@@ -28,15 +28,18 @@ There is no build step. Edit files directly; the browser loads them as-is.
 - Payments are server-authoritative: an enrollment is created **only** when Pesapal
   reports COMPLETED (`api/_orders.php`). Never grant access from the client side.
 
-## Deploying changes (IMPORTANT — tell the user to do this after edits)
-This repo auto-deploys via cPanel Git, but it is **not** automatic on push:
-1. `git add` + `git commit` + `git push` to GitHub (`origin`).
-2. In cPanel → **Git Version Control** → this repo → **Update from Remote**, then
-   **Manage** → **Deploy HEAD Commit** (runs `.cpanel.yml` → rsync into the live folder).
-3. LiteSpeed can serve stale files: toggle the domain's document root (or hard-refresh)
-   to bust cache. HTML/JS/CSS are set `no-cache`; images cache 30 days (rename to bust).
+## Deploying changes (now automatic)
+Deployment is automated by GitHub Actions (`.github/workflows/deploy.yml`): every push
+to `main` uploads the changed files to the live server over FTP. So:
+1. `git add` + `git commit` + `git push` to GitHub (`origin main`).
+2. The workflow deploys within ~1 minute (watch the repo's **Actions** tab). Then
+   hard-refresh the site. HTML/JS/CSS are `no-cache`; images cache 30 days (rename to bust).
 
-You (Claude) cannot deploy — always remind the user to run steps 2–3 after pushing.
+After pushing, tell the user it will be live in ~1 minute and to hard-refresh.
+The deploy never touches `api/pesapal/config.php` or runtime `data/*.json` (excluded).
+First-time wiring of the FTP secrets is documented in `SETUP-CONNECT.md`.
+The older manual path (cPanel Git "Update from Remote → Deploy HEAD Commit" via
+`.cpanel.yml`) still works as a fallback if Actions is ever disabled.
 
 ## Local preview
 A static server is enough: `npx serve site -l 4321` (PHP endpoints won't run locally;

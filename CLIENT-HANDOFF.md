@@ -58,18 +58,17 @@ site is built and how to deploy it. Just describe what you want in plain English
 
 Claude edits the files and explains what it did.
 
-## 5. Publish your changes (every time)
+## 5. Publish your changes (automatic)
 
-Claude can save and push the code, but **going live needs two manual clicks** (this is a
-safety feature of the hosting):
+Publishing is **automatic**. When the code is pushed to GitHub, a workflow
+(GitHub Actions) uploads it to the live server for you.
 
-1. Let Claude commit & push, or run `git push` yourself.
-2. In **cPanel → Git Version Control →** this repo → **Update from Remote**, then
-   **Manage → Deploy HEAD Commit**.
-3. Hard-refresh the site (Ctrl/Cmd + Shift + R). If something looks stale, toggle the
-   domain's document root in cPanel and refresh again.
+1. Let Claude commit & push (or run `git push` yourself).
+2. Wait ~1 minute. You can watch it on GitHub → the repo's **Actions** tab (green = done).
+3. Hard-refresh the site (Ctrl/Cmd + Shift + R) to see your change.
 
-Claude will remind you of these steps after each change.
+That's it, no cPanel step for normal changes. (First-time wiring of this auto-deploy is
+described in `SETUP-CONNECT.md`.)
 
 ---
 
