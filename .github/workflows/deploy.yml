@@ -1,7 +1,19 @@
 name: Deploy to cPanel
 
-# Auto-deploy: every push to main uploads the changed files to the live
-# server over FTP. No manual cPanel step needed.
+# Auto-deploy: every push to main asks cPanel to pull the latest commit from
+# GitHub and run .cpanel.yml (server-side rsync into the live document root +
+# LiteSpeed cache flush). This is the same action as the cPanel "Update from
+# Remote -> Deploy HEAD Commit" buttons, just triggered automatically.
+#
+# Why not FTP: the provided FTP account is jailed and cannot write to the real
+# document root (/home/irelandc/coachruthjackson.com), so uploads never went live.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   CPANEL_HOST       cPanel hostname only, no https/port  (e.g. server123.bluegifthosting.com)
+#   CPANEL_USER       cPanel username                       (irelandc)
+#   CPANEL_API_TOKEN  a cPanel API token (cPanel -> Manage API Tokens -> Create)
+#   CPANEL_REPO_ROOT  absolute path of the git repo on the server, shown in
+#                     cPanel -> Git Version Control (e.g. /home/irelandc/repositories/ruth-jackson-coach)
 on:
   push:
     branches: [ main ]
@@ -11,26 +23,42 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Trigger cPanel pull + deploy
+        env:
+          HOST:  ${{ secrets.CPANEL_HOST }}
+          USER:  ${{ secrets.CPANEL_USER }}
+          TOKEN: ${{ secrets.CPANEL_API_TOKEN }}
+          ROOT:  ${{ secrets.CPANEL_REPO_ROOT }}
+        run: |
+          set -uo pipefail
+          AUTH="Authorization: cpanel ${USER}:${TOKEN}"
+          BASE="https://${HOST}:2083/execute"
+          ENC_ROOT=$(printf '%s' "${ROOT}" | sed 's:/:%2F:g')
 
-      - name: Upload to cPanel via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server:    ${{ secrets.FTP_SERVER }}      # e.g. ftp.irelandcollection.com
-          username:  ${{ secrets.FTP_USERNAME }}    # e.g. claude@coachruthjackson.com
-          password:  ${{ secrets.FTP_PASSWORD }}
-          server-dir: ${{ secrets.FTP_SERVER_DIR }} # docroot path, MUST end with /  (e.g. ./ )
-          protocol:  ftps                            # change to ftp if your host has no FTPS
-          # NEVER touch these on the server (secrets + live data created at runtime):
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/.github/**
-            api/pesapal/config.php
-            data/programs.json
-            data/articles.json
-            data/affiliates.json
-            data/ipn_id.txt
-            **/*.md
-            .cpanel.yml
+          echo "::group::1) Update from remote (git pull on the server)"
+          curl -sS --fail-with-body -H "${AUTH}" \
+            "${BASE}/VersionControl/update?repository_root=${ENC_ROOT}&branch_name=main" | tee /tmp/update.json
+          echo
+          echo "::endgroup::"
+
+          echo "::group::2) Deploy HEAD commit (runs .cpanel.yml)"
+          curl -sS --fail-with-body -H "${AUTH}" \
+            "${BASE}/VersionControlDeployment/create?repository_root=${ENC_ROOT}" | tee /tmp/deploy.json
+          echo
+          echo "::endgroup::"
+
+          # UAPI returns {"status":1} on success, {"status":0,"errors":[...]} on failure.
+          python3 - <<'PY'
+          import json, sys
+          ok = True
+          for name in ("update", "deploy"):
+              try:
+                  d = json.load(open(f"/tmp/{name}.json"))
+              except Exception as e:
+                  print(f"{name}: could not parse response ({e})"); ok = False; continue
+              if d.get("status") == 1:
+                  print(f"{name}: OK")
+              else:
+                  print(f"{name}: FAILED -> {d.get('errors') or d}"); ok = False
+          sys.exit(0 if ok else 1)
+          PY
