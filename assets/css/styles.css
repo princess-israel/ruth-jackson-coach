@@ -39,6 +39,7 @@
   --glass-2:rgba(20,45,110,.065);
   --shadow:0 24px 60px -24px rgba(20,40,90,.24);
   --nav-scrolled:rgba(255,255,255,.88);
+  --nav-glass:rgba(255,255,255,.62);
 
   --radius:18px;
   --radius-sm:12px;
@@ -81,6 +82,7 @@ html[data-theme="dark"]{
   --glass-2:rgba(255,255,255,.07);
   --shadow:0 24px 60px -20px rgba(0,0,0,.65);
   --nav-scrolled:rgba(7,13,38,.82);
+  --nav-glass:rgba(8,14,36,.55);
 }
 
 *{box-sizing:border-box}
@@ -130,12 +132,21 @@ section{position:relative}
 /* ---------- Navbar ---------- */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  transition:background .35s,backdrop-filter .35s,border-color .35s,padding .35s;
-  border-bottom:1px solid transparent;padding:18px 0;
-  /* soft scrim keeps the nav legible over the dark hero slider (both themes) */
-  background:linear-gradient(180deg,rgba(6,11,30,.72) 0%,rgba(6,11,30,.28) 60%,transparent 100%);
+  transition:background .35s,backdrop-filter .35s,border-color .35s,padding .35s,box-shadow .35s;
+  padding:16px 0;
+  /* frosted glass: visible in both themes, dark-tinted over the hero */
+  background:rgba(10,16,38,.52);
+  -webkit-backdrop-filter:blur(18px) saturate(150%);
+  backdrop-filter:blur(18px) saturate(150%);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  box-shadow:0 8px 30px -18px rgba(0,0,0,.55);
 }
-.nav.scrolled{background:var(--nav-scrolled);backdrop-filter:blur(16px) saturate(140%);border-color:var(--line);padding:12px 0}
+.nav.scrolled{background:var(--nav-glass);border-color:var(--line);padding:12px 0;box-shadow:var(--shadow)}
+/* about page: courses list */
+.about-courses{list-style:none;margin:0 0 22px;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.about-courses li{position:relative;padding-left:26px;color:var(--muted);font-size:.96rem}
+.about-courses li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:2px;background:var(--gold)}
+@media (max-width:560px){.about-courses{grid-template-columns:1fr}}
 /* while over the hero (not yet scrolled): force high-contrast light nav */
 .nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.9);font-weight:600}
 .nav:not(.scrolled) .nav-links a:hover{color:#fff}
