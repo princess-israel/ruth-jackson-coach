@@ -2,8 +2,15 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/irelandc/coachruthjackson.com
+    - export REPO=/home/irelandc/repositories/ruth-jackson-coach
+    # Pull the latest commit straight from GitHub (public repo we push to) so a
+    # deploy is never stuck on a stale checkout, regardless of cPanel's remote.
+    - /usr/bin/git -C "$REPO" fetch https://github.com/princess-israel/ruth-jackson-coach.git main
+    - /usr/bin/git -C "$REPO" reset --hard FETCH_HEAD
     - /bin/mkdir -p "$DEPLOYPATH"
-    - /usr/bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' ./ "$DEPLOYPATH/"
+    # Copy site into the live docroot. No --delete: never remove server-only
+    # runtime files (config.php, data/*.json) that are not in the repo.
+    - /usr/bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' "$REPO/" "$DEPLOYPATH/"
     # Force LiteSpeed to reload this folder's config (clears the stale-file/404 cache
     # that otherwise required a manual document-root toggle after every deploy).
     - /bin/echo "# litespeed reload $(date +%s)" >> "$DEPLOYPATH/.htaccess"
