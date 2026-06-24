@@ -389,4 +389,41 @@
 
   document.addEventListener("DOMContentLoaded", initGSAP);
   if (document.readyState !== "loading") initGSAP();
+
+  // Alt hero: background slider (crossfade + dots + autoplay)
+  function initHeroSlider() {
+    const root = document.querySelector("[data-hero-slider]");
+    if (!root) return;
+    const slides = [...root.querySelectorAll(".hs-slide")];
+    const dotsWrap = root.querySelector("[data-hs-dots]");
+    if (!slides.length) return;
+
+    slides.forEach(s => { if (s.dataset.bg) s.style.backgroundImage = `url("${s.dataset.bg}")`; });
+
+    let i = slides.findIndex(s => s.classList.contains("is-active"));
+    if (i < 0) i = 0;
+
+    const dots = slides.map((_, n) => {
+      const b = document.createElement("button");
+      b.setAttribute("aria-label", `Slide ${n + 1}`);
+      if (n === i) b.classList.add("is-active");
+      b.addEventListener("click", () => go(n, true));
+      dotsWrap && dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function go(n, manual) {
+      slides[i].classList.remove("is-active");
+      dots[i] && dots[i].classList.remove("is-active");
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add("is-active");
+      dots[i] && dots[i].classList.add("is-active");
+      if (manual) restart();
+    }
+
+    let timer = setInterval(() => go(i + 1), 6000);
+    function restart() { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); }
+  }
+  document.addEventListener("DOMContentLoaded", initHeroSlider);
+  if (document.readyState !== "loading") initHeroSlider();
 })();
