@@ -90,36 +90,79 @@
   </div>
 </section>
 
-<!-- ALT HERO: full-screen background slider (inventingschool-style).
-     This is an alternative to the hero above. To use it, keep one and delete the other.
-     Swap the data-bg image URLs for the generated result-images (see prompts in CLAUDE notes). -->
+<!-- ALT HERO: split background slider (inventingschool-style: image left, brand panel + text right).
+     Alternative to the hero above. Each slide has its own image, headline and CTA.
+     Swap the data-bg image URLs for the generated result-images (see image prompts). -->
 <section class="hero-slider" data-hero-slider aria-label="Featured">
   <div class="hs-slides">
-    <div class="hs-slide is-active" data-bg="assets/img/empower-band.jpg"></div>
-    <div class="hs-slide" data-bg="assets/img/program-ai.jpg"></div>
-    <div class="hs-slide" data-bg="assets/img/program-ecommerce.jpg"></div>
-    <div class="hs-slide" data-bg="assets/img/cs-headset.jpg"></div>
+
+    <article class="hs-slide is-active">
+      <div class="hs-img" data-bg="assets/img/program-ai.jpg"></div>
+      <div class="container hs-content">
+        <div class="hs-text">
+          <span class="hs-badge">AI for Entrepreneurs</span>
+          <h1>Turn AI skills into <span>real income</span> this week</h1>
+          <div class="hs-accent"></div>
+          <p class="hs-lead">Self-paced, certificate-backed courses built to use the same week you learn them. No tech background needed.</p>
+          <div class="hs-cta">
+            <a class="btn btn-gold" href="programs.html">Browse $79 courses</a>
+            <a class="btn btn-ghost" data-open-chat="Which course is right for me?">💬 Find my course</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="hs-slide">
+      <div class="hs-img" data-bg="assets/img/empower-band.jpg"></div>
+      <div class="container hs-content">
+        <div class="hs-text">
+          <span class="hs-badge">30,000+ women reached</span>
+          <h1>Practical digital skills, <span>made for everyone</span></h1>
+          <div class="hs-accent"></div>
+          <p class="hs-lead">From marketing to e-commerce and SEO, learn the modern skills that move your business and income forward.</p>
+          <div class="hs-cta">
+            <a class="btn btn-gold" href="programs.html">See all programs</a>
+            <a class="btn btn-ghost" href="about.html">My story</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="hs-slide">
+      <div class="hs-img" data-bg="assets/img/cs-headset.jpg"></div>
+      <div class="container hs-content">
+        <div class="hs-text">
+          <span class="hs-badge">Personally by Ruth</span>
+          <h1>Customer service training that <span>wins customers</span></h1>
+          <div class="hs-accent"></div>
+          <p class="hs-lead">Equip your team to win, serve and keep customers, coached by a Microsoft-certified trainer with 5+ years in service and banking.</p>
+          <div class="hs-cta">
+            <a class="btn btn-gold" href="customer-service.html">Explore the training</a>
+            <a class="btn btn-ghost" data-open-chat="Tell me about customer service training">💬 Ask about it</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="hs-slide">
+      <div class="hs-img" data-bg="assets/img/about-ruth.jpg"></div>
+      <div class="container hs-content">
+        <div class="hs-text">
+          <span class="hs-badge">Microsoft Certified Coach</span>
+          <h1>Learn from a trainer <span>who's done it</span></h1>
+          <div class="hs-accent"></div>
+          <p class="hs-lead">WIDB Lead Trainer, ITC-ILO certified, and trusted by thousands. Your shortcut to skills you can actually earn from.</p>
+          <div class="hs-cta">
+            <a class="btn btn-gold" href="about.html">Meet Ruth</a>
+            <a class="btn btn-ghost" href="programs.html">Start learning</a>
+          </div>
+        </div>
+      </div>
+    </article>
+
   </div>
-  <div class="container">
-    <div class="hs-inner">
-      <div class="hs-badges">
-        <span class="pill"><span class="dot"></span>Microsoft Certified</span>
-        <span class="pill"><span class="dot"></span>30,000+ women reached</span>
-        <span class="pill"><span class="dot"></span>Certificate-backed</span>
-      </div>
-      <h1>Turn AI &amp; digital skills into <span>real income</span> this week</h1>
-      <p class="hs-lead">Join thousands of entrepreneurs, professionals and youth who learned a practical skill with Ruth Jackson and started earning, all self-paced, beginner-friendly, and built to use the same week you learn it.</p>
-      <div class="hero-actions">
-        <a class="btn btn-gold" href="programs.html">Start earning, browse $79 courses</a>
-        <a class="btn btn-ghost" data-open-chat="Which course is right for me?">💬 Find my course in 60 seconds</a>
-      </div>
-      <div class="hs-stats">
-        <div class="stat"><strong><span data-count="30000" data-suffix="+">0</span></strong><span>Women reached by WIDB</span></div>
-        <div class="stat"><strong><span data-count="6">0</span></strong><span>Certificate programs</span></div>
-        <div class="stat"><strong><span data-count="5" data-suffix="+">0</span></strong><span>Years in service &amp; banking</span></div>
-      </div>
-    </div>
-  </div>
+  <button class="hs-arrow hs-prev" data-hs-prev aria-label="Previous slide">&#8249;</button>
+  <button class="hs-arrow hs-next" data-hs-next aria-label="Next slide">&#8250;</button>
   <div class="hs-dots" data-hs-dots></div>
 </section>
 

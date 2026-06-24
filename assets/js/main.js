@@ -398,7 +398,10 @@
     const dotsWrap = root.querySelector("[data-hs-dots]");
     if (!slides.length) return;
 
-    slides.forEach(s => { if (s.dataset.bg) s.style.backgroundImage = `url("${s.dataset.bg}")`; });
+    slides.forEach(s => {
+      const img = s.querySelector(".hs-img") || s;
+      if (img.dataset.bg) img.style.backgroundImage = `url("${img.dataset.bg}")`;
+    });
 
     let i = slides.findIndex(s => s.classList.contains("is-active"));
     if (i < 0) i = 0;
@@ -421,8 +424,15 @@
       if (manual) restart();
     }
 
+    const prev = root.querySelector("[data-hs-prev]");
+    const next = root.querySelector("[data-hs-next]");
+    prev && prev.addEventListener("click", () => go(i - 1, true));
+    next && next.addEventListener("click", () => go(i + 1, true));
+
     let timer = setInterval(() => go(i + 1), 6000);
     function restart() { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); }
+    root.addEventListener("mouseenter", () => clearInterval(timer));
+    root.addEventListener("mouseleave", restart);
   }
   document.addEventListener("DOMContentLoaded", initHeroSlider);
   if (document.readyState !== "loading") initHeroSlider();
