@@ -132,8 +132,17 @@ section{position:relative}
   position:fixed;top:0;left:0;right:0;z-index:100;
   transition:background .35s,backdrop-filter .35s,border-color .35s,padding .35s;
   border-bottom:1px solid transparent;padding:18px 0;
+  /* soft scrim keeps the nav legible over the dark hero slider (both themes) */
+  background:linear-gradient(180deg,rgba(6,11,30,.72) 0%,rgba(6,11,30,.28) 60%,transparent 100%);
 }
 .nav.scrolled{background:var(--nav-scrolled);backdrop-filter:blur(16px) saturate(140%);border-color:var(--line);padding:12px 0}
+/* while over the hero (not yet scrolled): force high-contrast light nav */
+.nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.9);font-weight:600}
+.nav:not(.scrolled) .nav-links a:hover{color:#fff}
+.nav:not(.scrolled) .brand{color:#fff}
+.nav:not(.scrolled) .brand small{color:var(--gold-soft)}
+.nav:not(.scrolled) [data-account-cta] a,.nav:not(.scrolled) [data-account-cta]{color:#fff}
+.nav:not(.scrolled) .hamburger span{background:#fff}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-head);font-weight:700;font-size:1.1rem;letter-spacing:-.01em}
 .brand .logo{
