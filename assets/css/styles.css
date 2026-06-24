@@ -147,6 +147,29 @@ section{position:relative}
 .about-courses li{position:relative;padding-left:26px;color:var(--muted);font-size:.96rem}
 .about-courses li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:2px;background:var(--gold)}
 @media (max-width:560px){.about-courses{grid-template-columns:1fr}}
+/* about page: Timshi partner lockup */
+.timshi-lockup{display:inline-flex;align-items:center;gap:14px;margin:4px 0 26px;padding:10px 18px 10px 12px;
+  border:1px solid var(--line-strong);border-radius:14px;background:var(--glass);color:var(--text);
+  transition:background .2s,border-color .2s}
+.timshi-lockup:hover{background:var(--glass-2);border-color:var(--gold-soft)}
+.timshi-lockup img{width:42px;height:42px;border-radius:9px;object-fit:cover;background:#fff;padding:3px;flex:none}
+.timshi-lockup span{font-size:.82rem;line-height:1.35;color:var(--muted)}
+.timshi-lockup b{color:var(--text);font-family:var(--font-head);font-size:.95rem}
+/* about page: certificate frame */
+.cert-frame{max-width:900px;margin:0 auto;border:1px solid var(--line-strong);border-radius:20px;overflow:hidden;
+  background:var(--glass);box-shadow:var(--shadow)}
+.cert-bar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:14px 20px;background:linear-gradient(120deg,rgba(232,182,90,.16),rgba(78,168,255,.08));
+  border-bottom:1px solid var(--line)}
+.cert-verified{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-head);font-weight:700;font-size:.92rem;color:var(--text)}
+.cert-tick{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#1a1304;font-size:.72rem;font-weight:800}
+.cert-issuer{font-size:.8rem;color:var(--muted);letter-spacing:.02em}
+.cert-doc{padding:16px 16px 0}
+.cert-doc embed{display:block;width:100%;border-radius:12px;border:1px solid var(--line)}
+.cert-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:16px 20px}
+.cert-foot .muted{font-size:.84rem}
+.cert-actions{display:flex;gap:10px;flex-wrap:wrap}
+@media (max-width:560px){.cert-doc embed{height:420px}.cert-foot{flex-direction:column;align-items:stretch}.cert-actions .btn{flex:1 1 auto;justify-content:center}}
 /* while over the hero (not yet scrolled): force high-contrast light nav */
 .nav:not(.scrolled) .nav-links a{color:rgba(255,255,255,.9);font-weight:600}
 .nav:not(.scrolled) .nav-links a:hover{color:#fff}
