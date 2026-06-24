@@ -9,9 +9,11 @@ deployment:
     # Abort if the clone is incomplete, so we never sync an empty tree.
     - /bin/test -f "$SRC/index.html"
     - /bin/mkdir -p "$DEPLOYPATH"
-    # Copy into the live docroot. No --delete: keep server-only runtime files
-    # (config.php, data/*.json) that are not in the repo.
-    - /usr/bin/rsync -a --exclude='.git' --exclude='.cpanel.yml' "$SRC/" "$DEPLOYPATH/"
+    # Copy into the live docroot. --inplace writes files directly (never a
+    # temp+rename), so index.html is never momentarily missing, which is what
+    # made LiteSpeed cache a 404 after each deploy. No --delete: keep
+    # server-only runtime files (config.php, data/*.json) not in the repo.
+    - /usr/bin/rsync -a --inplace --exclude='.git' --exclude='.cpanel.yml' "$SRC/" "$DEPLOYPATH/"
     # Force LiteSpeed to reload (clears the stale-file/404 cache).
     - /bin/echo "# litespeed reload $(date +%s)" >> "$DEPLOYPATH/.htaccess"
     - /usr/bin/touch "$DEPLOYPATH/.htaccess" "$DEPLOYPATH" "$DEPLOYPATH/index.html"
