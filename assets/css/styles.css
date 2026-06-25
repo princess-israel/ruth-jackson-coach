@@ -300,7 +300,7 @@ html[data-theme="dark"]{
    everything and fades through a vertical gradient into the brand panel,
    with the text overlaid at the bottom. No seam, one section. */
 @media (max-width:900px){
-  .hs-img{background-position:50% 20%}
+  .hs-img{background-position:82% 18%}   /* subjects sit on the right of the photos */
   .hs-slide::after{background:linear-gradient(180deg,transparent 0%,rgba(9,18,46,.18) 30%,var(--hs-a) 46%,var(--hs-b) 70%)}
   .hero-slider .hs-content{align-items:flex-end;justify-content:flex-start;padding-bottom:58px}
   .hs-content .hs-text{width:100%;max-width:640px}
@@ -311,7 +311,7 @@ html[data-theme="dark"]{
 }
 /* small phones: tighten type, keep the subject framed */
 @media (max-width:560px){
-  .hs-img{background-position:50% 16%}
+  .hs-img{background-position:85% 16%}
   .hero-slider .hs-content{padding-bottom:48px}
   .hero-slider h1{font-size:clamp(1.7rem,7.4vw,2.25rem)}
   .hs-lead{font-size:1rem;margin-bottom:22px}
@@ -587,7 +587,13 @@ html[data-theme="dark"]{
   .brand{font-size:1rem;gap:9px}
   .brand .logo{width:36px;height:36px}
   .container{padding:0 16px}
-  .nav.menu-open .nav-links{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--navy-850);padding:20px 24px;border-bottom:1px solid var(--line);gap:16px}
+  .nav.menu-open .nav-links{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;
+    background:rgba(10,16,38,.97);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);
+    padding:14px 24px 20px;border-bottom:1px solid rgba(255,255,255,.12);
+    box-shadow:0 26px 44px -22px rgba(0,0,0,.65);gap:2px}
+  .nav.menu-open .nav-links a{color:#fff;font-weight:600;font-size:1.05rem;padding:13px 2px;
+    border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav.menu-open .nav-links li:last-child a{border-bottom:0}
   .grid-3,.grid-2{grid-template-columns:1fr}
   .steps{grid-template-columns:1fr}
   .cta-band{padding:38px 22px}
