@@ -296,31 +296,23 @@ html[data-theme="dark"]{
   .hs-text{width:min(42%,600px)}
   .hero-slider h1{font-size:clamp(3rem,3vw,3.8rem)}
 }
-/* tablet + phone: image becomes a top banner, text sits on a solid panel below
-   so the landscape photos are never force-cropped into a tall frame */
+/* tablet + phone: one cohesive full-bleed hero. The photo bleeds behind
+   everything and fades through a vertical gradient into the brand panel,
+   with the text overlaid at the bottom. No seam, one section. */
 @media (max-width:900px){
-  .hero-slider{min-height:calc(46vh + 430px)}      /* banner height + room for text */
-  .hs-slide{background:var(--hs-b)}                 /* solid panel behind text */
-  .hs-img{bottom:auto;height:46vh;min-height:280px;background-position:center 24%}
-  /* blend the bottom edge of the photo into the panel */
-  .hs-slide::after{top:0;height:46vh;min-height:280px;
-    background:linear-gradient(180deg,transparent 58%,var(--hs-b) 100%)}
-  .hero-slider .hs-content{display:block;min-height:0;padding-top:calc(46vh + 30px);padding-bottom:48px}
-  .hs-content .hs-text{width:100%;max-width:640px;padding:0}
+  .hs-img{background-position:50% 20%}
+  .hs-slide::after{background:linear-gradient(180deg,transparent 0%,rgba(9,18,46,.18) 30%,var(--hs-a) 46%,var(--hs-b) 70%)}
+  .hero-slider .hs-content{align-items:flex-end;justify-content:flex-start;padding-bottom:58px}
+  .hs-content .hs-text{width:100%;max-width:640px}
   .hs-lead{max-width:42em}
-  /* arrows sit on the image banner */
-  .hs-arrow{top:23vh;bottom:auto;transform:translateY(-50%);width:40px;height:40px}
+  .hs-arrow{width:40px;height:40px}
   .hs-prev{left:14px;right:auto}.hs-next{right:14px;left:auto}
-  /* dots ride the seam between photo and panel */
-  .hs-dots{justify-content:center;left:0;right:0;bottom:auto;top:46vh;margin-top:-12px}
+  .hs-dots{justify-content:center;left:0;right:0;bottom:20px}
 }
-/* small phones: tighten type, slightly shorter banner */
+/* small phones: tighten type, keep the subject framed */
 @media (max-width:560px){
-  .hero-slider{min-height:calc(38vh + 420px)}
-  .hs-img,.hs-slide::after{height:38vh;min-height:240px}
-  .hero-slider .hs-content{padding-top:calc(38vh + 26px)}
-  .hs-arrow{top:19vh}
-  .hs-dots{top:38vh}
+  .hs-img{background-position:50% 16%}
+  .hero-slider .hs-content{padding-bottom:48px}
   .hero-slider h1{font-size:clamp(1.7rem,7.4vw,2.25rem)}
   .hs-lead{font-size:1rem;margin-bottom:22px}
   .hs-badge{font-size:.66rem;padding:7px 13px;margin-bottom:16px}
