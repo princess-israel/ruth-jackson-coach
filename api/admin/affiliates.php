@@ -39,6 +39,17 @@ if ($method === 'GET') {
     $sales[strtoupper($r['code'])] = $r;
   }
 
+  // The individual orders behind each affiliate's commission.
+  $ordersByCode = [];
+  foreach (db()->query(
+    "SELECT affiliate_code code, created_at, program_id, merchant_reference, confirmation_code,
+            email, amount, commission, commission_status
+       FROM orders
+      WHERE status='COMPLETED' AND affiliate_code IS NOT NULL
+      ORDER BY created_at DESC") as $r) {
+    $ordersByCode[strtoupper($r['code'])][] = $r;
+  }
+
   $out = [];
   foreach ($affs as $a) {
     $code = strtoupper((string)($a['code'] ?? ''));
@@ -50,6 +61,7 @@ if ($method === 'GET') {
       'available' => round((float)($s['available'] ?? 0), 2),
       'requested' => round((float)($s['requested'] ?? 0), 2),
       'paid'      => round((float)($s['paid'] ?? 0), 2),
+      'orders'    => $ordersByCode[$code] ?? [],
     ];
   }
 

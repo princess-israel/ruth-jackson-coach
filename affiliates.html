@@ -55,14 +55,19 @@
     <div class="auth-card" style="max-width:620px;margin:0 auto">
       <div class="eyebrow" style="justify-content:center">Affiliate registration</div>
       <h2 class="center" style="font-size:1.8rem">Become a partner</h2>
-      <p class="muted center" style="margin-bottom:24px">Free to join. You'll get your referral link instantly.</p>
+      <p class="muted center" style="margin-bottom:24px">Free to join, tied to your account. You'll get your referral link instantly.</p>
       <div id="aff-notice"></div>
-      <form id="aff-form">
-        <div class="pay-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
-          <div class="field"><label>Full name</label><input id="aff-name" required placeholder="Your name"></div>
-          <div class="field"><label>Phone / WhatsApp</label><input id="aff-phone" required placeholder="+254…"></div>
-        </div>
-        <div class="field"><label>Email</label><input type="email" id="aff-email" required placeholder="you@email.com"></div>
+
+      <!-- Shown when not signed in -->
+      <div id="aff-signin" style="display:none;text-align:center">
+        <p class="muted" style="margin-bottom:18px">Affiliates use a Ruth Jackson account so we can track your sales and pay you. Sign in, or create a free account, to continue.</p>
+        <a class="btn btn-gold btn-block" href="login.html?next=affiliates.html%23join">Sign in or create account</a>
+      </div>
+
+      <!-- Shown when signed in -->
+      <form id="aff-form" style="display:none">
+        <p class="muted" style="font-size:.9rem;margin-bottom:16px">Registering as <b id="aff-acct"></b>.</p>
+        <div class="field"><label>Phone / WhatsApp (for M-Pesa payouts)</label><input id="aff-phone" required placeholder="+254…"></div>
         <div class="field"><label>Where will you promote? <span class="muted" style="font-weight:400">(optional)</span></label><input id="aff-reach" placeholder="e.g. TikTok @myhandle, WhatsApp groups, my blog"></div>
         <div class="field"><label>Tell us about your audience <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="aff-audience" placeholder="e.g. I run a community of small-business owners and young entrepreneurs."></textarea></div>
         <button class="btn btn-gold btn-block" type="submit">Get my referral link</button>
@@ -83,35 +88,50 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/chat.js"></script>
 <script>
-document.getElementById("aff-form").onsubmit=async function(e){
-  e.preventDefault();
+(async function(){
   const $=id=>document.getElementById(id);
-  const notice=$("aff-notice");
-  const btn=this.querySelector("button[type=submit]");
-  const payload={name:$("aff-name").value.trim(),phone:$("aff-phone").value.trim(),email:$("aff-email").value.trim(),reach:$("aff-reach").value.trim(),audience:$("aff-audience").value.trim()};
-  btn.disabled=true; btn.textContent="Submitting…";
-  try{
-    const r=await fetch("/api/affiliates.php",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-    const d=await r.json();
-    if(!r.ok||d.error){throw new Error(d.error||"Something went wrong.");}
-    const first=payload.name.split(" ")[0]||"there";
-    notice.innerHTML=`<div class="notice ok">🎉 You're in, ${first}! Your referral link is ready below. Share it anywhere, you earn on every enrolment through it.
-      <div style="margin-top:12px;padding:12px 14px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);border-radius:10px;word-break:break-all">
-        <b>Your link:</b><br><a href="${d.link}" id="aff-link">${d.link}</a><br>
-        <span style="font-size:.85rem">Referral code: <b>${d.code}</b></span><br>
-        <span style="font-size:.85rem">Track your clicks, sales and payouts at <a href="affiliate-dashboard.html">your dashboard</a> (log in with this email and code).</span>
-      </div>
-      <button type="button" class="btn btn-ghost btn-sm" id="aff-copy" style="margin-top:10px">Copy my link</button>
-      <a class="btn btn-azure btn-sm" style="margin-top:10px" target="_blank" rel="noopener"
-         href="https://wa.me/?text=${encodeURIComponent("Check out Ruth Jackson's certificate courses, enroll here: "+d.link)}">Share on WhatsApp</a></div>`;
-    this.reset(); this.style.display="none";
-    document.getElementById("aff-copy").onclick=()=>{navigator.clipboard?.writeText(d.link); document.getElementById("aff-copy").textContent="Copied ✓";};
-    notice.scrollIntoView({behavior:"smooth",block:"center"});
-  }catch(err){
-    notice.innerHTML=`<div class="notice err">${err.message}</div>`;
-    btn.disabled=false; btn.textContent="Get my referral link";
+  // Gate registration on having an account.
+  if(window.Store&&Store.ready){ try{ await Store.ready(); }catch(e){} }
+  const user=window.Store&&Store.currentUser&&Store.currentUser();
+  if(user){
+    $("aff-acct").textContent=(user.name||"")+" ("+(user.email||"")+")";
+    $("aff-form").style.display="";
+  } else {
+    $("aff-signin").style.display="";
   }
-};
+
+  const form=$("aff-form");
+  if(form) form.onsubmit=async function(e){
+    e.preventDefault();
+    const notice=$("aff-notice");
+    const btn=this.querySelector("button[type=submit]");
+    const payload={phone:$("aff-phone").value.trim(),reach:$("aff-reach").value.trim(),audience:$("aff-audience").value.trim()};
+    btn.disabled=true; btn.textContent="Submitting…";
+    try{
+      const r=await fetch("/api/affiliates.php",{method:"POST",
+        headers:{"Content-Type":"application/json","Authorization":"Bearer "+(Store.token()||"")},
+        body:JSON.stringify(payload)});
+      const d=await r.json();
+      if(!r.ok||d.error){throw new Error(d.error||"Something went wrong.");}
+      const first=(user.name||"there").split(" ")[0]||"there";
+      notice.innerHTML=`<div class="notice ok">🎉 You're in, ${first}! Your referral link is ready below. Share it anywhere, you earn 50% on every enrolment through it.
+        <div style="margin-top:12px;padding:12px 14px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);border-radius:10px;word-break:break-all">
+          <b>Your link:</b><br><a href="${d.link}" id="aff-link">${d.link}</a><br>
+          <span style="font-size:.85rem">Referral code: <b>${d.code}</b></span><br>
+          <span style="font-size:.85rem">Track your clicks, sales and payouts at <a href="affiliate-dashboard.html">your dashboard</a>.</span>
+        </div>
+        <button type="button" class="btn btn-ghost btn-sm" id="aff-copy" style="margin-top:10px">Copy my link</button>
+        <a class="btn btn-azure btn-sm" style="margin-top:10px" target="_blank" rel="noopener"
+           href="https://wa.me/?text=${encodeURIComponent("Check out Ruth Jackson's certificate courses, enroll here: "+d.link)}">Share on WhatsApp</a></div>`;
+      this.reset(); this.style.display="none";
+      $("aff-copy").onclick=()=>{navigator.clipboard?.writeText(d.link); $("aff-copy").textContent="Copied ✓";};
+      notice.scrollIntoView({behavior:"smooth",block:"center"});
+    }catch(err){
+      notice.innerHTML=`<div class="notice err">${err.message}</div>`;
+      btn.disabled=false; btn.textContent="Get my referral link";
+    }
+  };
+})();
 </script>
 </body>
 </html>

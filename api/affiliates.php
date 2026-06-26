@@ -48,19 +48,26 @@ if ($method === 'GET') {
 
 if ($method === 'POST') {
   $b = read_body();
-  $name  = trim((string)($b['name']  ?? ''));
-  $email = strtolower(trim((string)($b['email'] ?? '')));
+
+  // Affiliates must have an account (a new signup or an existing customer).
+  $user = user_from_token(bearer_token($b));
+  if (!$user) {
+    json_out(401, ['error' => 'Please sign in or create an account to become an affiliate.', 'need_auth' => true]);
+  }
+
+  $name  = (string)$user['name'];
+  $email = strtolower(trim((string)$user['email']));
   $phone = trim((string)($b['phone'] ?? ''));
   $reach = trim((string)($b['reach'] ?? ''));   // where they'll promote (socials, audience)
   $audience = trim((string)($b['audience'] ?? ''));
 
-  if ($name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $phone === '') {
-    json_out(422, ['error' => 'Please provide your name, a valid email and a phone number.']);
+  if ($phone === '') {
+    json_out(422, ['error' => 'Please provide a phone number for your M-Pesa payouts.']);
   }
 
   $list = aff_load();
   foreach ($list as $a) {
-    if (strtolower($a['email']) === $email) {
+    if ((string)($a['user_id'] ?? '') === (string)$user['id'] || strtolower((string)($a['email'] ?? '')) === $email) {
       json_out(200, ['ok' => true, 'code' => $a['code'], 'returning' => true,
         'link' => site_url() . '/?ref=' . $a['code']]);
     }
@@ -69,13 +76,14 @@ if ($method === 'POST') {
   $code = aff_code($name, array_column($list, 'code'));
   $entry = [
     'id'       => uuid(),
+    'user_id'  => $user['id'],
     'name'     => $name,
     'email'    => $email,
     'phone'    => $phone,
     'reach'    => $reach,
     'audience' => $audience,
     'code'     => $code,
-    'status'   => 'pending',
+    'status'   => 'active',
     'created'  => date('c'),
   ];
   $list[] = $entry;

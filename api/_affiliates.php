@@ -30,14 +30,16 @@ function aff_find_by_code($code) {
   return null;
 }
 
-/** Validate an affiliate by email + referral code (their dashboard login). */
-function aff_find_by_email_code($email, $code) {
-  $email = strtolower(trim((string)$email));
-  $code  = strtoupper(trim((string)$code));
-  if ($email === '' || $code === '') return null;
+/** Find the affiliate record that belongs to a logged-in user (by user_id, else email). */
+function aff_find_by_user($user) {
+  if (!$user) return null;
+  $uid   = (string)($user['id'] ?? '');
+  $email = strtolower(trim((string)($user['email'] ?? '')));
   foreach (aff_load() as $a) {
-    if (strtolower((string)($a['email'] ?? '')) === $email
-        && strtoupper((string)($a['code'] ?? '')) === $code) return $a;
+    if ($uid !== '' && (string)($a['user_id'] ?? '') === $uid) return $a;
+  }
+  foreach (aff_load() as $a) {
+    if ($email !== '' && strtolower((string)($a['email'] ?? '')) === $email) return $a;
   }
   return null;
 }

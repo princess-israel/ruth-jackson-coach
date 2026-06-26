@@ -1,10 +1,8 @@
 <?php
 /**
- * Affiliate self-service portal (stateless: every call re-sends email + code).
- *   POST { action: "login",  email, code }
- *   POST { action: "stats",  email, code }
- *   POST { action: "payout", email, code }
- * Login is email + referral code (no password by design).
+ * Affiliate self-service portal. Authenticated with the user's normal account
+ * session (Authorization: Bearer <token>). The affiliate is the logged-in user.
+ *   POST { action: "login" | "stats" | "payout" }
  */
 require __DIR__ . '/_affiliates.php';
 
@@ -14,11 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(405, ['error' => 'Method not
 
 $b      = read_body();
 $action = (string)($b['action'] ?? '');
-$email  = (string)($b['email'] ?? '');
-$code   = (string)($b['code'] ?? '');
 
-$aff = aff_find_by_email_code($email, $code);
-if (!$aff) json_out(401, ['error' => 'We could not match that email and referral code. Check both and try again.']);
+$user = user_from_token(bearer_token($b));
+if (!$user) json_out(401, ['error' => 'Please sign in to view your affiliate dashboard.', 'need_auth' => true]);
+
+$aff = aff_find_by_user($user);
+if (!$aff) json_out(200, ['ok' => true, 'affiliate' => null, 'not_affiliate' => true]);
 
 $code = strtoupper((string)$aff['code']);
 $profile = [
