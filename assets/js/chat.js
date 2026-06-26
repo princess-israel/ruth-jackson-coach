@@ -45,6 +45,7 @@
 
   const QUICK = [
     "What courses do you offer?",
+    "Is it self-paced?",
     "How much do they cost?",
     "Do I get a certificate?",
     "Tell me about customer service training",
@@ -129,7 +130,7 @@
     } else if (has("contact", "phone", "call", "whatsapp", "email", "reach")) {
       reply = `You can reach Ruth directly:<br>📞 ${PHONE}<br>💬 <a href="${WHATSAPP}" target="_blank">Chat on WhatsApp</a><br>Or just enroll and message her inside your dashboard.`;
     } else if (has("self", "pace", "time", "long", "duration")) {
-      reply = `All courses are <b>100% self-paced</b>, start anytime, learn on your schedule, keep lifetime access. Most take 6-8 hours total. 🎯`;
+      reply = `Yes, every course is a <b>self-learning, self-paced</b> course 🎯 You study online on your own schedule, start anytime, go at your own speed, and keep <b>lifetime access</b>. There are no live classes or fixed timetable, most learners finish in about 6-8 hours. <a href="${BASE}programs.html">Browse the courses →</a>`;
     } else if (has("thank", "thanks", "asante", "great", "ok", "cool")) {
       reply = `You're welcome! 🌟 Ready when you are, <a href="${BASE}programs.html">browse the courses</a> or ask me anything else.`;
     } else if (has("women", "youth", "empower")) {
