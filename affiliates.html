@@ -70,8 +70,26 @@
         <div class="field"><label>Phone / WhatsApp (for M-Pesa payouts)</label><input id="aff-phone" required placeholder="+254…"></div>
         <div class="field"><label>Where will you promote? <span class="muted" style="font-weight:400">(optional)</span></label><input id="aff-reach" placeholder="e.g. TikTok @myhandle, WhatsApp groups, my blog"></div>
         <div class="field"><label>Tell us about your audience <span class="muted" style="font-weight:400">(optional)</span></label><textarea id="aff-audience" placeholder="e.g. I run a community of small-business owners and young entrepreneurs."></textarea></div>
-        <button class="btn btn-gold btn-block" type="submit">Get my referral link</button>
-        <p class="muted" style="font-size:.82rem;text-align:center;margin-top:12px">By joining you agree to share courses honestly and respect our <a href="terms.html">terms</a>.</p>
+
+        <details class="aff-terms" style="margin:4px 0 14px;border:1px solid var(--line-strong);border-radius:10px;padding:10px 14px;background:var(--glass)">
+          <summary style="cursor:pointer;font-weight:600">Read the Affiliate Terms &amp; Conditions</summary>
+          <div style="font-size:.85rem;color:var(--muted);line-height:1.6;margin-top:10px">
+            <p><b>1. Commission.</b> You earn 50% of the amount a client you referred actually pays, credited only after the payment is confirmed by Pesapal.</p>
+            <p><b>2. Tracking.</b> Referrals are tracked by your unique link for 30 days. Self-referrals, fake, spam or fraudulent referrals are not eligible.</p>
+            <p><b>3. Payouts.</b> Commissions are paid to the M-Pesa number or bank details you provide. You request a payout from your dashboard and Ruth processes it manually.</p>
+            <p><b>4. Refunds.</b> If a client refunds or reverses a payment, the related commission is cancelled.</p>
+            <p><b>5. Honest promotion.</b> Promote courses truthfully. No spam, no misleading claims, and no misrepresenting Ruth Jackson, Timshi Universal Institute or our partners.</p>
+            <p><b>6. Your account.</b> One affiliate account per person, tied to your Ruth Jackson account. You are responsible for any taxes on your earnings.</p>
+            <p style="margin-bottom:0"><b>7. Changes.</b> Ruth may update these terms or end the programme at any time. Abuse of the programme leads to forfeiture of commissions.</p>
+          </div>
+        </details>
+        <label style="display:flex;gap:10px;align-items:flex-start;font-size:.9rem;margin-bottom:14px;cursor:pointer">
+          <input type="checkbox" id="aff-agree" required style="margin-top:3px;flex:none">
+          <span>I have read and agree to the <b>Affiliate Terms &amp; Conditions</b> above.</span>
+        </label>
+
+        <button class="btn btn-gold btn-block" type="submit" disabled>Get my referral link</button>
+        <p class="muted" style="font-size:.82rem;text-align:center;margin-top:12px">You must agree to the terms to continue.</p>
       </form>
     </div>
   </div>
@@ -96,6 +114,9 @@
   if(user){
     $("aff-acct").textContent=(user.name||"")+" ("+(user.email||"")+")";
     $("aff-form").style.display="";
+    // Require reading + agreeing to the terms before the button enables.
+    const agree=$("aff-agree"), submitBtn=$("aff-form").querySelector("button[type=submit]");
+    agree.addEventListener("change",()=>{ submitBtn.disabled=!agree.checked; });
   } else {
     $("aff-signin").style.display="";
   }
