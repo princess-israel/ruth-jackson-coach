@@ -19,6 +19,42 @@ if (!function_exists('aff_load')) {
     return is_array($a) ? $a : [];
   }
 }
+if (!function_exists('aff_save')) {
+  function aff_save($list) {
+    return file_put_contents(aff_file(),
+      json_encode(array_values($list), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+      LOCK_EX) !== false;
+  }
+}
+
+/** Merge fields into the affiliate record matching $code. Returns true if saved. */
+function aff_update_by_code($code, $fields) {
+  $code = strtoupper(trim((string)$code));
+  $list = aff_load();
+  $changed = false;
+  foreach ($list as &$a) {
+    if (strtoupper((string)($a['code'] ?? '')) === $code) {
+      foreach ($fields as $k => $v) $a[$k] = $v;
+      $changed = true;
+      break;
+    }
+  }
+  unset($a);
+  return $changed ? aff_save($list) : false;
+}
+
+/** Normalised payout details for display/decisions. */
+function aff_payment($a) {
+  $method = (string)($a['payment_method'] ?? '');
+  return [
+    'method'       => $method,
+    'mpesa_phone'  => (string)($a['mpesa_phone'] ?? ($a['phone'] ?? '')),
+    'bank_name'    => (string)($a['bank_name'] ?? ''),
+    'bank_account' => (string)($a['bank_account'] ?? ''),
+    'bank_holder'  => (string)($a['bank_holder'] ?? ''),
+    'set'          => $method !== '',
+  ];
+}
 
 /** Find an affiliate by referral code (case-insensitive). */
 function aff_find_by_code($code) {

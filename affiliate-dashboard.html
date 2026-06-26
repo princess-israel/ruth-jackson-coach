@@ -53,7 +53,27 @@
         <a class="btn btn-azure btn-sm" id="d-share" target="_blank" rel="noopener">Share on WhatsApp</a>
       </div>
 
+      <div id="paid-banner"></div>
+
       <div class="grid grid-4" id="d-kpis" style="margin:18px 0"></div>
+
+      <div class="panel" id="pay-details">
+        <h3 style="margin:0">Payment details</h3>
+        <p class="muted" style="font-size:.86rem;margin:6px 0 12px">How should Ruth pay your commission? Required before you can request a payout.</p>
+        <div id="pm-current" style="margin-bottom:12px"></div>
+        <div style="display:flex;gap:22px;margin-bottom:12px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pm" value="mpesa"> M-Pesa</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="pm" value="bank"> Bank transfer</label>
+        </div>
+        <div id="pm-mpesa"><div class="field"><label>M-Pesa phone number</label><input id="pm-phone" placeholder="+254…"></div></div>
+        <div id="pm-bank" style="display:none">
+          <div class="field"><label>Bank name</label><input id="pm-bank-name" placeholder="e.g. Equity Bank"></div>
+          <div class="field"><label>Account number</label><input id="pm-bank-acct" placeholder="Account number"></div>
+          <div class="field"><label>Account holder name</label><input id="pm-bank-holder" placeholder="Name on the account"></div>
+        </div>
+        <button class="btn btn-gold btn-sm" id="pm-save">Save payment details</button>
+        <div id="pm-notice" style="margin-top:10px"></div>
+      </div>
 
       <div class="panel" id="d-payout-box">
         <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
@@ -86,12 +106,45 @@
   var money=function(n){return "$"+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});};
   var NEXT="affiliate-dashboard.html";
 
-  function api(action){
+  function post(body){
     return fetch("/api/affiliate-portal.php",{method:"POST",
       headers:{"Content-Type":"application/json","Authorization":"Bearer "+(window.Store&&Store.token()||"")},
-      body:JSON.stringify({action:action})}).then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});});
+      body:JSON.stringify(body)}).then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});});
   }
+  function api(action){ return post({action:action}); }
   function show(el,on){ el.style.display=on?"":"none"; }
+
+  var PAY=null;
+  function pmToggle(m){ $("pm-mpesa").style.display=(m==="bank")?"none":""; $("pm-bank").style.display=(m==="bank")?"":"none"; }
+  function renderPayment(p){
+    PAY=p||{set:false};
+    var method=PAY.method||"mpesa";
+    document.querySelectorAll('input[name="pm"]').forEach(function(r){ r.checked=(r.value===method); });
+    pmToggle(method);
+    $("pm-phone").value=PAY.mpesa_phone||"";
+    $("pm-bank-name").value=PAY.bank_name||"";
+    $("pm-bank-acct").value=PAY.bank_account||"";
+    $("pm-bank-holder").value=PAY.bank_holder||"";
+    $("pm-current").innerHTML = PAY.set
+      ? '<div class="muted" style="font-size:.86rem">Currently paid by: <b style="color:var(--text)">'+(PAY.method==="bank"?("Bank — "+PAY.bank_name+" "+PAY.bank_account):("M-Pesa "+PAY.mpesa_phone))+'</b></div>'
+      : '<div class="notice err" style="margin:0">No payment method saved yet. Add one below to receive payouts.</div>';
+  }
+  document.querySelectorAll('input[name="pm"]').forEach(function(r){ r.addEventListener("change",function(){ pmToggle(this.value); }); });
+  $("pm-save").onclick=function(){
+    var method=(document.querySelector('input[name="pm"]:checked')||{}).value||"mpesa";
+    var b=$("pm-save"); b.disabled=true; b.textContent="Saving…";
+    post({action:"save_payment",method:method,mpesa_phone:$("pm-phone").value.trim(),
+      bank_name:$("pm-bank-name").value.trim(),bank_account:$("pm-bank-acct").value.trim(),bank_holder:$("pm-bank-holder").value.trim()})
+      .then(function(res){
+        if(!res.ok||res.d.error) throw new Error(res.d.error||"Could not save.");
+        $("pm-notice").innerHTML='<div class="notice ok">Payment details saved.</div>';
+        renderPayment(res.d.payment);
+        return api("stats");
+      })
+      .then(function(r2){ if(r2&&r2.ok&&!r2.d.not_affiliate&&!r2.d.error) render(r2.d); })
+      .catch(function(err){ $("pm-notice").innerHTML='<div class="notice err">'+err.message+'</div>'; })
+      .then(function(){ b.disabled=false; b.textContent="Save payment details"; });
+  };
 
   function gate(html){ $("aff-gate").innerHTML=html; show($("aff-gate"),true); show($("aff-dash"),false); }
 
@@ -111,8 +164,17 @@
       kpi("Clicks", t.clicks) + kpi("Sales", t.sales) +
       kpi("Available", money(t.available), true) + kpi("Total earned", money(t.earned));
 
+    renderPayment(a.payment);
+
+    // Paid notification (most recent paid payout)
+    var lastPaid=(d.payouts||[]).filter(function(p){return p.status==="paid";})[0];
+    $("paid-banner").innerHTML = lastPaid
+      ? '<div class="notice ok">🎉 You have been paid '+money(lastPaid.amount)+(lastPaid.paid_at?' on '+new Date(String(lastPaid.paid_at).replace(" ","T")).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):'')+'. Thank you for partnering with Ruth.</div>'
+      : '';
+
     var pbtn=$("d-payout");
     if(t.requested>0){ pbtn.disabled=true; pbtn.textContent="Payout pending ("+money(t.requested)+")"; }
+    else if(!(a.payment&&a.payment.set)){ pbtn.disabled=true; pbtn.textContent="Add payment details first"; }
     else if(t.available<0.01){ pbtn.disabled=true; pbtn.textContent="No balance yet"; }
     else { pbtn.disabled=false; pbtn.textContent="Request payout ("+money(t.available)+")"; }
 

@@ -21,16 +21,35 @@ if (!$aff) json_out(200, ['ok' => true, 'affiliate' => null, 'not_affiliate' => 
 
 $code = strtoupper((string)$aff['code']);
 $profile = [
-  'name'   => $aff['name'] ?? '',
-  'email'  => $aff['email'] ?? '',
-  'phone'  => $aff['phone'] ?? '',
-  'code'   => $code,
-  'status' => $aff['status'] ?? 'pending',
-  'link'   => site_url() . '/?ref=' . $code,
+  'name'    => $aff['name'] ?? '',
+  'email'   => $aff['email'] ?? '',
+  'phone'   => $aff['phone'] ?? '',
+  'code'    => $code,
+  'status'  => $aff['status'] ?? 'pending',
+  'link'    => site_url() . '/?ref=' . $code,
+  'payment' => aff_payment($aff),
 ];
 
 if ($action === 'login') {
   json_out(200, ['ok' => true, 'affiliate' => $profile]);
+}
+
+if ($action === 'save_payment') {
+  $method = (($b['method'] ?? '') === 'bank') ? 'bank' : 'mpesa';
+  $fields = ['payment_method' => $method];
+  if ($method === 'mpesa') {
+    $mp = trim((string)($b['mpesa_phone'] ?? ''));
+    if ($mp === '') json_out(422, ['error' => 'Enter your M-Pesa phone number.']);
+    $fields['mpesa_phone'] = $mp;
+  } else {
+    $bn = trim((string)($b['bank_name'] ?? ''));
+    $ba = trim((string)($b['bank_account'] ?? ''));
+    $bh = trim((string)($b['bank_holder'] ?? ''));
+    if ($bn === '' || $ba === '') json_out(422, ['error' => 'Enter your bank name and account number.']);
+    $fields['bank_name'] = $bn; $fields['bank_account'] = $ba; $fields['bank_holder'] = $bh;
+  }
+  aff_update_by_code($code, $fields);
+  json_out(200, ['ok' => true, 'payment' => aff_payment(aff_find_by_code($code))]);
 }
 
 if ($action === 'stats') {
@@ -43,6 +62,9 @@ if ($action === 'payout') {
   $pend->execute([$code]);
   if ((int)$pend->fetch()['c'] > 0) {
     json_out(400, ['error' => 'You already have a payout request being processed. Ruth will send it shortly.']);
+  }
+  if (!aff_payment($aff)['set']) {
+    json_out(400, ['error' => 'Please add your payment details (M-Pesa or bank) before requesting a payout.', 'need_payment' => true]);
   }
   $s = aff_stats($code);
   $available = (float)$s['totals']['available'];
