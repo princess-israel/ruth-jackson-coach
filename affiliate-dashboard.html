@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Affiliate Dashboard, Ruth Jackson</title>
+<meta name="description" content="Track your referral clicks, sales and earnings, and request your payout.">
+<meta name="robots" content="noindex,follow">
+<meta name="theme-color" content="#070e29">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
+    <nav><ul class="nav-links">
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="customer-service.html">Customer Service</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="affiliates.html">Affiliate programme</a></li>
+    </ul></nav>
+    <div class="nav-cta"><span data-account-cta></span><a class="btn btn-gold btn-sm" href="affiliates.html#join">Join</a>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+
+<section class="section" style="padding-top:130px">
+  <div class="container">
+
+    <!-- LOGIN -->
+    <div id="aff-login" class="auth-card" style="max-width:460px;margin:0 auto">
+      <div class="eyebrow" style="justify-content:center">Affiliate dashboard</div>
+      <h1 class="center" style="font-size:1.7rem;margin-bottom:6px">Welcome back, partner</h1>
+      <p class="muted center" style="margin-bottom:22px">Log in with the email you registered and your referral code.</p>
+      <div id="login-notice"></div>
+      <form id="login-form">
+        <div class="field"><label>Email</label><input type="email" id="li-email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Referral code</label><input id="li-code" required placeholder="e.g. RUTH123" style="text-transform:uppercase"></div>
+        <button class="btn btn-gold btn-block" type="submit">View my dashboard</button>
+        <p class="muted" style="font-size:.82rem;text-align:center;margin-top:12px">Not a partner yet? <a href="affiliates.html#join">Join free</a>.</p>
+      </form>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="aff-dash" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px">
+        <div>
+          <div class="eyebrow">Affiliate dashboard</div>
+          <h1 style="font-size:1.9rem;margin:4px 0 0" id="d-name">Hi</h1>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="d-logout">Log out</button>
+      </div>
+
+      <div class="panel" style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <div style="flex:1;min-width:240px">
+          <div class="muted" style="font-size:.8rem;margin-bottom:6px">Your referral link</div>
+          <div style="word-break:break-all;font-weight:600" id="d-link"></div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="d-copy">Copy link</button>
+        <a class="btn btn-azure btn-sm" id="d-share" target="_blank" rel="noopener">Share on WhatsApp</a>
+      </div>
+
+      <div class="grid grid-4" id="d-kpis" style="margin:18px 0"></div>
+
+      <div class="panel" id="d-payout-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+          <div>
+            <h3 style="margin:0">Request a payout</h3>
+            <p class="muted" style="font-size:.86rem;margin:6px 0 0">Available balance is paid to your M-Pesa number on file. Ruth processes requests manually.</p>
+          </div>
+          <button class="btn btn-gold" id="d-payout">Request payout</button>
+        </div>
+        <div id="payout-notice" style="margin-top:12px"></div>
+      </div>
+
+      <div class="panel"><h3>Your sales</h3><div style="overflow-x:auto"><table class="table" id="d-sales"></table></div></div>
+      <div class="panel"><h3>Payout history</h3><div style="overflow-x:auto"><table class="table" id="d-payouts"></table></div></div>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-bottom" style="border:0">
+  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="tel:+254729384374">+254 729 384374</a> · <a href="https://wa.me/254729384374">WhatsApp</a></span>
+</div></div></footer>
+
+<script src="assets/js/main.js"></script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var KEY="rj_aff_session";
+  var money=function(n){return "$"+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});};
+  var creds=null;
+  try{ creds=JSON.parse(sessionStorage.getItem(KEY)||"null"); }catch(e){}
+
+  function api(action){
+    return fetch("/api/affiliate-portal.php",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({action:action,email:creds.email,code:creds.code})}).then(function(r){return r.json().then(function(d){return {ok:r.ok,d:d};});});
+  }
+
+  function show(el,on){ el.style.display=on?"":"none"; }
+
+  function kpi(label,val,accent){
+    return '<div class="card" style="text-align:center;padding:18px"><div style="font-family:var(--font-head);font-size:1.7rem;font-weight:800;'+(accent?'color:var(--gold)':'')+'">'+val+'</div><div class="muted" style="font-size:.8rem;margin-top:4px">'+label+'</div></div>';
+  }
+
+  function render(d){
+    var a=d.affiliate, t=d.totals;
+    $("d-name").textContent="Hi, "+(a.name.split(" ")[0]||"partner");
+    $("d-link").textContent=a.link;
+    $("d-share").href="https://wa.me/?text="+encodeURIComponent("Check out Ruth Jackson's certificate courses, enroll here: "+a.link);
+    $("d-copy").onclick=function(){ navigator.clipboard&&navigator.clipboard.writeText(a.link); $("d-copy").textContent="Copied ✓"; };
+
+    $("d-kpis").innerHTML =
+      kpi("Clicks", t.clicks) +
+      kpi("Sales", t.sales) +
+      kpi("Available", money(t.available), true) +
+      kpi("Total earned", money(t.earned));
+
+    // Payout button state
+    var pbtn=$("d-payout");
+    if(t.requested>0){ pbtn.disabled=true; pbtn.textContent="Payout pending ("+money(t.requested)+")"; }
+    else if(t.available<0.01){ pbtn.disabled=true; pbtn.textContent="No balance yet"; }
+    else { pbtn.disabled=false; pbtn.textContent="Request payout ("+money(t.available)+")"; }
+
+    // Sales table
+    var st=$("d-sales");
+    if(!d.orders.length){ st.innerHTML='<tbody><tr><td class="muted" style="padding:16px">No sales yet. Share your link to start earning.</td></tr></tbody>'; }
+    else {
+      var cs={pending:'#b8860b',requested:'#1f6fe0',paid:'#1c8a4e'};
+      st.innerHTML='<thead><tr><th>Date</th><th>Course</th><th>Client paid</th><th>Your 50%</th><th>Status</th></tr></thead><tbody>'+
+        d.orders.map(function(o){var lbl={pending:'Earned',requested:'Payout requested',paid:'Paid'}[o.commission_status]||o.commission_status;
+          return '<tr><td style="font-size:.85rem">'+(o.created_at?new Date(String(o.created_at).replace(" ","T")).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"")+'</td>'+
+          '<td style="font-size:.85rem">'+(o.program_id||"")+'</td>'+
+          '<td>'+money(o.amount)+'</td>'+
+          '<td><b>'+money(o.commission)+'</b></td>'+
+          '<td><span class="pill" style="font-weight:700;color:'+(cs[o.commission_status]||'var(--muted)')+'">'+lbl+'</span></td></tr>';
+        }).join("")+'</tbody>';
+    }
+
+    // Payout history
+    var pt=$("d-payouts");
+    if(!d.payouts.length){ pt.innerHTML='<tbody><tr><td class="muted" style="padding:16px">No payout requests yet.</td></tr></tbody>'; }
+    else {
+      pt.innerHTML='<thead><tr><th>Requested</th><th>Amount</th><th>Status</th><th>Paid</th></tr></thead><tbody>'+
+        d.payouts.map(function(p){return '<tr><td style="font-size:.85rem">'+(p.requested_at?new Date(String(p.requested_at).replace(" ","T")).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"")+'</td>'+
+          '<td><b>'+money(p.amount)+'</b></td>'+
+          '<td><span class="pill" style="font-weight:700;color:'+(p.status==="paid"?'#1c8a4e':p.status==="rejected"?'var(--rose)':'#1f6fe0')+'">'+p.status+'</span></td>'+
+          '<td style="font-size:.85rem">'+(p.paid_at?new Date(String(p.paid_at).replace(" ","T")).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):"—")+'</td></tr>';
+        }).join("")+'</tbody>';
+    }
+  }
+
+  function load(){
+    show($("aff-login"),false); show($("aff-dash"),true);
+    api("stats").then(function(res){
+      if(!res.ok||res.d.error){ logout(res.d&&res.d.error); return; }
+      render(res.d);
+    }).catch(function(){ /* keep last view */ });
+  }
+
+  function logout(msg){
+    sessionStorage.removeItem(KEY); creds=null;
+    show($("aff-dash"),false); show($("aff-login"),true);
+    if(msg) $("login-notice").innerHTML='<div class="notice err">'+msg+'</div>';
+  }
+
+  $("login-form").onsubmit=function(e){
+    e.preventDefault();
+    var btn=this.querySelector("button[type=submit]");
+    creds={email:$("li-email").value.trim(),code:$("li-code").value.trim().toUpperCase()};
+    btn.disabled=true; btn.textContent="Checking…";
+    api("login").then(function(res){
+      if(!res.ok||res.d.error){ throw new Error(res.d.error||"Could not log you in."); }
+      sessionStorage.setItem(KEY,JSON.stringify(creds));
+      load();
+    }).catch(function(err){
+      $("login-notice").innerHTML='<div class="notice err">'+err.message+'</div>';
+      creds=null; btn.disabled=false; btn.textContent="View my dashboard";
+    });
+  };
+
+  $("d-logout").onclick=function(){ logout(); };
+
+  $("d-payout").onclick=function(){
+    var b=$("d-payout"); b.disabled=true; b.textContent="Requesting…";
+    api("payout").then(function(res){
+      if(!res.ok||res.d.error){ throw new Error(res.d.error||"Could not request payout."); }
+      $("payout-notice").innerHTML='<div class="notice ok">Payout requested. Ruth will send it to your M-Pesa number shortly.</div>';
+      render(res.d);
+    }).catch(function(err){
+      $("payout-notice").innerHTML='<div class="notice err">'+err.message+'</div>';
+      b.disabled=false; b.textContent="Request payout";
+    });
+  };
+
+  if(creds&&creds.email&&creds.code){ load(); }
+})();
+</script>
+</body>
+</html>

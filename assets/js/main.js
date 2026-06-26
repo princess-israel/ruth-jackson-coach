@@ -4,6 +4,30 @@
 (function () {
   "use strict";
 
+  // Affiliate referral capture: ?ref=CODE -> 30-day cookie, one tracked click per session.
+  // window.RJ_ref() returns the stored code so checkout can credit the affiliate.
+  (function affiliateRef() {
+    var KEY = "rj_ref";
+    function setCookie(v) { document.cookie = KEY + "=" + encodeURIComponent(v) + ";path=/;max-age=" + (60 * 60 * 24 * 30) + ";SameSite=Lax"; }
+    function getCookie() { var m = document.cookie.match(/(?:^|;\s*)rj_ref=([^;]+)/); return m ? decodeURIComponent(m[1]) : ""; }
+    var incoming = (new URLSearchParams(location.search).get("ref") || "").trim().toUpperCase();
+    if (incoming) {
+      setCookie(incoming);
+      try { localStorage.setItem(KEY, incoming); } catch (e) {}
+      var sk = "rj_ref_hit_" + incoming;
+      if (!sessionStorage.getItem(sk)) {
+        sessionStorage.setItem(sk, "1");
+        fetch("/api/affiliate-track.php", { method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: incoming, path: location.pathname }) }).catch(function () {});
+      }
+    }
+    window.RJ_ref = function () {
+      var c = getCookie();
+      if (c) return c;
+      try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; }
+    };
+  })();
+
   /* ---------- Theme (light default, dark opt-in) ---------- */
   const THEME_KEY = "rj_theme";
   function applyTheme(t) {

@@ -4,6 +4,7 @@
 require __DIR__ . '/_pesapal.php';
 require __DIR__ . '/../_catalog.php';
 require __DIR__ . '/../_db.php';
+require __DIR__ . '/../_affiliates.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') json_out(405, ['error' => 'Method not allowed']);
 
@@ -14,6 +15,10 @@ try {
   $email     = isset($body['email']) ? trim($body['email']) : '';
   $name      = isset($body['name']) ? trim($body['name']) : 'Customer';
   $phone     = isset($body['phone']) ? trim($body['phone']) : '';
+
+  // Credit the referring affiliate, but only if the ref is a real code.
+  $ref     = isset($body['ref']) ? strtoupper(trim((string)$body['ref'])) : '';
+  $affCode = ($ref !== '' && aff_find_by_code($ref)) ? $ref : null;
 
   $program = catalog_find($programId);
   if (!$program) json_out(400, ['error' => 'Unknown program.']);
@@ -59,14 +64,14 @@ try {
 
   // Persist the PENDING order — the authoritative record that this checkout happened.
   $ins = db()->prepare(
-    'INSERT INTO orders (id, merchant_reference, order_tracking_id, user_id, email, phone, program_id, amount, currency, status)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, "USD", "PENDING")');
+    'INSERT INTO orders (id, merchant_reference, order_tracking_id, user_id, email, phone, program_id, affiliate_code, amount, currency, status)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, "USD", "PENDING")');
   $ins->execute([
     uuid(), $merchantRef, $trackingId,
     $user ? $user['id'] : null,
     $email !== '' ? strtolower($email) : null,
     $phone !== '' ? $phone : null,
-    $programId, $program['price'],
+    $programId, $affCode, $program['price'],
   ]);
 
   json_out(200, [

@@ -31,10 +31,10 @@
 
 <section class="hero" style="min-height:auto;padding:150px 0 50px">
   <div class="container">
-    <div class="hero-badges"><span class="pill"><span class="dot"></span>Open to everyone</span><span class="pill"><span class="dot"></span>Free to join</span><span class="pill"><span class="dot"></span>Earn per student</span></div>
-    <h1 style="max-width:760px">Earn by sharing courses that <span>change lives</span></h1>
-    <p class="hero-lead" style="max-width:680px">Love what Ruth teaches? Become an affiliate partner. Share your personal referral link, and earn a commission for every person who enrolls through you. No fees, no targets, just get rewarded for spreading the word.</p>
-    <div class="hero-actions"><a class="btn btn-azure" href="#join">Join the programme</a><a class="btn btn-ghost" href="programs.html">See the courses</a></div>
+    <div class="hero-badges"><span class="pill"><span class="dot"></span>Open to everyone</span><span class="pill"><span class="dot"></span>Free to join</span><span class="pill"><span class="dot"></span>Earn 50% per sale</span></div>
+    <h1 style="max-width:760px">Earn <span>50% commission</span> sharing courses that change lives</h1>
+    <p class="hero-lead" style="max-width:680px">Love what Ruth teaches? Become an affiliate partner. Share your personal referral link and earn <b>50% of what the client pays</b> on every enrolment through you. Your link is tracked automatically, and every click and sale is reported to you and to Ruth the moment it happens.</p>
+    <div class="hero-actions"><a class="btn btn-azure" href="#join">Join the programme</a><a class="btn btn-ghost" href="affiliate-dashboard.html">My affiliate dashboard</a></div>
   </div>
 </section>
 
@@ -43,9 +43,10 @@
     <div class="section-head center reveal"><div class="eyebrow" style="justify-content:center">How it works</div><h2>Three simple steps</h2></div>
     <div class="grid grid-3" data-stagger>
       <div class="card feature"><div class="ico">📝</div><h3>1. Register</h3><p class="muted">Fill the short form below. We send you your own referral link and code right away.</p></div>
-      <div class="card feature"><div class="ico">📢</div><h3>2. Share</h3><p class="muted">Post your link on WhatsApp, TikTok, Instagram, Facebook or to your network.</p></div>
-      <div class="card feature"><div class="ico">💰</div><h3>3. Earn</h3><p class="muted">When someone enrolls through your link, you earn a commission. Ruth pays out directly.</p></div>
+      <div class="card feature"><div class="ico">📢</div><h3>2. Share</h3><p class="muted">Post your link on WhatsApp, TikTok, Instagram, Facebook or to your network. Every click is tracked to your code.</p></div>
+      <div class="card feature"><div class="ico">💰</div><h3>3. Earn 50%</h3><p class="muted">When someone enrolls through your link, you earn 50% of what they paid. It shows on your dashboard instantly, and you request payout by M-Pesa.</p></div>
     </div>
+    <p class="muted center" style="margin-top:22px;font-size:.92rem">Tracked and transparent: your dashboard shows your clicks, sales and balance in real time, and every sale is reported to both you and Ruth automatically. <a href="affiliate-dashboard.html">Open your dashboard</a>.</p>
   </div>
 </section>
 
@@ -97,7 +98,8 @@ document.getElementById("aff-form").onsubmit=async function(e){
     notice.innerHTML=`<div class="notice ok">🎉 You're in, ${first}! Your referral link is ready below. Share it anywhere, you earn on every enrolment through it.
       <div style="margin-top:12px;padding:12px 14px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.3);border-radius:10px;word-break:break-all">
         <b>Your link:</b><br><a href="${d.link}" id="aff-link">${d.link}</a><br>
-        <span style="font-size:.85rem">Referral code: <b>${d.code}</b></span>
+        <span style="font-size:.85rem">Referral code: <b>${d.code}</b></span><br>
+        <span style="font-size:.85rem">Track your clicks, sales and payouts at <a href="affiliate-dashboard.html">your dashboard</a> (log in with this email and code).</span>
       </div>
       <button type="button" class="btn btn-ghost btn-sm" id="aff-copy" style="margin-top:10px">Copy my link</button>
       <a class="btn btn-azure btn-sm" style="margin-top:10px" target="_blank" rel="noopener"

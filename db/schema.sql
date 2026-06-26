@@ -28,7 +28,10 @@ CREATE TABLE IF NOT EXISTS orders (
   email              VARCHAR(190) NULL,
   phone              VARCHAR(40) NULL,
   program_id         VARCHAR(80) NOT NULL,
+  affiliate_code     VARCHAR(20) NULL,
   amount             DECIMAL(10,2) NOT NULL,
+  commission         DECIMAL(10,2) NULL,
+  commission_status  ENUM('none','pending','requested','paid') NOT NULL DEFAULT 'none',
   currency           VARCHAR(8) NOT NULL DEFAULT 'USD',
   status             ENUM('PENDING','COMPLETED','FAILED','REVERSED','INVALID') NOT NULL DEFAULT 'PENDING',
   confirmation_code  VARCHAR(80) NULL,
@@ -37,6 +40,28 @@ CREATE TABLE IF NOT EXISTS orders (
   UNIQUE KEY uniq_ref (merchant_reference),
   KEY idx_tracking (order_tracking_id),
   KEY idx_user (user_id),
+  KEY idx_status (status),
+  KEY idx_affiliate (affiliate_code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS affiliate_clicks (
+  id         CHAR(36) NOT NULL PRIMARY KEY,
+  code       VARCHAR(20) NOT NULL,
+  ip         VARCHAR(45) NULL,
+  ref_path   VARCHAR(190) NULL,
+  created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY idx_code_time (code, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS affiliate_payouts (
+  id           CHAR(36) NOT NULL PRIMARY KEY,
+  code         VARCHAR(20) NOT NULL,
+  amount       DECIMAL(10,2) NOT NULL,
+  status       ENUM('requested','paid','rejected') NOT NULL DEFAULT 'requested',
+  note         VARCHAR(255) NULL,
+  requested_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  paid_at      DATETIME NULL,
+  KEY idx_code (code),
   KEY idx_status (status)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

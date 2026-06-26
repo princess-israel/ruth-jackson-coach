@@ -197,7 +197,7 @@
       const resp = await fetch("/api/pesapal/pay.php", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + (Store.token() || "") },
-        body: JSON.stringify({ programId: id, email: u.email, name: u.name, phone })
+        body: JSON.stringify({ programId: id, email: u.email, name: u.name, phone, ref: (window.RJ_ref && window.RJ_ref()) || "" })
       });
       const data = await resp.json();
       if (!resp.ok || !data.redirect_url) throw new Error(data.error || "Could not start payment. Please try again.");

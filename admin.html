@@ -102,7 +102,8 @@
 
     <!-- AFFILIATES -->
     <section data-pane="affiliates" class="hide">
-      <div class="panel"><h3>Affiliate partners</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">People who signed up to promote your courses. Each has a unique referral code.</p><div style="overflow-x:auto"><table class="table" id="affiliates-table"></table></div></div>
+      <div class="panel"><h3>Payout requests</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">Affiliates who requested a payout. Send the amount to their M-Pesa number, then mark it paid.</p><div style="overflow-x:auto"><table class="table" id="payouts-table"></table></div></div>
+      <div class="panel"><h3>Affiliate partners</h3><p class="muted" style="font-size:.84rem;margin-top:-8px">People who signed up to promote your courses. Clicks, sales and 50% commission earnings are tracked per code.</p><div style="overflow-x:auto"><table class="table" id="affiliates-table"></table></div></div>
     </section>
 
     <!-- PROGRAMS -->
@@ -586,17 +587,44 @@
 
   async function renderAffiliates(){
     const t=document.getElementById("affiliates-table");
-    let list=[];
-    try{ const d=await fetch("/api/affiliates.php", AUTH).then(r=>r.json()); list=d.affiliates||[]; }catch(e){}
+    const pt=document.getElementById("payouts-table");
+    const money=n=>"$"+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    let list=[], payouts=[];
+    try{ const d=await fetch("/api/admin/affiliates.php", AUTH).then(r=>r.json()); list=d.affiliates||[]; payouts=d.payouts||[]; }catch(e){}
+
+    // Payout requests
+    const byCode={}; list.forEach(a=>byCode[(a.code||"").toUpperCase()]=a);
+    if(!payouts.length){ pt.innerHTML=`<tbody><tr><td class="muted" style="padding:16px">No payout requests yet.</td></tr></tbody>`; }
+    else {
+      pt.innerHTML=`<thead><tr><th>Affiliate</th><th>M-Pesa</th><th>Amount</th><th>Requested</th><th>Status</th><th></th></tr></thead><tbody>`+
+        payouts.map(p=>{const a=byCode[(p.code||"").toUpperCase()]||{};const phone=(a.phone||"").replace(/[^0-9]/g,"");return `<tr>
+          <td style="font-size:.85rem"><b>${a.name||p.code}</b><br><span class="muted">${p.code}</span></td>
+          <td style="font-size:.85rem">${a.phone?`<a href="https://wa.me/${phone}" target="_blank">${a.phone}</a>`:"—"}</td>
+          <td><b>${money(p.amount)}</b></td>
+          <td style="font-size:.85rem">${p.requested_at?new Date(String(p.requested_at).replace(" ","T")).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):""}</td>
+          <td><span class="pill" style="font-weight:700;color:${p.status==="paid"?"#1c8a4e":p.status==="rejected"?"var(--rose)":"#b8860b"}">${p.status}</span></td>
+          <td>${p.status==="requested"?`<button class="btn btn-gold btn-sm" data-pay="${p.id}">Mark paid</button>`:""}</td>
+        </tr>`;}).join("")+`</tbody>`;
+      pt.querySelectorAll("[data-pay]").forEach(b=>b.addEventListener("click", async ()=>{
+        if(!confirm("Confirm you have sent this payout via M-Pesa?")) return;
+        b.textContent="Saving…"; b.disabled=true;
+        try{ await fetch("/api/admin/affiliates.php",{method:"POST",...AUTHJSON,body:JSON.stringify({action:"pay",payout_id:b.dataset.pay})}); renderAffiliates(); }
+        catch(e){ b.textContent="Mark paid"; b.disabled=false; }
+      }));
+    }
+
+    // Affiliate partners with performance
     if(!list.length){ t.innerHTML=`<tbody><tr><td class="muted" style="padding:18px">No affiliates have registered yet. Share <b>/affiliates.html</b> to recruit partners.</td></tr></tbody>`; return; }
-    list.sort((a,b)=>new Date(b.created)-new Date(a.created));
-    t.innerHTML=`<thead><tr><th>Name</th><th>Contact</th><th>Code</th><th>Promotes via</th><th>Joined</th></tr></thead><tbody>`+
+    list.sort((a,b)=>(b.earned||0)-(a.earned||0)||new Date(b.created)-new Date(a.created));
+    t.innerHTML=`<thead><tr><th>Name</th><th>Contact</th><th>Code</th><th>Clicks</th><th>Sales</th><th>Earned</th><th>Available</th></tr></thead><tbody>`+
       list.map(a=>`<tr>
-        <td><b>${a.name||""}</b></td>
+        <td><b>${a.name||""}</b><br><span class="muted" style="font-size:.8rem">${a.created?new Date(a.created).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):""}</span></td>
         <td style="font-size:.85rem">✉️ ${a.email||""}${a.phone?`<br>📞 <a href="https://wa.me/${(a.phone||"").replace(/[^0-9]/g,"")}" target="_blank">${a.phone}</a>`:""}</td>
         <td><span class="pill" style="font-weight:700">${a.code||""}</span></td>
-        <td style="font-size:.85rem">${a.reach||"<span class='muted'>—</span>"}${a.audience?`<br><span class="muted">${a.audience}</span>`:""}</td>
-        <td style="font-size:.85rem">${a.created?new Date(a.created).toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"}):""}</td>
+        <td>${a.clicks||0}</td>
+        <td>${a.sales||0}</td>
+        <td><b>${money(a.earned)}</b></td>
+        <td>${money(a.available)}</td>
       </tr>`).join("")+`</tbody>`;
   }
 

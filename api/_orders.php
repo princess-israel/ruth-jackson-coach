@@ -6,6 +6,7 @@
  */
 require_once __DIR__ . '/_db.php';
 require_once __DIR__ . '/pesapal/_pesapal.php';
+require_once __DIR__ . '/_affiliates.php';
 
 function order_find_by_tracking($trackingId) {
   $s = db()->prepare('SELECT * FROM orders WHERE order_tracking_id = ? LIMIT 1');
@@ -66,6 +67,7 @@ function order_verify_and_fulfill($trackingId) {
 
   if ($label === 'COMPLETED') {
     order_fulfill($order, $confirmation);
+    order_credit_affiliate($order);
   }
 
   return [
@@ -106,4 +108,21 @@ function order_fulfill($order, $confirmation) {
           "\n4) Open the menu, go to Training Programmes, and start learning." .
           "\n\nIf you get stuck, just reply here or WhatsApp me on +254729384374. You can also send your payment receipt there so I can cross-check it against my account. Welcome again!";
   $msg->execute([uuid(), $userId, $body]);
+}
+
+/**
+ * Credit the referring affiliate when an order completes. Commission is a flat
+ * share of what the client paid. Idempotent: the commission_status='none' guard
+ * means a re-run (Pesapal retries / manual recheck) never double-credits.
+ */
+function order_credit_affiliate($order) {
+  $code = isset($order['affiliate_code']) ? strtoupper(trim((string)$order['affiliate_code'])) : '';
+  if ($code === '') return;
+  if (isset($order['commission_status']) && $order['commission_status'] !== 'none') return;
+
+  $commission = round((float)$order['amount'] * AFF_COMMISSION_RATE, 2);
+  $upd = db()->prepare(
+    "UPDATE orders SET commission = ?, commission_status = 'pending'
+      WHERE id = ? AND commission_status = 'none'");
+  $upd->execute([$commission, $order['id']]);
 }
