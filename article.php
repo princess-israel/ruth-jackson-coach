@@ -91,6 +91,10 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
         <?php if (!empty($a['readMins'])): ?><span>· <?= e($a['readMins']) ?> min read</span><?php endif; ?>
       </div>
       <?php if ($artImg): ?><img class="article-hero-img" src="<?= e($artImg) ?>" alt="<?= e($a['title']) ?>"><?php endif; ?>
+      <section class="partners" style="margin:32px 0">
+        <p>Trained &amp; certified within the Women in Digital Business ecosystem</p>
+        <div class="marquee"><div class="marquee-track" data-partners></div></div>
+      </section>
       <div class="article-body"><?= $a['body'] ?? '' ?></div>
 
       <div class="cta-band reveal" style="margin-top:50px">
