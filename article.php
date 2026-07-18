@@ -56,8 +56,22 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
+<style>
+.rj-topbar{position:fixed;top:0;left:0;right:0;z-index:101;background:#070e29;color:#c2cdec;font-size:.78rem;padding:8px 0;text-align:center}
+.rj-topbar a{color:#e8b65a}
+.nav{top:34px}
+.page-pad{padding-top:154px}
+.cta-logos{margin:28px auto 0;max-width:480px}
+.cta-logos .marquee-track{gap:18px}
+.cta-logos .logo-chip{padding:5px 10px}
+.cta-logos .logo-chip img{height:16px}
+.partners{background:#0c1633;border-color:rgba(140,170,240,.22)}
+.partners p{color:#9fb0d8}
+.partners .logo-item{color:#c2cdec}
+</style>
 </head>
 <body>
+<div class="rj-topbar"><a href="mailto:info@coachruthjackson.com">info@coachruthjackson.com</a></div>
 <header class="nav">
   <div class="container nav-inner">
     <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
@@ -99,8 +113,28 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 
       <div class="cta-band reveal" style="margin-top:50px">
         <h2 style="font-size:1.6rem">Ready to turn this into real skills?</h2>
-        <p class="muted" style="margin-bottom:20px">Self-paced certificate courses, or custom training with Ruth.</p>
+        <p class="muted" style="margin-bottom:20px">Self-paced courses certified by Women in Digital Business, Microsoft, ILO and ITC.</p>
         <a class="btn btn-gold" href="programs.html">Browse programs →</a>
+        <div class="marquee cta-logos">
+          <div class="marquee-track">
+            <div class="logo-item logo-chip"><img src="assets/img/partner-widb.jpg" alt="Women in Digital Business"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-microsoft.jpg" alt="Microsoft"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-ilo.jpg" alt="ILO"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-itc.jpg" alt="ITC"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-widb.jpg" alt="Women in Digital Business"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-microsoft.jpg" alt="Microsoft"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-ilo.jpg" alt="ILO"></div>
+            <div class="logo-item logo-chip"><img src="assets/img/partner-itc.jpg" alt="ITC"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="center" style="margin-top:40px">
+        <h3 style="font-size:1.1rem;margin-bottom:14px">Contact us</h3>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a class="btn btn-gold btn-sm" href="https://wa.me/254729384374" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a class="btn btn-ghost btn-sm" href="tel:+254729384374">📞 Call us</a>
+        </div>
       </div>
     </article>
 <?php endif; ?>
@@ -108,7 +142,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 </main>
 
 <footer class="footer"><div class="container"><div class="footer-bottom" style="border:0">
-  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="about.html">About</a> · <a href="tel:+254729384374">+254 729 384374</a></span>
+  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="about.html">About</a> · <a href="tel:+254729384374">+254 729 384374</a> · <a href="https://wa.me/254729384374" target="_blank" rel="noopener">WhatsApp</a> · <a href="mailto:info@coachruthjackson.com">info@coachruthjackson.com</a></span>
 </div></div></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
