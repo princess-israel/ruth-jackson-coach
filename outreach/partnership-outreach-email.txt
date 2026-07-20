@@ -1,6 +1,6 @@
 Subject: Partnering with {{institution_name}} on AI & digital skills training
 
-Greetings {{contact_name}},
+Greetings,
 
 Trusted by institutions around the world, we have trained and certified
 100,000s of students worldwide with practical, digital skills that
@@ -19,7 +19,7 @@ What we teach:
 - Customer Service
 - Training of Trainers
 
-How it works: your students enrol, we train them online or on campus, and
+How it works: your students enroll, we train them online or on campus, and
 your institution earns a percentage of every fee.
 
 Reply with the courses that interest you, and I will send outlines and
