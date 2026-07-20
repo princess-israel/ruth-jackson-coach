@@ -1,14 +1,15 @@
 Subject: Partnering with {{institution_name}} on AI & digital skills training
 
-Dear {{contact_name}},
+Greetings {{contact_name}},
 
 Trusted by institutions around the world, we have trained and certified
-tens of 1000s of students worldwide with practical, digital skills that
+100,000s of students worldwide with practical, digital skills that
 translate into real workplace success.
 
 We deliver this through the Women in Digital Business programme, an
-initiative of Microsoft, the ILO and ITC. I am Ruth Jackson, a certified
-trainer delivering it through partner institutions across the globe.
+initiative of Microsoft, the ILO and ITC, and it is for both men and
+women. I am Ruth Jackson, a certified trainer delivering it through
+partner institutions across the globe.
 
 What we teach:
 - Artificial Intelligence
