@@ -9,3 +9,5 @@ data/articles.json
 data/affiliates.json
 data/ipn_id.txt
 outreach/output/
+outreach/suppression.csv
+__pycache__/

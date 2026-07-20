@@ -1,26 +1,33 @@
 # Partnership outreach email
 
 Cold-outreach template for university/TVET registrars, deans and principals,
-offering the Women in Digital Business partnership. Built from the approved
-copy in the project handover — do not lengthen the body copy.
+offering the Women in Digital Business partnership.
 
 ## Files
 
 - `partnership-outreach-email.html` — the mail-merge-ready HTML email.
   Table-based layout, inline CSS only (no `<style>` block, no flexbox), capped
-  at 600px, so it survives Gmail/Outlook stripping and reads on a phone.
+  at 600px. Colors match the site's own article pages (background `#e8eef9`,
+  ink `#27314f`/`#0c1633`, gold `#9a6b15`).
 - `partnership-outreach-email.txt` — plain-text alternative (first line is
   `Subject: ...`, the rest is the body). Many university mail servers strip
   HTML, and sending a text alternative alongside HTML improves deliverability.
 - `ruth-jackson-email-signature.html` — the signature block on its own, for
-  reuse in other emails. Deep teal `#0F6156`, ink `#16282E`, name in Georgia,
-  body in Arial, 3px left accent rule, three small logo images (Microsoft,
-  ILO, ITC) hosted on `coachruthjackson.com` (already live under
-  `assets/img/`).
+  reuse in other emails: name in Georgia, body in Arial, gold left accent
+  rule, Call/WhatsApp/Email/Website each individually clickable, and a
+  logo strip (Timshi, Microsoft, ILO, ITC, WIDB) hosted on
+  `coachruthjackson.com` (already live under `assets/img/`).
 - `contacts.sample.csv` — expected spreadsheet format: `Institution,
   Contact Name, Email`.
 - `merge_emails.py` — reads a contacts CSV and writes one `.eml` file per row
   to `outreach/output/` (gitignored — review-only, not for committing).
+  Automatically skips any address listed in `suppression.csv`.
+- `check_stop_replies.py` — scans a mailbox for STOP replies and adds the
+  sender to `suppression.csv` automatically, so `merge_emails.py` never
+  emails that address again. See below.
+- `suppression.sample.csv` — format reference only. The real
+  `suppression.csv` is gitignored (it holds real recipient emails) and is
+  created automatically the first time `check_stop_replies.py` runs.
 
 Merge fields used in the templates: `{{contact_name}}`, `{{institution_name}}`.
 
@@ -35,6 +42,36 @@ Open a few of the resulting `.eml` files in a real mail client (double-click
 on macOS Mail, or drag into Outlook/Thunderbird) to check formatting and links
 before sending anything. Update `--from-email` if Ruth sends from a different
 mailbox than `info@coachruthjackson.com`.
+
+## Honoring STOP replies automatically
+
+The email ends with "Reply STOP if you would rather not hear from me." To
+make that actually stop future sends without anyone having to track replies
+by hand:
+
+```
+cd outreach
+python3 check_stop_replies.py --host imap.zoho.com --user info@coachruthjackson.com
+```
+
+You'll be prompted for nothing insecure in the repo — pass the mailbox
+password as `--password`, or set `IMAP_HOST` / `IMAP_USER` / `IMAP_PASSWORD`
+as environment variables instead of typing it on the command line. Common
+hosts: `imap.zoho.com` (Zoho Mail), `imap.gmail.com` (Gmail — use an app
+password, not the account password).
+
+The script scans unread mail for "stop" in the subject or body, pulls out
+the sender's address, and appends it to `suppression.csv` with a timestamp.
+Run it once before generating each day's batch:
+
+```
+python3 check_stop_replies.py --host imap.zoho.com --user info@coachruthjackson.com
+python3 merge_emails.py contacts.csv
+```
+
+`merge_emails.py` automatically skips every address already in
+`suppression.csv` and prints which ones it skipped, so a contact who opted
+out is never sent to again, with no manual list-editing required.
 
 ## Sending: do this in batches, not all at once
 
@@ -53,3 +90,5 @@ With ~150 institutional addresses:
 - Watch reply/bounce rates on the first couple of batches before sending the
   rest, so a deliverability problem is caught early rather than after all 150
   have gone out.
+- Run `check_stop_replies.py` before every batch so opt-outs from earlier
+  sends are excluded automatically.

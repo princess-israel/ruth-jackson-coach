@@ -9,6 +9,10 @@ Writes review-ready .eml files to outreach/output/ (open them in any mail
 client, e.g. double-click on macOS Mail, or "Import" in Outlook/Thunderbird,
 to check formatting before sending).
 
+Any address in suppression.csv (built automatically by
+check_stop_replies.py from real STOP replies) is skipped automatically —
+run check_stop_replies.py before each batch to keep it current.
+
 Usage:
     python3 merge_emails.py contacts.csv \
         --from-email info@coachruthjackson.com \
@@ -29,6 +33,14 @@ HERE = Path(__file__).resolve().parent
 HTML_TEMPLATE_PATH = HERE / "partnership-outreach-email.html"
 TEXT_TEMPLATE_PATH = HERE / "partnership-outreach-email.txt"
 OUTPUT_DIR = HERE / "output"
+SUPPRESSION_PATH = HERE / "suppression.csv"
+
+
+def load_suppressed():
+    if not SUPPRESSION_PATH.exists():
+        return set()
+    with SUPPRESSION_PATH.open(newline="", encoding="utf-8") as f:
+        return {row["Email"].strip().lower() for row in csv.DictReader(f) if row.get("Email")}
 
 
 def load_templates():
@@ -72,8 +84,10 @@ def main():
         sys.exit(f"CSV not found: {csv_path}")
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+    suppressed = load_suppressed()
 
     count = 0
+    skipped = 0
     with csv_path.open(newline="", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         required = {"Institution", "Contact Name", "Email"}
@@ -87,6 +101,10 @@ def main():
             to_email = row["Email"].strip()
             if not to_email:
                 print(f"Skipping row with no email: {institution!r}", file=sys.stderr)
+                continue
+            if to_email.lower() in suppressed:
+                print(f"Skipping (opted out via STOP): {to_email}", file=sys.stderr)
+                skipped += 1
                 continue
 
             subject = merge(subject_tpl, institution, contact_name)
@@ -105,6 +123,8 @@ def main():
             count += 1
 
     print(f"Wrote {count} .eml file(s) to {OUTPUT_DIR}/")
+    if skipped:
+        print(f"Skipped {skipped} address(es) that already opted out (see suppression.csv).")
     print("Open a few in your mail client to review before sending in batches of 20-30/day.")
 
 
