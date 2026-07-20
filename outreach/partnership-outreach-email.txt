@@ -2,12 +2,13 @@ Subject: Partnering with {{institution_name}} on AI & digital skills training
 
 Dear {{contact_name}},
 
-Institutions like {{institution_name}} want their students leaving with
-practical, job-ready digital skills, not just a certificate.
+Trusted by institutions around the world, we have trained and certified
+tens of 1000s of students worldwide with practical, digital skills that
+translate into real workplace success.
 
-We deliver exactly that through the Women in Digital Business programme,
-an initiative of Microsoft, the ILO and ITC. I am Ruth Jackson, a
-certified trainer delivering it through partner institutions across Kenya.
+We deliver this through the Women in Digital Business programme, an
+initiative of Microsoft, the ILO and ITC. I am Ruth Jackson, a certified
+trainer delivering it through partner institutions across the globe.
 
 What we teach:
 - Artificial Intelligence
@@ -29,9 +30,7 @@ department.
 Warm regards,
 
 Ruth Jackson
-Certified Trainer, Women in Digital Business
+Certified Trainer by Microsoft, ILO and ITC
 Timshi Universal Institute
 Call: +254 729 384 374 | WhatsApp: +254 729 384 374 (wa.me/254729384374)
 Email: info@coachruthjackson.com | Website: coachruthjackson.com
-
-Reply STOP if you would rather not hear from me.
