@@ -5,9 +5,9 @@
   Table-based layout, inline CSS only (no <style> block, no flexbox) —
   built to survive Gmail/Outlook stripping. Capped at 600px.
 
-  Brand colors pulled from assets/css/styles.css: navy #0c1633 (--text)
-  and gold #9a6b15 (--gold), on white. Applied as typography and thin
-  accent rules only (no background color blocks, banners, or buttons in
+  Colors sampled directly from Ruth's own signature card: navy #0C3D8F,
+  gold #C69545, on white. Applied as typography, thin rules, and small
+  logo marks only (no background color blocks, banners, or buttons in
   the body) so it still reads as a personal email rather than a
   marketing send — a colour-blocked layout is what pushes cold
   institutional mail into Promotions/spam.
@@ -17,28 +17,45 @@
     <td align="center" style="padding:24px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;">
 
-        <!-- letterhead -->
+        <!-- top lockup: Timshi Universal Institute in partnership with Women in Digital Business — logos only -->
         <tr>
-          <td align="center" style="font-family:Arial,Helvetica,sans-serif;font-size:11px;font-weight:bold;letter-spacing:3px;text-transform:uppercase;color:#9a6b15;padding-bottom:8px;">
-            Women in Digital Business
+          <td align="center" style="padding-bottom:14px;">
+            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td><img src="https://coachruthjackson.com/assets/img/timshi-logo.png" alt="Timshi Universal Institute" width="40" height="40" style="display:block;height:40px;width:40px;border:0;"></td>
+                <td style="padding:0 14px;font-size:0;line-height:0;">&nbsp;</td>
+                <td width="1" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
+                <td style="padding:0 14px;font-size:0;line-height:0;">&nbsp;</td>
+                <td><img src="https://coachruthjackson.com/assets/img/partner-widb.jpg" alt="Women in Digital Business" width="75" height="40" style="display:block;height:40px;width:auto;border:0;"></td>
+              </tr>
+            </table>
           </td>
         </tr>
         <tr>
           <td style="padding-bottom:22px;">
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr><td bgcolor="#9a6b15" style="background-color:#9a6b15;font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
+              <tr><td bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
             </table>
           </td>
         </tr>
 
         <tr>
-          <td style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0c1633;">
+          <td style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0C3D8F;">
 
             Dear {{contact_name}},<br><br>
 
             We deliver the Women in Digital Business programme, an initiative of Microsoft, the ILO and ITC, through partner institutions like {{institution_name}}.<br><br>
 
-            What we teach: Artificial Intelligence, Digital Marketing, Cybersecurity, Graphic Design, Customer Service, Training of Trainers.<br><br>
+            What we teach:
+
+            <ul style="margin:8px 0 16px;padding:0 0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#0C3D8F;">
+              <li>Artificial Intelligence</li>
+              <li>Digital Marketing</li>
+              <li>Cybersecurity</li>
+              <li>Graphic Design</li>
+              <li>Customer Service</li>
+              <li>Training of Trainers</li>
+            </ul>
 
             How it works: your students enrol, we train them online or on campus, and your institution takes a percentage of every fee.<br><br>
 
@@ -54,41 +71,59 @@
             <!-- signature: matches outreach/ruth-jackson-email-signature.html -->
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
               <tr>
-                <td width="4" bgcolor="#9a6b15" style="background-color:#9a6b15;font-size:0;line-height:0;">&nbsp;</td>
+                <td width="4" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
                 <td style="padding:2px 0 2px 14px;">
                   <table role="presentation" cellpadding="0" cellspacing="0" border="0">
                     <tr>
-                      <td style="font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:bold;color:#0c1633;padding-bottom:3px;">
+                      <td style="font-family:Georgia,'Times New Roman',serif;font-size:19px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;color:#0C3D8F;padding-bottom:3px;">
                         Ruth Jackson
                       </td>
                     </tr>
                     <tr>
-                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:.5px;text-transform:uppercase;color:#9a6b15;padding-bottom:4px;">
+                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:1.5px;text-transform:uppercase;color:#C69545;padding-bottom:4px;">
                         Certified by Microsoft, ILO and ITC
                       </td>
                     </tr>
                     <tr>
-                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0c1633;padding-bottom:8px;">
+                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0C3D8F;padding-bottom:8px;">
                         Women in Digital Business
                       </td>
                     </tr>
                     <tr>
-                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0c1633;padding-bottom:10px;">
-                        +254 729 384 374&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:info@coachruthjackson.com" style="color:#9a6b15;text-decoration:none;">info@coachruthjackson.com</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://coachruthjackson.com" style="color:#9a6b15;text-decoration:none;">coachruthjackson.com</a>
+                      <td style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#0C3D8F;padding-bottom:10px;">
+                        +254 729 384 374&nbsp;&nbsp;|&nbsp;&nbsp;<a href="mailto:info@coachruthjackson.com" style="color:#C69545;text-decoration:none;">info@coachruthjackson.com</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="https://coachruthjackson.com" style="color:#C69545;text-decoration:none;">coachruthjackson.com</a>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding-bottom:10px;">
                         <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                          <tr><td width="60" bgcolor="#9a6b15" style="background-color:#9a6b15;font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
+                          <tr><td width="60" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;height:2px;">&nbsp;</td></tr>
                         </table>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                        <img src="https://coachruthjackson.com/assets/img/partner-microsoft.jpg" alt="Microsoft" width="112" height="24" style="display:inline-block;height:24px;width:auto;margin-right:14px;border:0;vertical-align:middle;">
-                        <img src="https://coachruthjackson.com/assets/img/partner-ilo.jpg" alt="ILO" width="67" height="24" style="display:inline-block;height:24px;width:auto;margin-right:14px;border:0;vertical-align:middle;">
-                        <img src="https://coachruthjackson.com/assets/img/partner-itc.jpg" alt="ITC" width="53" height="24" style="display:inline-block;height:24px;width:auto;border:0;vertical-align:middle;">
+                        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                          <tr>
+                            <td><img src="https://coachruthjackson.com/assets/img/timshi-logo.png" alt="Timshi Universal Institute" width="26" height="26" style="display:block;height:26px;width:26px;border:0;"></td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td width="1" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td><img src="https://coachruthjackson.com/assets/img/partner-microsoft.jpg" alt="Microsoft" width="90" height="20" style="display:block;height:20px;width:auto;border:0;"></td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td width="1" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td><img src="https://coachruthjackson.com/assets/img/partner-ilo.jpg" alt="ILO" width="56" height="20" style="display:block;height:20px;width:auto;border:0;"></td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td width="1" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td><img src="https://coachruthjackson.com/assets/img/partner-itc.jpg" alt="ITC" width="44" height="20" style="display:block;height:20px;width:auto;border:0;"></td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td width="1" bgcolor="#C69545" style="background-color:#C69545;font-size:0;line-height:0;">&nbsp;</td>
+                            <td style="padding:0 10px;font-size:0;line-height:0;">&nbsp;</td>
+                            <td><img src="https://coachruthjackson.com/assets/img/partner-widb.jpg" alt="Women in Digital Business" width="70" height="20" style="display:block;height:20px;width:auto;border:0;"></td>
+                          </tr>
+                        </table>
                       </td>
                     </tr>
                   </table>

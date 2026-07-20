@@ -6,8 +6,13 @@ We deliver the Women in Digital Business programme, an initiative of
 Microsoft, the ILO and ITC, through partner institutions like
 {{institution_name}}.
 
-What we teach: Artificial Intelligence, Digital Marketing, Cybersecurity,
-Graphic Design, Customer Service, Training of Trainers.
+What we teach:
+- Artificial Intelligence
+- Digital Marketing
+- Cybersecurity
+- Graphic Design
+- Customer Service
+- Training of Trainers
 
 How it works: your students enrol, we train them online or on campus, and
 your institution takes a percentage of every fee.
