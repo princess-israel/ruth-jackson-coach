@@ -2,9 +2,9 @@ Subject: Partner with us: AI and digital skills for your students
 
 Dear {{contact_name}},
 
-We deliver the Women in Digital Business programme, an initiative of
-Microsoft, the ILO and ITC, through partner institutions like
-{{institution_name}}.
+My name is Ruth Jackson. I am a certified trainer delivering the Women in
+Digital Business programme, an initiative of Microsoft, the ILO and ITC,
+in partnership with institutions such as {{institution_name}}.
 
 What we teach:
 - Artificial Intelligence
