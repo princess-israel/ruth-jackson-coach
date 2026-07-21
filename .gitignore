@@ -10,4 +10,5 @@ data/affiliates.json
 data/ipn_id.txt
 outreach/output/
 outreach/suppression.csv
+outreach/contacts-public-universities-kenya.csv
 __pycache__/
