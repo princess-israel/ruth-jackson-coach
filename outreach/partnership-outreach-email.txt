@@ -1,4 +1,4 @@
-Subject: Partnering with {{institution_name}} on AI & digital skills training
+Subject: Microsoft & ILO-certified: bring AI and digital skills training to {{institution_name}}
 
 Greetings,
 
