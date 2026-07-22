@@ -25,6 +25,11 @@ offering the Women in Digital Business partnership.
 - `check_stop_replies.py` — scans a mailbox for STOP replies and adds the
   sender to `suppression.csv` automatically, so `merge_emails.py` never
   emails that address again. See below.
+- `push_to_drafts.py` — alternative to `merge_emails.py` for webmail-only
+  setups: pushes each merged email straight into your mailbox's Drafts
+  folder over IMAP instead of writing `.eml` files. See below.
+- `_email_common.py` — shared template/merge logic used by both
+  `merge_emails.py` and `push_to_drafts.py`. Not run directly.
 - `suppression.sample.csv` — format reference only. The real
   `suppression.csv` is gitignored (it holds real recipient emails) and is
   created automatically the first time `check_stop_replies.py` runs.
@@ -42,6 +47,30 @@ Open a few of the resulting `.eml` files in a real mail client (double-click
 on macOS Mail, or drag into Outlook/Thunderbird) to check formatting and links
 before sending anything. Update `--from-email` if Ruth sends from a different
 mailbox than `info@coachruthjackson.com`.
+
+Either way, this only ever writes local files or drafts — nothing is sent
+automatically. Sending is always a manual, deliberate action from inside
+the real mailbox.
+
+## Webmail-only? Push straight to Drafts instead
+
+If there's no desktop mail client to open `.eml` files in (e.g. Zoho or
+Gmail used only in a browser), use `push_to_drafts.py` instead of
+`merge_emails.py`. It logs into the mailbox over IMAP and creates one
+ready-to-send draft per contact — open Drafts on your phone or in the
+browser afterward and hit Send on each one yourself. It never sends
+anything itself.
+
+```
+cd outreach
+python3 push_to_drafts.py contacts.csv --host imap.zoho.com --user info@coachruthjackson.com --limit 25
+```
+
+Same credential rules as `check_stop_replies.py` below: pass `--password`
+or set `IMAP_HOST` / `IMAP_USER` / `IMAP_PASSWORD`, never hardcode it.
+`--limit` caps how many drafts get created in one run, so you can match
+the 20-30/day batch pace directly instead of drafting all of them at once.
+It respects `suppression.csv` exactly like `merge_emails.py` does.
 
 ## Honoring STOP replies automatically
 
