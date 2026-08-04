@@ -132,8 +132,9 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
       <div class="center" style="margin-top:40px">
         <h3 style="font-size:1.1rem;margin-bottom:14px">Contact us</h3>
         <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
-          <a class="btn btn-gold btn-sm" href="https://wa.me/254729384374" target="_blank" rel="noopener">💬 WhatsApp</a>
-          <a class="btn btn-ghost btn-sm" href="tel:+254729384374">📞 Call us</a>
+          <a class="btn btn-gold btn-sm" href="https://wa.me/254729384374" target="_blank" rel="noopener">💬 WhatsApp +254 729 384374</a>
+          <a class="btn btn-ghost btn-sm" href="tel:+254729384374">📞 Call +254 729 384374</a>
+          <a class="btn btn-ghost btn-sm" href="mailto:info@coachruthjackson.com">✉️ info@coachruthjackson.com</a>
         </div>
       </div>
     </article>
