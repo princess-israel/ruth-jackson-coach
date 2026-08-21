@@ -8,3 +8,8 @@ data/programs.json
 data/articles.json
 data/affiliates.json
 data/ipn_id.txt
+outreach/output/
+outreach/suppression.csv
+outreach/contacts-public-universities-kenya.csv
+outreach/contacts-international-schools-kenya.csv
+__pycache__/
