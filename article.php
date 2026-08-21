@@ -80,6 +80,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
       <li><a href="customer-service.html">Customer Service</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="blog.html">Articles</a></li>
+      <li><a href="timshi-digital-ads.html">Timshi Digital Ads</a></li>
     </ul></nav>
     <div class="nav-cta"><a class="btn btn-gold btn-sm" href="programs.html">Enroll now</a>
     <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
