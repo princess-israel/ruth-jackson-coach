@@ -2,11 +2,11 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/irelandc/coachruthjackson.com
-    - export SRC=$(/bin/mktemp -d)
-    # Pull the latest code into a throwaway dir (independent of cPanel's repo
-    # state) so a deploy always has a complete, correct tree.
-    - /usr/bin/git clone --depth 1 --branch main https://github.com/princess-israel/ruth-jackson-coach.git "$SRC"
-    # Abort if the clone is incomplete, so we never sync an empty tree.
+    - export SRC=/home/irelandc/repositories/ruth-jackson-coach
+    # Deploy from the repo checkout that cPanel already keeps up to date via
+    # "Update from Remote". This avoids a fresh git clone during the deploy,
+    # which stalled in the cPanel deploy environment and left the docroot stale.
+    # Abort if the source tree is incomplete, so we never sync an empty tree.
     - /bin/test -f "$SRC/index.html"
     - /bin/mkdir -p "$DEPLOYPATH"
     # Copy into the live docroot. --inplace writes files directly (never a
@@ -17,4 +17,3 @@ deployment:
     # Force LiteSpeed to reload (clears the stale-file/404 cache).
     - /bin/echo "# litespeed reload $(date +%s)" >> "$DEPLOYPATH/.htaccess"
     - /usr/bin/touch "$DEPLOYPATH/.htaccess" "$DEPLOYPATH" "$DEPLOYPATH/index.html"
-    - /bin/rm -rf "$SRC"
