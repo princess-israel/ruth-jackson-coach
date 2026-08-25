@@ -5,13 +5,26 @@ function articles_file() { return articles_dir() . '/articles.json'; }
 function articles_default_file() { return articles_dir() . '/articles.default.json'; }
 
 function articles_load() {
-  foreach ([articles_file(), articles_default_file()] as $f) {
-    if (file_exists($f)) {
-      $j = json_decode(file_get_contents($f), true);
-      if (is_array($j)) return $j;
+  // Merge committed defaults (data/articles.default.json, version-controlled and
+  // deployed from git) with the runtime file (data/articles.json, written by the
+  // admin panel). Defaults are the base; runtime entries with the same slug win,
+  // so admin edits still override. This lets articles published via git appear
+  // live even when a runtime file exists, instead of being hidden by it.
+  $bySlug = [];
+  $order  = [];
+  foreach ([articles_default_file(), articles_file()] as $f) {
+    if (!file_exists($f)) continue;
+    $j = json_decode(file_get_contents($f), true);
+    if (!is_array($j)) continue;
+    foreach ($j as $a) {
+      $key = isset($a['slug']) && $a['slug'] !== '' ? $a['slug'] : ('#' . count($order));
+      if (!array_key_exists($key, $bySlug)) $order[] = $key;
+      $bySlug[$key] = $a;
     }
   }
-  return [];
+  $out = [];
+  foreach ($order as $k) $out[] = $bySlug[$k];
+  return $out;
 }
 function articles_sorted() {
   $list = articles_load();
