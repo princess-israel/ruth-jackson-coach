@@ -12,7 +12,8 @@ There is no build step. Edit files directly; the browser loads them as-is.
 ## Layout
 - `index.html`, `programs.html`, `program.html`, `customer-service.html`, `about.html`,
   `blog.html`, `affiliates.html`, `dashboard.html`, `login.html`, `admin.html`,
-  `video-studio.html` (admin-only AI video generator), `onboarding.html`,
+  `video-studio.html` (admin-only AI video generator),
+  `video-playbook.html` (noindex free-video how-to guide), `onboarding.html`,
   `payment-callback.html`, policy pages.
 - `assets/css/styles.css` — all styling (CSS variables; light default + `[data-theme=dark]`).
 - `assets/js/` — `main.js` (nav, footer, language switcher, GSAP, renderers),
