@@ -22,6 +22,11 @@ return [
   'admin_email'     => 'info@coachruthjackson.com',
   'admin_token'     => 'change-this-to-a-strong-secret',
 
+  // AI Video Studio (video-studio.html). Get a token at replicate.com -> Account
+  // -> API tokens. Pay-per-use; you are only billed for videos you generate.
+  // Leave blank to keep the studio disabled. See VIDEO-STUDIO-SETUP.md.
+  'replicate_token' => '',
+
   // MySQL (cPanel -> MySQL Databases). Use the prefixed names cPanel shows you,
   // e.g. irelandc_ruth. The DB user must be added to the DB with ALL PRIVILEGES.
   'db' => [
