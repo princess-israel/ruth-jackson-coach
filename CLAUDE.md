@@ -12,11 +12,14 @@ There is no build step. Edit files directly; the browser loads them as-is.
 ## Layout
 - `index.html`, `programs.html`, `program.html`, `customer-service.html`, `about.html`,
   `blog.html`, `affiliates.html`, `dashboard.html`, `login.html`, `admin.html`,
-  `onboarding.html`, `payment-callback.html`, policy pages.
+  `video-studio.html` (admin-only AI video generator), `onboarding.html`,
+  `payment-callback.html`, policy pages.
 - `assets/css/styles.css` — all styling (CSS variables; light default + `[data-theme=dark]`).
 - `assets/js/` — `main.js` (nav, footer, language switcher, GSAP, renderers),
   `store.js` (customer session/data layer), `data.js` (catalog data), `chat.js` (AI widget).
 - `api/` — PHP endpoints. `api/pesapal/` handles payments. `api/admin/` is admin-only.
+  `api/video/` powers the AI Video Studio via Replicate (admin-gated; token in
+  `config.php`, see `VIDEO-STUDIO-SETUP.md`).
   `data/*.default.json` are committed defaults; runtime `data/*.json` are gitignored.
 
 ## Critical rules

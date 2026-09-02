@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Video Studio, Ruth Jackson AI Coach</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070e29">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script>/* apply saved theme before paint to avoid a flash */(function(){try{if(localStorage.getItem("rj_theme")==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+<style>
+  .vs-wrap{max-width:1180px;margin:0 auto;padding:24px}
+  .vs-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  .vs-top .actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .vs-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:22px;align-items:start}
+  @media(max-width:900px){.vs-grid{grid-template-columns:1fr}}
+  .vs-label{display:block;font-family:var(--font-head);font-weight:600;font-size:.9rem;margin:0 0 8px}
+  .vs-hint{font-size:.82rem;color:var(--muted);margin:6px 0 0}
+  textarea.field,select.field,input.field{width:100%;background:var(--navy-800);color:var(--text);border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;font-family:var(--font-body);font-size:.98rem}
+  textarea.field{min-height:120px;resize:vertical;line-height:1.5}
+  select.field:disabled{opacity:.45;cursor:not-allowed}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line-strong);background:var(--glass);color:var(--text);border-radius:999px;padding:8px 14px;font-family:var(--font-head);font-weight:600;font-size:.82rem;cursor:pointer;transition:background .2s,border-color .2s,transform .15s}
+  .chip:hover{transform:translateY(-1px)}
+  .chip.on{background:var(--gold);color:#1a1200;border-color:var(--gold)}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media(max-width:520px){.row3{grid-template-columns:1fr}}
+  .vs-field+.vs-field{margin-top:18px}
+  .preview-stage{aspect-ratio:16/9;width:100%;background:var(--navy-800);border:1px solid var(--line);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;overflow:hidden;text-align:center;padding:18px}
+  .preview-stage.tall{aspect-ratio:9/16;max-width:340px;margin:0 auto}
+  .preview-stage.square{aspect-ratio:1/1;max-width:440px;margin:0 auto}
+  .preview-stage video{width:100%;height:100%;object-fit:contain;background:#000;border-radius:calc(var(--radius) - 4px)}
+  .spinner{width:44px;height:44px;border-radius:50%;border:4px solid var(--line-strong);border-top-color:var(--gold);animation:vspin 1s linear infinite;margin:0 auto 14px}
+  @keyframes vspin{to{transform:rotate(360deg)}}
+  .vs-status{font-size:.9rem;color:var(--muted)}
+  .vs-err{background:var(--err-bg);border:1px solid var(--err-border);color:var(--err);border-radius:var(--radius-sm);padding:12px 14px;font-size:.9rem;margin-top:14px}
+  .cost-note{font-size:.8rem;color:var(--muted-2);margin-top:10px;text-align:center}
+  .hist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px}
+  .hist-card{border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;background:var(--navy-850)}
+  .hist-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;display:block}
+  .hist-body{padding:10px 12px}
+  .hist-body p{font-size:.82rem;margin:0 0 8px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .hist-body .hb-actions{display:flex;gap:8px}
+  .tips li{margin-bottom:8px;color:var(--muted);font-size:.9rem}
+</style>
+</head>
+<body>
+
+<!-- Login gate (same single-admin secret as the admin dashboard) -->
+<div class="auth-wrap" id="vs-login" style="display:none;position:fixed;inset:0;z-index:500">
+  <div class="auth-card">
+    <a class="brand" href="index.html" style="justify-content:center;margin-bottom:20px"><span class="logo">RJ</span><span>Ruth Jackson<small>Video Studio</small></span></a>
+    <h2 style="text-align:center;font-size:1.5rem">Studio access</h2>
+    <p class="muted center" style="margin-bottom:22px">Enter your admin password to open the studio.</p>
+    <form id="vl-form">
+      <div class="field"><label>Admin email</label><input type="email" id="vl-email" autocomplete="username" required placeholder="info@coachruthjackson.com"></div>
+      <div class="field"><label>Admin password</label><input type="password" id="vl-pass" autocomplete="current-password" required placeholder="••••••••"></div>
+      <div id="vl-note" class="muted" style="font-size:.85rem;min-height:1.2em;margin-bottom:10px"></div>
+      <button class="btn btn-gold btn-block" type="submit">Sign in</button>
+    </form>
+    <p class="auth-switch"><a href="index.html">← Back to site</a></p>
+  </div>
+</div>
+
+<div class="vs-wrap" id="vs-root" style="display:none">
+  <div class="vs-top">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>Video Studio</small></span></a>
+    <div class="actions">
+      <button class="btn btn-ghost btn-sm" id="vs-theme" type="button">🌓 Theme</button>
+      <a class="btn btn-ghost btn-sm" href="admin.html">← Admin</a>
+      <button class="btn btn-ghost btn-sm" id="vs-logout" type="button" style="color:var(--rose)">Log out</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom:20px">
+    <span class="eyebrow">AI Video Studio</span>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 6px">Create high quality videos</h1>
+    <p class="muted" style="max-width:620px">Describe a lesson clip or a marketing reel, choose a look, and the studio renders a finished video for you. Great for course intros, social promos and adverts.</p>
+  </div>
+
+  <div class="vs-grid">
+    <!-- CONTROLS -->
+    <div class="panel">
+      <div class="vs-field">
+        <label class="vs-label">1. What is this video for?</label>
+        <div class="chips" id="purpose-chips"></div>
+      </div>
+
+      <div class="vs-field">
+        <label class="vs-label" for="vs-prompt">2. Describe the video</label>
+        <textarea class="field" id="vs-prompt" placeholder="e.g. A confident African woman trainer in a bright modern office welcomes students to a digital marketing course, warm smile, speaking to camera, soft daylight, professional and inspiring."></textarea>
+        <p class="vs-hint">Tip: name the subject, the setting, the mood and the camera movement. The more specific, the better the result.</p>
+      </div>
+
+      <div class="vs-field">
+        <label class="vs-label">3. Pick a look</label>
+        <div class="chips" id="style-chips"></div>
+      </div>
+
+      <div class="vs-field">
+        <label class="vs-label" for="vs-model">4. Quality engine</label>
+        <select class="field" id="vs-model"></select>
+        <p class="vs-hint" id="vs-model-hint"></p>
+      </div>
+
+      <div class="vs-field row3">
+        <div>
+          <label class="vs-label" for="vs-aspect">Shape</label>
+          <select class="field" id="vs-aspect"></select>
+        </div>
+        <div>
+          <label class="vs-label" for="vs-duration">Length</label>
+          <select class="field" id="vs-duration"></select>
+        </div>
+        <div>
+          <label class="vs-label" for="vs-res">Resolution</label>
+          <select class="field" id="vs-res"></select>
+        </div>
+      </div>
+
+      <div class="vs-field">
+        <a id="vs-adv-toggle" class="muted" style="cursor:pointer;font-size:.85rem">▸ Advanced: things to avoid (optional)</a>
+        <div id="vs-adv" style="display:none;margin-top:10px">
+          <input class="field" id="vs-negative" placeholder="e.g. blurry, distorted faces, text, watermark, low quality">
+        </div>
+      </div>
+
+      <button class="btn btn-gold btn-block" id="vs-generate" type="button" style="margin-top:20px">🎬 Generate video</button>
+      <p class="cost-note">Each generation uses your Replicate credit. Rendering takes about 1 to 4 minutes.</p>
+    </div>
+
+    <!-- PREVIEW -->
+    <div>
+      <div class="panel">
+        <h3 style="margin-top:0">Preview</h3>
+        <div class="preview-stage" id="vs-stage">
+          <div class="muted">Your video will appear here.</div>
+        </div>
+        <div id="vs-err" class="vs-err" style="display:none"></div>
+        <div id="vs-actions" style="display:none;gap:10px;margin-top:14px;flex-wrap:wrap">
+          <a class="btn btn-gold btn-sm" id="vs-download" download>⬇ Download</a>
+          <button class="btn btn-ghost btn-sm" id="vs-copy" type="button">🔗 Copy link</button>
+          <button class="btn btn-ghost btn-sm" id="vs-again" type="button">↻ New video</button>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:20px">
+        <h3 style="margin-top:0">Prompt ideas</h3>
+        <ul class="tips" style="margin:0;padding-left:18px">
+          <li><b>Course intro:</b> "Friendly female trainer greets learners, welcome to the AI for Business course, bright studio, speaking to camera."</li>
+          <li><b>Social reel (9:16):</b> "Fast, energetic montage of a woman using a laptop, phone and design tools, bold captions feel, upbeat, vertical."</li>
+          <li><b>Advert:</b> "Cinematic shot of confident professionals in a call centre, smiling, headsets on, modern office, warm lighting."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div style="margin-top:34px">
+    <h3>Recent videos</h3>
+    <p class="muted" style="margin-top:-4px;font-size:.88rem">Saved on this device. Download the ones you want to keep.</p>
+    <div class="hist-grid" id="vs-history"></div>
+    <p class="muted" id="vs-history-empty" style="font-size:.9rem">No videos yet. Create your first one above.</p>
+  </div>
+</div>
+
+<script src="assets/js/video-studio.js"></script>
+</body>
+</html>
