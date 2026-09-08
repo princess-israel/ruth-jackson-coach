@@ -107,7 +107,7 @@ function pesapal_register_ipn($cfg, $token, $base) {
 /** Server-side price authority — the client cannot change the charged amount. */
 function pesapal_programs() {
   return [
-    'ai-women-entrepreneurs'   => ['title' => 'Artificial Intelligence for Women Entrepreneurs', 'price' => 79],
+    'ai-women-entrepreneurs'   => ['title' => 'Artificial Intelligence Academy', 'price' => 79],
     'digital-marketing-social' => ['title' => 'Digital Marketing & Social Media Management',     'price' => 79],
     'website-development'       => ['title' => 'Build Your Business Website',                       'price' => 79],
     'seo-online-visibility'     => ['title' => 'SEO & Online Visibility',                           'price' => 79],

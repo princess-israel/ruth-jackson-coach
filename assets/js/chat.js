@@ -118,13 +118,13 @@
     } else if (has("customer service", "banking", "service training", "team training")) {
       reply = `Great choice 💬 Customer Service Excellence is Ruth's signature, personally delivered. She spent years in <b>banking customer service</b>, so this is her strongest craft. It's custom-built for you or your team, no fixed price. <a href="${BASE}customer-service.html">Request custom training →</a> or message her on <a href="${WHATSAPP}" target="_blank">WhatsApp</a>.`;
     } else if (has("course", "program", "learn", "offer", "what do you", "topics")) {
-      reply = `Ruth offers 6 self-paced certificate courses ($79 each): <br>🤖 AI for Women Entrepreneurs<br>📣 Digital Marketing & Social Media<br>🌐 Build Your Business Website<br>🔎 SEO & Online Visibility<br>📊 Data Analysis for Growth<br>🛒 E-Commerce & Selling Online<br><a href="${BASE}programs.html">Explore all →</a>`;
+      reply = `Ruth offers 6 self-paced certificate courses ($79 each): <br>🤖 Artificial Intelligence Academy<br>📣 Digital Marketing & Social Media<br>🌐 Build Your Business Website<br>🔎 SEO & Online Visibility<br>📊 Data Analysis for Growth<br>🛒 E-Commerce & Selling Online<br><a href="${BASE}programs.html">Explore all →</a>`;
     } else if (has("enroll", "sign up", "buy", "register", "start", "how do i join")) {
       reply = `It's simple: pick a course → click <b>Enroll ($79)</b> → create your account → you'll land in your <b>customer dashboard</b>, where Ruth sends your private access link and instructions, and you can message her directly. <a href="${BASE}programs.html">Choose a course →</a>`;
     } else if (has("dashboard", "access", "after i buy", "instructions")) {
       reply = `After enrolling you get a personal <b>customer dashboard</b>. That's where Ruth shares your course access link, getting-started instructions, and where you two chat directly. <a href="${BASE}login.html">Go to dashboard →</a>`;
     } else if (has("ai", "artificial intelligence", "chatgpt")) {
-      reply = `Ruth's flagship is <b>Artificial Intelligence for Women Entrepreneurs</b>, practical AI tools for marketing, admin and growth, no tech background needed. $79, certificate included. <a href="${BASE}program.html?id=ai-women-entrepreneurs">View course →</a>`;
+      reply = `Ruth's flagship is <b>Artificial Intelligence Academy</b>, practical AI tools for marketing, admin and growth, no tech background needed. $79, certificate included. <a href="${BASE}program.html?id=ai-women-entrepreneurs">View course →</a>`;
     } else if (has("ruth", "who is", "about", "experience", "qualif")) {
       reply = `Ruth Wanjohi, known as <b>Ruth Jackson</b>, is an AI coach, Microsoft-certified, and a certified <b>WIDB Lead Trainer</b> (Women in Digital Business / ITC-ILO). She empowers women in business and youth, and previously built deep expertise in banking customer service. <a href="${BASE}about.html">Read her story →</a>`;
     } else if (has("contact", "phone", "call", "whatsapp", "email", "reach")) {

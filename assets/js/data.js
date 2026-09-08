@@ -5,7 +5,7 @@ window.RJ_PROGRAMS = [
   {
     id: "ai-women-entrepreneurs",
     icon: "🤖",
-    title: "Artificial Intelligence for Women Entrepreneurs",
+    title: "Artificial Intelligence Academy",
     short: "Use AI tools to plan, market and run your business, no tech background needed.",
     price: 79,
     level: "Beginner → Intermediate",
