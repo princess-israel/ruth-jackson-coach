@@ -13,16 +13,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <style>
-  .contact-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:520px;margin:0 auto}
-  .contact-row{display:flex;align-items:center;gap:16px;padding:18px 20px;border:1px solid var(--line-strong);border-radius:16px;background:var(--surface,#fff);box-shadow:var(--shadow);text-decoration:none;transition:transform .2s ease,border-color .2s ease}
-  .contact-row:hover{transform:translateY(-2px);border-color:var(--gold,#e0a53f)}
-  .contact-row .ico{font-size:1.6rem;width:46px;height:46px;flex:0 0 46px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:rgba(0,0,0,.05)}
-  .contact-row .ct-label{font-weight:700;font-size:1.02rem;line-height:1.2}
-  .contact-row .ct-sub{font-size:.9rem;color:var(--muted);margin-top:2px}
-  .contact-row.wa{background:#25D366;border-color:#25D366}
-  .contact-row.wa .ico{background:rgba(255,255,255,.22)}
-  .contact-row.wa .ct-label,.contact-row.wa .ct-sub{color:#fff}
-  .contact-row.wa:hover{border-color:#1fb457}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:560px;margin:0 auto}
+  .ctile{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;min-height:158px;padding:22px 14px;border-radius:18px;text-decoration:none;background:#0e1c40;color:#fff;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 24px rgba(7,14,41,.14);transition:transform .2s ease,box-shadow .2s ease}
+  .ctile:hover{transform:translateY(-3px);box-shadow:0 16px 32px rgba(7,14,41,.22)}
+  .ctile .ico{width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.6rem;background:#e0a53f;color:#0e1c40}
+  .ctile .ico svg{display:block}
+  .ctile .lbl{font-weight:700;font-size:1.05rem}
+  .ctile .sub{font-size:.82rem;color:rgba(255,255,255,.72);word-break:break-word;line-height:1.3}
+  .ctile.wa{background:#25D366}
+  .ctile.wa .ico{background:#fff;color:#25D366}
+  .ctile.wa .sub{color:rgba(255,255,255,.92)}
 </style>
 </head>
 <body>
@@ -59,36 +59,28 @@
   <div class="container">
     <div class="contact-grid">
 
-      <a class="contact-row wa" href="https://wa.me/254729384374?text=Hi%2C%20I%20found%20you%20on%20Coach%20Ruth%20Jackson%20and%20have%20a%20few%20enquiries." target="_blank" rel="noopener">
+      <a class="ctile wa" href="https://wa.me/254729384374?text=Hi%2C%20I%20found%20you%20on%20Coach%20Ruth%20Jackson%20and%20have%20a%20few%20enquiries." target="_blank" rel="noopener">
         <span class="ico">💬</span>
-        <span>
-          <span class="ct-label">Message us on WhatsApp</span>
-          <span class="ct-sub">Fastest reply, tap to chat</span>
-        </span>
+        <span class="lbl">WhatsApp</span>
+        <span class="sub">Tap to chat</span>
       </a>
 
-      <a class="contact-row" href="tel:+254729384374">
+      <a class="ctile" href="tel:+254729384374">
         <span class="ico">📞</span>
-        <span>
-          <span class="ct-label">+254 729 384374</span>
-          <span class="ct-sub">Tap to call</span>
-        </span>
+        <span class="lbl">Call us</span>
+        <span class="sub">+254 729 384374</span>
       </a>
 
-      <a class="contact-row" href="mailto:info@coachruthjackson.com">
+      <a class="ctile" href="mailto:info@coachruthjackson.com">
         <span class="ico">✉️</span>
-        <span>
-          <span class="ct-label">info@coachruthjackson.com</span>
-          <span class="ct-sub">Tap to email</span>
-        </span>
+        <span class="lbl">Email</span>
+        <span class="sub">info@coachruthjackson.com</span>
       </a>
 
-      <a class="contact-row" href="#" data-open-chat="Hi, I have a few questions">
-        <span class="ico">🤖</span>
-        <span>
-          <span class="ct-label">Ask the AI assistant</span>
-          <span class="ct-sub">Quick answers, right here on the site</span>
-        </span>
+      <a class="ctile" href="#" data-open-chat="Hi, I have a few questions">
+        <span class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#0e1c40" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
+        <span class="lbl">Ask the AI</span>
+        <span class="sub">Quick questions</span>
       </a>
 
     </div>
