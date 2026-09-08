@@ -128,7 +128,7 @@
     } else if (has("ruth", "who is", "about", "experience", "qualif")) {
       reply = `Ruth Wanjohi, known as <b>Ruth Jackson</b>, is an AI coach, Microsoft-certified, and a certified <b>WIDB Lead Trainer</b> (Women in Digital Business / ITC-ILO). She empowers women in business and youth, and previously built deep expertise in banking customer service. <a href="${BASE}about.html">Read her story →</a>`;
     } else if (has("contact", "phone", "call", "whatsapp", "email", "reach")) {
-      reply = `You can reach Ruth directly:<br>📞 ${PHONE}<br>💬 <a href="${WHATSAPP}" target="_blank">Chat on WhatsApp</a><br>Or just enroll and message her inside your dashboard.`;
+      reply = `You can reach Ruth on the <a href="${BASE}contact.html">Contact page</a> — WhatsApp, call, or email. Or enroll and message her right inside your dashboard.`;
     } else if (has("self", "pace", "time", "long", "duration")) {
       reply = `Yes, every course is a <b>self-learning, self-paced</b> course 🎯 You study online on your own schedule, start anytime, go at your own speed, and keep <b>lifetime access</b>. There are no live classes or fixed timetable, most learners finish in about 6-8 hours. <a href="${BASE}programs.html">Browse the courses →</a>`;
     } else if (has("thank", "thanks", "asante", "great", "ok", "cool")) {
@@ -136,7 +136,7 @@
     } else if (has("women", "youth", "empower")) {
       reply = `Absolutely, Ruth is passionate about empowering <b>women in business and youth</b>. Her programs are designed to be beginner-friendly and immediately practical. 💪 <a href="${BASE}programs.html">See how →</a>`;
     } else {
-      reply = `Good question! I can help with our <b>$79 certificate courses</b>, the custom <b>customer service training</b>, enrollment, or contacting Ruth. You can also reach her on <a href="${WHATSAPP}" target="_blank">WhatsApp</a> (${PHONE}). What would you like to know?`;
+      reply = `Good question! I can help with our <b>$79 certificate courses</b>, the custom <b>customer service training</b>, enrollment, or contacting Ruth. You can also reach her on the <a href="${BASE}contact.html">Contact page</a>. What would you like to know?`;
     }
 
     const t = typing();
