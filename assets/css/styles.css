@@ -583,6 +583,11 @@ html[data-theme="dark"]{
   /* keep the top bar from overflowing: solid page CTAs move into page content,
      the menu (☰) and Sign in stay reachable */
   .nav-cta .btn-gold,.nav-cta .btn-azure{display:none}
+  /* On phones the top bar was overcrowded (logo + language + theme + account),
+     pushing the ☰ menu off-screen. Hide the two secondary toggles so the menu
+     button always fits. Theme still follows the phone's system light/dark. */
+  .nav-cta .theme-toggle,.nav-cta .lang-switch{display:none}
+  .hamburger{flex:0 0 auto}
   .nav-cta{gap:8px}
   .brand small{display:none}
   .brand{font-size:1rem;gap:9px}
