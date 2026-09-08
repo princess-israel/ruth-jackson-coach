@@ -334,18 +334,27 @@
   }
   renderPrograms(false);
 
-  // Refresh the catalog from the server (so admin-added programs appear).
-  // Falls back silently to the bundled defaults if the API isn't reachable.
+  // Refresh only PRICES from the server (so admin price edits show live).
+  // The bundled catalog in data.js is the source of truth for course titles,
+  // descriptions, ordering and which courses appear, so content changes ship
+  // reliably regardless of any older catalog file left on the server.
   (function loadServerCatalog() {
     if (!document.querySelector("[data-programs]")) return;
-    const sig = list => JSON.stringify((list || []).map(p => [p.id, p.price]));
+    const priceSig = list => JSON.stringify((list || []).map(p => [p.id, p.price]));
     fetch("/api/programs.php?_=" + Date.now(), { cache: "no-store" })
       .then(r => r.ok ? r.json() : null)
       .then(d => {
         if (!d || !Array.isArray(d.programs) || !d.programs.length) return;
-        const paid = d.programs.filter(p => Number(p.price) > 0);
-        if (paid.length && sig(paid) !== sig(window.RJ_PROGRAMS)) {
-          window.RJ_PROGRAMS = paid;
+        const serverPrice = {};
+        d.programs.forEach(p => { if (p && p.id) serverPrice[p.id] = Number(p.price); });
+        const before = priceSig(window.RJ_PROGRAMS);
+        const updated = window.RJ_PROGRAMS.map(p =>
+          (p.id in serverPrice && serverPrice[p.id] > 0 && serverPrice[p.id] !== Number(p.price))
+            ? Object.assign({}, p, { price: serverPrice[p.id] })
+            : p
+        );
+        if (priceSig(updated) !== before) {
+          window.RJ_PROGRAMS = updated;
           renderPrograms(true);
         }
       })
