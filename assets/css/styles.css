@@ -588,6 +588,7 @@ html[data-theme="dark"]{
      tap for all languages) but hide the theme toggle so the ☰ menu still fits.
      Theme still follows the phone's system light/dark. */
   .nav-cta .theme-toggle{display:none}
+  .nav-cta [data-account-cta]{display:none}
   .nav-cta .lang-switch .lang-cur{display:none}
   .hamburger{flex:0 0 auto}
   .nav-cta{gap:8px}
