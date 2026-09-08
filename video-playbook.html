@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Video Playbook, Ruth Jackson</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="A no-cost workflow for making TUI course lessons and marketing clips using only free tools.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0f7256">
+<script>/* apply saved theme before paint (shared with the rest of the site) */(function(){try{if(localStorage.getItem("rj_theme")==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f1f4f1;
+    --surface:#ffffff;
+    --surface-2:#f7faf8;
+    --ink:#16202e;
+    --muted:#586576;
+    --line:rgba(22,32,46,.12);
+    --line-strong:rgba(22,32,46,.22);
+    --emerald:#0f7256;
+    --emerald-soft:#e3f1ea;
+    --gold:#9a6b15;
+    --gold-soft:#f4ead2;
+    --shadow:0 18px 44px -26px rgba(20,40,40,.35);
+    --font-display:'Bricolage Grotesque',Georgia,serif;
+    --font-body:'Inter',system-ui,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --paper:#0b1018; --surface:#131c2b; --surface-2:#0f1826;
+      --ink:#e9f0f8; --muted:#9aabc0;
+      --line:rgba(150,180,215,.16); --line-strong:rgba(150,180,215,.30);
+      --emerald:#43d3a3; --emerald-soft:rgba(67,211,163,.13);
+      --gold:#e6b862; --gold-soft:rgba(230,184,98,.14);
+      --shadow:0 22px 50px -26px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0b1018; --surface:#131c2b; --surface-2:#0f1826;
+    --ink:#e9f0f8; --muted:#9aabc0;
+    --line:rgba(150,180,215,.16); --line-strong:rgba(150,180,215,.30);
+    --emerald:#43d3a3; --emerald-soft:rgba(67,211,163,.13);
+    --gold:#e6b862; --gold-soft:rgba(230,184,98,.14);
+    --shadow:0 22px 50px -26px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:clamp(18px,4vw,44px) clamp(18px,4vw,40px) 72px}
+  h1,h2,h3{font-family:var(--font-display);line-height:1.05;text-wrap:balance;margin:0}
+  h1{font-size:clamp(2.3rem,6vw,4rem);font-weight:800;letter-spacing:-.02em}
+  h2{font-size:clamp(1.5rem,3.2vw,2.1rem);font-weight:700;letter-spacing:-.01em}
+  h3{font-size:1.12rem;font-weight:700}
+  p{margin:0}
+  a{color:inherit}
+  .eyebrow{font-family:var(--font-mono);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--emerald)}
+
+  .top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:30px;flex-wrap:wrap}
+  .nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .lnk{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.05em;background:var(--surface);border:1px solid var(--line-strong);color:var(--muted);border-radius:999px;padding:8px 14px;cursor:pointer;text-decoration:none}
+  .lnk:hover{color:var(--ink);border-color:var(--emerald)}
+
+  .hero p.lede{font-size:clamp(1.05rem,2vw,1.28rem);color:var(--muted);max-width:60ch;margin-top:16px}
+  .free-badge{display:inline-flex;align-items:center;gap:10px;margin-top:22px;background:var(--emerald-soft);color:var(--emerald);border:1px solid var(--emerald);border-radius:999px;padding:9px 18px;font-family:var(--font-mono);font-weight:600;font-size:.82rem;letter-spacing:.03em}
+  .free-badge b{font-size:1.02rem}
+
+  .truth{margin:30px 0 8px;border-left:4px solid var(--gold);background:var(--gold-soft);border-radius:0 14px 14px 0;padding:18px 22px}
+  .truth p{color:var(--ink)}
+  .truth .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:600;display:block;margin-bottom:6px}
+
+  section{margin-top:52px}
+  .section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:760px){.lanes{grid-template-columns:1fr}}
+  .lane{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;box-shadow:var(--shadow)}
+  .lane .tag{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .lane.teach .tag{color:var(--emerald)}
+  .lane.promo .tag{color:var(--gold)}
+  .lane h3{margin:8px 0 6px;font-size:1.35rem}
+  .lane .sub{color:var(--muted);font-size:.95rem;margin-bottom:20px}
+
+  .tool{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 0;border-top:1px solid var(--line)}
+  .tool:first-of-type{border-top:1px dashed var(--line-strong)}
+  .tool .name{font-family:var(--font-mono);font-weight:600;font-size:.92rem}
+  .tool .use{grid-column:1/2;color:var(--muted);font-size:.88rem}
+  .pill{align-self:start;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.04em;padding:4px 9px;border-radius:999px;white-space:nowrap;font-weight:600}
+  .pill.good{background:var(--emerald-soft);color:var(--emerald);border:1px solid var(--emerald)}
+  .pill.warn{background:var(--gold-soft);color:var(--gold);border:1px solid var(--gold)}
+
+  .tips{margin:20px 0 0;padding:16px 18px;background:var(--surface-2);border-radius:12px;font-size:.9rem}
+  .tips ul{margin:8px 0 0;padding-left:18px}
+  .tips li{margin-bottom:6px;color:var(--muted)}
+  .tips li b{color:var(--ink)}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}}
+
+  .ratio{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line)}
+  .ratio:first-child{border-top:0}
+  .ratio .box{flex:0 0 auto;border-radius:5px;margin-top:3px}
+  .ratio .r169{width:44px;height:25px;background:var(--emerald)}
+  .ratio .r916{width:20px;height:35px;background:var(--gold)}
+  .ratio .r11{width:30px;height:30px;background:var(--muted)}
+  .ratio .t b{font-family:var(--font-mono);font-size:.9rem}
+  .ratio .t span{display:block;color:var(--muted);font-size:.86rem}
+
+  .prompt{background:var(--surface-2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:16px 18px;margin-top:14px}
+  .prompt .label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+  .prompt code{font-family:var(--font-mono);font-size:.84rem;color:var(--ink);line-height:1.55;display:block}
+
+  .flow{display:grid;gap:2px;margin-top:6px}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;padding:16px 0;border-top:1px solid var(--line);counter-increment:step}
+  .step:first-child{border-top:0}
+  .step .n{font-family:var(--font-display);font-weight:800;font-size:1.5rem;color:var(--emerald);min-width:1.4em}
+  .step .n::before{content:counter(step,decimal-leading-zero)}
+  .step h3{font-size:1.02rem;margin-bottom:2px}
+  .step p{color:var(--muted);font-size:.92rem}
+  .flow{counter-reset:step}
+
+  .foot{margin-top:60px;padding-top:26px;border-top:1px solid var(--line-strong);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.88rem}
+  .foot a{color:var(--emerald);font-weight:600;text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  :focus-visible{outline:2px solid var(--emerald);outline-offset:2px;border-radius:4px}
+  @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top">
+    <span class="eyebrow">Ruth Jackson &middot; Timshi Universal Institute</span>
+    <div class="nav">
+      <a class="lnk" href="index.html">&larr; Site</a>
+      <a class="lnk" href="admin.html">Admin</a>
+      <a class="lnk" href="video-studio.html">Video Studio</a>
+      <button class="lnk" id="themeBtn" type="button">Dark</button>
+    </div>
+  </div>
+
+  <header class="hero">
+    <h1>Make your videos for free</h1>
+    <p class="lede">A practical playbook for creating course lessons and marketing clips for your TUI programs, without paying for any tool or subscription. Every option here has a genuinely free path.</p>
+    <span class="free-badge">Total cost &nbsp;<b>KES 0 / $0</b></span>
+  </header>
+
+  <div class="truth">
+    <span class="k">The one honest rule</span>
+    <p>No tool gives away <em>unlimited, high quality, AI-generated</em> video for free, because it runs on costly machines. So the free path splits in two: <b>record your own lessons</b> (free forever, and better for teaching), and use <b>free daily credits</b> on AI tools for short promo clips. Pick the lane that fits what you are making.</p>
+  </div>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">Choose your lane</span></div>
+    <div class="lanes">
+
+      <div class="lane teach">
+        <span class="tag">For teaching &middot; free forever</span>
+        <h3>Record your lessons</h3>
+        <p class="sub">Screen shares, talking-to-camera, narrated slides. No credits, no limits, no watermark.</p>
+
+        <div class="tool">
+          <span class="name">OBS Studio</span>
+          <span class="pill good">no watermark</span>
+          <span class="use">Record your screen and webcam together. Best for software demos and slide lessons.</span>
+        </div>
+        <div class="tool">
+          <span class="name">CapCut</span>
+          <span class="pill good">free editor</span>
+          <span class="use">Trim, add auto-captions, music and your logo. The all-rounder editor, on phone or desktop.</span>
+        </div>
+        <div class="tool">
+          <span class="name">Canva (free plan)</span>
+          <span class="pill good">templates</span>
+          <span class="use">Slide-style lessons and branded intros with your colours saved in a brand kit.</span>
+        </div>
+        <div class="tool">
+          <span class="name">Your phone</span>
+          <span class="pill good">already yours</span>
+          <span class="use">A modern phone shoots crisp 1080p. Face a window for light and it looks professional.</span>
+        </div>
+
+        <div class="tips">
+          <b>Make it look hired, not homemade</b>
+          <ul>
+            <li><b>Light:</b> face a window. Daylight beats any paid ring light.</li>
+            <li><b>Sound first:</b> earphone mic or a clip mic. Clear audio matters more than 4K.</li>
+            <li><b>Script it:</b> read from notes taped beside the lens so your eyes stay up.</li>
+            <li><b>Shoot 16:9</b> for the course player; keep each clip short and focused.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="lane promo">
+        <span class="tag">For marketing &middot; free daily credits</span>
+        <h3>Generate promo clips</h3>
+        <p class="sub">Short AI clips for reels, adverts and course intros. Free tiers give you a set of credits each day; expect a small watermark you can cover in CapCut.</p>
+
+        <div class="tool">
+          <span class="name">Google AI Studio (Veo)</span>
+          <span class="pill warn">limited free</span>
+          <span class="use">Highest quality and adds sound. A few free generations to start.</span>
+        </div>
+        <div class="tool">
+          <span class="name">Kling AI</span>
+          <span class="pill warn">daily credits</span>
+          <span class="use">Free credits refresh each day. Strong, realistic results from text or a photo.</span>
+        </div>
+        <div class="tool">
+          <span class="name">Hailuo / MiniMax</span>
+          <span class="pill warn">daily credits</span>
+          <span class="use">Free daily credits with especially natural, lifelike motion.</span>
+        </div>
+        <div class="tool">
+          <span class="name">Luma &middot; Pika &middot; Runway</span>
+          <span class="pill warn">free tier</span>
+          <span class="use">Each gives a monthly free allowance. Rotate between them for more free clips.</span>
+        </div>
+
+        <div class="tips">
+          <b>Turn a free clip into a branded one</b>
+          <ul>
+            <li>Generate on the tool's own website, then <b>download</b> the clip.</li>
+            <li>Drop it into <b>CapCut</b>, add your logo, captions and music.</li>
+            <li>Your logo and a caption bar <b>cover the free-tier watermark</b>.</li>
+            <li>Free amounts change often, so treat them as a bonus, not a promise.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">Shared step</span><h2>Polish and publish</h2></div>
+    <div class="grid2">
+      <div class="panel">
+        <h3 style="margin-bottom:12px">Free finishing kit</h3>
+        <div class="tool"><span class="name">Auto-captions</span><span class="pill good">CapCut</span><span class="use">Most people watch on mute. Captions lift views more than anything else.</span></div>
+        <div class="tool"><span class="name">Free music</span><span class="pill good">no copyright</span><span class="use">YouTube Audio Library, Pixabay Music, or CapCut's licensed tracks.</span></div>
+        <div class="tool"><span class="name">Free b-roll</span><span class="pill good">stock</span><span class="use">Pexels, Pixabay and Mixkit for extra shots between your talking parts.</span></div>
+      </div>
+      <div class="panel">
+        <h3 style="margin-bottom:12px">Export the right shape</h3>
+        <div class="ratio"><span class="box r169"></span><span class="t"><b>16:9 wide</b><span>Course lessons, YouTube, your site player.</span></span></div>
+        <div class="ratio"><span class="box r916"></span><span class="t"><b>9:16 tall</b><span>WhatsApp Status, TikTok, Reels, Shorts.</span></span></div>
+        <div class="ratio"><span class="box r11"></span><span class="t"><b>1:1 square</b><span>Facebook and Instagram feed posts.</span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">Copy, paste, tweak</span><h2>Prompt starters for AI clips</h2></div>
+    <p style="color:var(--muted);max-width:62ch">Paste these into any marketing-lane tool and change the words in brackets. Name the subject, the setting, the mood and the camera move.</p>
+
+    <div class="prompt">
+      <div class="label">Course intro &middot; 16:9</div>
+      <code>A confident African woman trainer in a bright modern studio welcomes learners to the [AI for Business] course, warm friendly smile, speaking to camera, soft daylight, clean and professional, gentle push-in.</code>
+    </div>
+    <div class="prompt">
+      <div class="label">Social reel &middot; 9:16</div>
+      <code>Fast energetic vertical montage of a woman using a laptop, phone and design tools, bright bold colours, upbeat and modern, quick confident movement, feels made for [women in digital business].</code>
+    </div>
+    <div class="prompt">
+      <div class="label">Training advert &middot; 16:9</div>
+      <code>Cinematic shot of a friendly customer-care team in a sleek modern call centre, headsets on, smiling and helping, warm lighting, aspirational and trustworthy, slow smooth camera glide.</code>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">Keep it simple</span><h2>Your weekly rhythm</h2></div>
+    <div class="panel">
+      <div class="flow">
+        <div class="step"><span class="n"></span><div><h3>Script it</h3><p>Ten minutes. Three points and a call to action. Keep it to what one clip needs.</p></div></div>
+        <div class="step"><span class="n"></span><div><h3>Record or generate</h3><p>Lesson? Record yourself (teaching lane). Promo? Spend a free credit (marketing lane).</p></div></div>
+        <div class="step"><span class="n"></span><div><h3>Edit and caption</h3><p>CapCut: trim, auto-caption, add your logo and a free music bed.</p></div></div>
+        <div class="step"><span class="n"></span><div><h3>Export two shapes</h3><p>16:9 for the course and site, 9:16 for status and reels, from the same edit.</p></div></div>
+        <div class="step"><span class="n"></span><div><h3>Post and link back</h3><p>End every clip pointing to coachruthjackson.com so views turn into enrolments.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><span class="eyebrow">On your website</span><h2>The built-in studio (optional, later)</h2></div>
+    <div class="panel">
+      <p style="color:var(--muted);max-width:64ch">Your site has an <a href="video-studio.html" style="color:var(--emerald);font-weight:600">AI Video Studio</a> built in, but it is <b>switched off and costs nothing</b> while it sits there. It only ever charges you if you choose to add a pay-as-you-go key and press Generate, at a few cents per clip. Nothing in this playbook needs it. Leave it off, use the free lanes above, and switch it on only if one day the convenience is worth a small per-clip cost.</p>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Timshi Universal Institute &middot; Women in Digital Business</span>
+    <span><a href="https://coachruthjackson.com">coachruthjackson.com</a> &middot; <a href="https://wa.me/254729384374">WhatsApp +254 729 384374</a></span>
+  </div>
+</div>
+
+<script>
+  (function(){
+    var btn=document.getElementById('themeBtn');
+    function current(){
+      var s=document.documentElement.getAttribute('data-theme');
+      if(s) return s;
+      try{ if(localStorage.getItem('rj_theme')==='dark') return 'dark'; }catch(e){}
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark':'light';
+    }
+    function sync(){ btn.textContent = current()==='dark' ? 'Light' : 'Dark'; }
+    btn.addEventListener('click',function(){
+      var next = current()==='dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme',next);
+      try{ localStorage.setItem('rj_theme', next); }catch(e){}
+      sync();
+    });
+    sync();
+  })();
+</script>
+</body>
+</html>
