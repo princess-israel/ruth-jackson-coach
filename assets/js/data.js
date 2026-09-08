@@ -21,10 +21,64 @@ window.RJ_PROGRAMS = [
     summary: "Ruth's flagship program, built on the same Microsoft & ITC-ILO curriculum she is certified to deliver. Learn to put practical AI to work in a real small business this week."
   },
   {
+    id: "graphic-design",
+    icon: "🎨",
+    title: "Graphic Design",
+    short: "Design modern websites, logos, flyers and brand kits with industry-standard tools, earn a recognised certificate, and win clients who pay for quality. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
+    price: 79,
+    level: "Beginner",
+    hours: 7,
+    lessons: 20,
+    tags: ["Design", "Branding", "Canva"],
+    outcomes: [
+      "Design flyers, posters and social posts that get noticed",
+      "Create a simple, memorable logo and brand kit",
+      "Use free tools like Canva like a pro",
+      "Keep a consistent, professional look everywhere"
+    ],
+    summary: "You don't need a designer or expensive software. Learn to create eye-catching, on-brand visuals yourself, so your business looks as professional as the big players."
+  },
+  {
+    id: "cybersecurity-essentials",
+    icon: "🛡️",
+    title: "Cyber Security",
+    short: "Spot vulnerabilities, secure networks and respond to real attacks, then earn a recognised certificate that opens doors and wins clients who pay for real protection. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
+    price: 79,
+    level: "Beginner",
+    hours: 6,
+    lessons: 18,
+    tags: ["Security", "Online Safety", "Fraud"],
+    outcomes: [
+      "Spot phishing, scams and fake messages before they cost you",
+      "Secure your email, passwords and social accounts properly",
+      "Protect customer data and payments from theft",
+      "Recover quickly and safely if something goes wrong"
+    ],
+    summary: "Most small businesses are one careless click away from a costly breach. This course gives you the practical habits and simple tools to keep your money, accounts and customers safe online."
+  },
+  {
+    id: "training-of-trainers",
+    icon: "🎓",
+    title: "Training of Trainers",
+    short: "Turn your expertise into income by teaching others. Design curricula, facilitate engaging sessions and earn a recognised certificate that stands out in the global training market. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
+    price: 79,
+    level: "Intermediate → Advanced",
+    hours: 10,
+    lessons: 26,
+    tags: ["Train the Trainer", "Facilitation", "Certification"],
+    outcomes: [
+      "Plan and deliver engaging training sessions with confidence",
+      "Facilitate both in-person and online workshops",
+      "Assess learners and issue meaningful certificates",
+      "Build a new income stream as a recognised trainer"
+    ],
+    summary: "This is the very pathway that certified Ruth as a WIDB Lead Trainer. Learn to train others in digital business on global platforms, earn a recognised certification, and turn your skills into a new way to earn."
+  },
+  {
     id: "digital-marketing-social",
     icon: "📣",
-    title: "Digital Marketing & Social Media Management",
-    short: "Grow a loyal audience and turn followers into paying customers.",
+    title: "Digital Marketing",
+    short: "Run campaigns that convert with SEO, social media, paid ads and content, earn a recognised certificate, and win clients who pay for real results. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
     price: 79,
     level: "Beginner",
     hours: 7,
@@ -75,24 +129,6 @@ window.RJ_PROGRAMS = [
     summary: "The exact, no-jargon SEO routine that grows free, compounding traffic month after month."
   },
   {
-    id: "data-analysis-growth",
-    icon: "📊",
-    title: "Data Analysis for Business Growth",
-    short: "Read your numbers with confidence and make smarter decisions.",
-    price: 79,
-    level: "Beginner → Intermediate",
-    hours: 7,
-    lessons: 20,
-    tags: ["Data", "Spreadsheets", "Decisions"],
-    outcomes: [
-      "Track sales, costs and profit clearly",
-      "Build simple dashboards in spreadsheets",
-      "Spot trends and stop guessing",
-      "Use AI to summarise and explain your data"
-    ],
-    summary: "Turn the numbers you already have into decisions that grow margin and cash flow."
-  },
-  {
     id: "ecommerce-selling-online",
     icon: "🛒",
     title: "E-Commerce & Selling Online",
@@ -109,60 +145,6 @@ window.RJ_PROGRAMS = [
       "Run launch promotions that drive first sales"
     ],
     summary: "Everything between a product idea and your first online order, in one guided path."
-  },
-  {
-    id: "cybersecurity-essentials",
-    icon: "🛡️",
-    title: "Cybersecurity Essentials for Business",
-    short: "Protect your business and customers from phishing, malware and online fraud.",
-    price: 79,
-    level: "Beginner",
-    hours: 6,
-    lessons: 18,
-    tags: ["Security", "Online Safety", "Fraud"],
-    outcomes: [
-      "Spot phishing, scams and fake messages before they cost you",
-      "Secure your email, passwords and social accounts properly",
-      "Protect customer data and payments from theft",
-      "Recover quickly and safely if something goes wrong"
-    ],
-    summary: "Most small businesses are one careless click away from a costly breach. This course gives you the practical habits and simple tools to keep your money, accounts and customers safe online."
-  },
-  {
-    id: "graphic-design",
-    icon: "🎨",
-    title: "Graphic Design for Business",
-    short: "Create flyers, logos and social graphics that make your brand look professional.",
-    price: 79,
-    level: "Beginner",
-    hours: 7,
-    lessons: 20,
-    tags: ["Design", "Branding", "Canva"],
-    outcomes: [
-      "Design flyers, posters and social posts that get noticed",
-      "Create a simple, memorable logo and brand kit",
-      "Use free tools like Canva like a pro",
-      "Keep a consistent, professional look everywhere"
-    ],
-    summary: "You don't need a designer or expensive software. Learn to create eye-catching, on-brand visuals yourself, so your business looks as professional as the big players."
-  },
-  {
-    id: "training-of-trainers",
-    icon: "🎓",
-    title: "Training of Trainers (ToT)",
-    short: "Become a certified digital-skills trainer and earn by teaching others.",
-    price: 79,
-    level: "Intermediate → Advanced",
-    hours: 10,
-    lessons: 26,
-    tags: ["Train the Trainer", "Facilitation", "Certification"],
-    outcomes: [
-      "Plan and deliver engaging training sessions with confidence",
-      "Facilitate both in-person and online workshops",
-      "Assess learners and issue meaningful certificates",
-      "Build a new income stream as a recognised trainer"
-    ],
-    summary: "This is the very pathway that certified Ruth as a WIDB Lead Trainer. Learn to train others in digital business on global platforms, earn a recognised certification, and turn your skills into a new way to earn."
   }
 ];
 
@@ -170,8 +152,8 @@ window.RJ_PROGRAMS = [
 window.RJ_SIGNATURE = {
   id: "customer-service-excellence",
   icon: "💬",
-  title: "Customer Service Excellence, Personal Training by Ruth",
-  short: "Custom, live training drawn from Ruth's years in banking customer service.",
+  title: "Customer Service Excellence",
+  short: "Turn every interaction into a returning customer. Train your team to handle inquiries, resolve complaints and build loyalty across phone, email and in-person, delivered on-site or virtually with practical role-plays tailored to your sector.",
   level: "All levels · Teams welcome",
   tags: ["Customer Service", "Live & Custom", "For Teams"],
   outcomes: [
@@ -189,7 +171,6 @@ window.RJ_PROGRAM_IMG = {
   "digital-marketing-social": "assets/img/program-marketing.jpg",
   "website-development":      "assets/img/program-website.jpg",
   "seo-online-visibility":    "assets/img/program-seo.jpg",
-  "data-analysis-growth":     "assets/img/program-data.jpg",
   "ecommerce-selling-online": "assets/img/program-ecommerce.jpg",
   "cybersecurity-essentials": "assets/img/program-cybersecurity.jpg",
   "graphic-design":           "assets/img/program-graphic-design.jpg",
@@ -246,16 +227,6 @@ window.RJ_PROGRAM_MODULES = {
     { t: "Getting found locally", d: "Rank for 'near me' searches in your town or city." },
     { t: "Track rankings & traffic for free", d: "Use Search Console and free tools to see what's working." },
     { t: "A monthly SEO routine", d: "A short, repeatable checklist that grows free traffic over time." }
-  ],
-  "data-analysis-growth": [
-    { t: "The numbers every business tracks", d: "Know the handful of metrics that actually drive decisions." },
-    { t: "Organise your data in spreadsheets", d: "Set up clean, simple sheets you'll actually keep using." },
-    { t: "Build clear dashboards", d: "Turn rows of numbers into simple charts you can read at a glance." },
-    { t: "Read sales, costs & profit", d: "Understand where your money really comes from and goes." },
-    { t: "Spot trends & seasonality", d: "See patterns early so you can plan stock, staff and promotions." },
-    { t: "Use AI to explain your data", d: "Let AI summarise your numbers in plain language." },
-    { t: "Turn insights into decisions", d: "Translate what you see into concrete actions that grow the business." },
-    { t: "Pricing & margin basics", d: "Price with confidence so every sale makes the profit you intend." }
   ],
   "ecommerce-selling-online": [
     { t: "Choose the right platform", d: "Match the best store platform to your products and budget." },
