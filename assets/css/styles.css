@@ -193,7 +193,6 @@ section{position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--gold);transition:width .25s}
 .nav-links a:hover::after{width:100%}
 .nav-cta{display:flex;align-items:center;gap:12px}
-.nav-signin{display:none}
 .hamburger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
 .hamburger span{width:24px;height:2px;background:var(--text);transition:.3s}
 
@@ -584,17 +583,15 @@ html[data-theme="dark"]{
   /* keep the top bar from overflowing: solid page CTAs move into page content,
      the menu (☰) and Sign in stay reachable */
   .nav-cta .btn-gold,.nav-cta .btn-azure{display:none}
-  /* On phones the top bar was overcrowded (logo + language + theme + account),
-     pushing the ☰ menu off-screen. Keep the language switcher (compact globe,
-     tap for all languages) but hide the theme toggle so the ☰ menu still fits.
-     Theme still follows the phone's system light/dark. */
+  /* Phone top bar shows: language (labeled) + Sign in + ☰ menu. Hide only the
+     theme toggle and shrink the items so all three fit on one row. */
   .nav-cta .theme-toggle{display:none}
-  .nav-cta [data-account-cta]{display:none}
-  .nav-cta .lang-switch .lang-cur{display:none}
-  .hamburger{flex:0 0 auto}
-  .nav-cta{gap:8px}
-  /* Sign in lives in the ☰ dropdown on phones (hidden from the top bar above) */
-  .nav-signin{display:block}
+  .nav-cta{gap:7px}
+  .lang-btn{height:34px;padding:0 9px;font-size:.72rem}
+  .nav-cta .btn-ghost{padding:.45rem .7rem;font-size:.78rem}
+  .hamburger{flex:0 0 auto;padding:6px}
+  .brand{font-size:.92rem;gap:7px}
+  .brand .logo{width:32px;height:32px}
   .brand small{display:none}
   .brand{font-size:1rem;gap:9px}
   .brand .logo{width:36px;height:36px}

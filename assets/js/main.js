@@ -109,7 +109,7 @@
     const wrap = document.createElement("div");
     wrap.className = "lang-switch";
     wrap.innerHTML =
-      `<button type="button" class="lang-btn" aria-label="Change language"><span class="lang-globe">🌐</span><span class="lang-cur">${(LANGS.find(l => l.code === cur) || LANGS[0]).short}</span></button>
+      `<button type="button" class="lang-btn" aria-label="Change language"><span class="lang-globe">🌐</span><span class="lang-cur">${(LANGS.find(l => l.code === cur) || LANGS[0]).label}</span></button>
        <div class="lang-menu">${LANGS.map(l => `<button type="button" data-lang="${l.code}" class="${l.code === cur ? "on" : ""}">${l.label}</button>`).join("")}</div>`;
     const btn = wrap.querySelector(".lang-btn"), menu = wrap.querySelector(".lang-menu");
     btn.addEventListener("click", e => { e.stopPropagation(); wrap.classList.toggle("open"); });
