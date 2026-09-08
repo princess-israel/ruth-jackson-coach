@@ -584,9 +584,11 @@ html[data-theme="dark"]{
      the menu (☰) and Sign in stay reachable */
   .nav-cta .btn-gold,.nav-cta .btn-azure{display:none}
   /* On phones the top bar was overcrowded (logo + language + theme + account),
-     pushing the ☰ menu off-screen. Hide the two secondary toggles so the menu
-     button always fits. Theme still follows the phone's system light/dark. */
-  .nav-cta .theme-toggle,.nav-cta .lang-switch{display:none}
+     pushing the ☰ menu off-screen. Keep the language switcher (compact globe,
+     tap for all languages) but hide the theme toggle so the ☰ menu still fits.
+     Theme still follows the phone's system light/dark. */
+  .nav-cta .theme-toggle{display:none}
+  .nav-cta .lang-switch .lang-cur{display:none}
   .hamburger{flex:0 0 auto}
   .nav-cta{gap:8px}
   .brand small{display:none}
