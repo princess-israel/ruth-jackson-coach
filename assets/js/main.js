@@ -59,13 +59,14 @@
   });
   paintToggle();
 
-  /* ---------- Language switcher (EN / SW / AR / ES / HI via Google Translate) ---------- */
+  /* ---------- Language switcher (EN / HI / TA / TE / KN / MR via Google Translate) ---------- */
   const LANGS = [
-    { code: "en", label: "English",   short: "EN" },
-    { code: "sw", label: "Kiswahili", short: "SW" },
-    { code: "ar", label: "العربية",   short: "AR" },
-    { code: "es", label: "Español",   short: "ES" },
-    { code: "hi", label: "हिन्दी",      short: "HI" },
+    { code: "en", label: "English", short: "EN" },
+    { code: "hi", label: "Hindi",   short: "HI" },
+    { code: "ta", label: "Tamil",   short: "TA" },
+    { code: "te", label: "Telugu",  short: "TE" },
+    { code: "kn", label: "Kannada", short: "KN" },
+    { code: "mr", label: "Marathi", short: "MR" },
   ];
   function currentLang() {
     const m = document.cookie.match(/googtrans=\/[a-z-]+\/([a-z-]+)/i);
