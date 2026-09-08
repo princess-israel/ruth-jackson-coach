@@ -24,6 +24,19 @@
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# Stop LiteSpeed's server page-cache from serving stale HTML/JS/CSS after a deploy.
+# The FTP deploy replaces files but does not ping the cache, so without this the
+# server keeps serving old cached pages. Mark every non-image request no-cache so
+# LiteSpeed always revalidates and updates show immediately; images still cache.
+<IfModule LiteSpeed>
+  CacheDisable public /
+</IfModule>
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_URI} !\.(jpg|jpeg|png|gif|svg|webp|ico|woff2?|ttf|eot)$ [NC]
+  RewriteRule .* - [E=Cache-Control:no-cache]
+</IfModule>
+
 # Custom error page
 ErrorDocument 404 /404.html
 
