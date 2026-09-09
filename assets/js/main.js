@@ -265,12 +265,11 @@
     const price = isFree
       ? `<div class="price-tag">Custom<small>by enquiry</small></div>`
       : `<div class="price-tag">$${p.price}<small>certificate included</small></div>`;
-    const cta = isFree
-      ? `<a class="btn btn-ghost btn-block" href="customer-service.html">Talk to Ruth</a>`
-      : `<a class="btn btn-gold btn-block" href="program.html?id=${p.id}">Learn more</a>`;
+    const link = isFree ? "customer-service.html" : `program.html?id=${p.id}`;
+    const ctaLabel = isFree ? "Talk to Ruth" : "Learn more";
     const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
     return `
-      <article class="card program-card">
+      <a class="card program-card" href="${link}">
         <span class="card-glow"></span>
         ${img ? `<div class="card-img" style="background-image:url(${img})"></div>` : ""}
         <div class="program-top">
@@ -282,8 +281,8 @@
         <div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
         <div class="program-meta">${meta}</div>
         ${window.cardAccredHTML ? window.cardAccredHTML() : ""}
-        ${cta}
-      </article>`;
+        <span class="btn ${isFree ? "btn-ghost" : "btn-gold"} btn-block">${ctaLabel}</span>
+      </a>`;
   };
 
   // Render into [data-programs] grids (+ optional [data-signature])
