@@ -153,6 +153,7 @@ section{position:relative}
 .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--gold);transition:width .25s}
 .nav-links a:hover::after{width:100%}
 .nav-cta{display:flex;align-items:center;gap:12px}
+.nav-cta .btn-gold{color:#0e1c40}
 .nav-signin{display:none}
 .hamburger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:8px}
 .hamburger span{width:24px;height:2px;background:var(--text);transition:.3s}
