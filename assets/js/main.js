@@ -157,7 +157,7 @@
         </div>
         <div><h4>Company</h4>
           <a href="about.html">About Ruth</a>
-          <a href="blog.html">Articles</a>
+          <a href="blog.html">Insights</a>
           <a href="affiliates.html">Affiliate programme</a>
           <a href="login.html">Customer login</a>
           <a href="privacy.html">Privacy Policy</a>
