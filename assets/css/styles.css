@@ -2,54 +2,8 @@
    Ruth Jackson, AI Coach  |  Design System
    Dark-blue, modern, professional
    ========================================================= */
-/* ---------- LIGHT THEME (default) ----------
-   Bright, high-contrast palette so the site never looks dull on dim/cheap
-   displays. Dark theme below is the original look, opt-in via the toggle. */
+/* ---------- Theme: navy/dark only, no light mode ---------- */
 :root{
-  --navy-900:#e8eef9;   /* page background */
-  --navy-850:#ffffff;   /* cards / nav / panels */
-  --navy-800:#f2f6fd;
-  --navy-700:#e6edfa;
-  --navy-600:#d7e3f8;
-  --navy-500:#c4d4f1;
-  --line:rgba(22,44,104,.16);
-  --line-strong:rgba(22,44,104,.28);
-
-  --gold:#9a6b15;        /* deepened for readable text on light bg */
-  --gold-soft:#c79a3f;
-  --azure:#1f6fe0;
-  --azure-deep:#1559c0;
-  --rose:#c2453b;
-
-  --text:#0c1633;
-  --muted:#475479;
-  --muted-2:#6a78a0;
-
-  /* semantic status colours (theme-aware so they stay legible on both themes) */
-  --ok:#15803d;        --ok-bg:rgba(21,128,61,.10);  --ok-border:rgba(21,128,61,.30);
-  --err:#c2453b;       --err-bg:rgba(194,69,59,.10); --err-border:rgba(194,69,59,.32);
-  --status-online:#1f7a4d;
-  --article-text:#27314f;
-  --float-bg:rgba(255,255,255,.92);
-
-  --grad-hero:radial-gradient(1200px 700px at 75% -10%,rgba(31,111,224,.16),transparent 60%),
-              radial-gradient(900px 600px at 10% 10%,rgba(232,182,90,.16),transparent 55%),
-              linear-gradient(180deg,#f5f9ff 0%,#e7eefb 100%);
-  --glass:rgba(20,45,110,.038);
-  --glass-2:rgba(20,45,110,.065);
-  --shadow:0 24px 60px -24px rgba(20,40,90,.24);
-  --nav-scrolled:rgba(255,255,255,.88);
-  --nav-glass:rgba(255,255,255,.62);
-
-  --radius:18px;
-  --radius-sm:12px;
-  --maxw:1200px;
-  --font-head:'Sora',system-ui,sans-serif;
-  --font-body:'Inter',system-ui,sans-serif;
-}
-
-/* ---------- DARK THEME (opt-in, original design) ---------- */
-html[data-theme="dark"]{
   --navy-900:#050a20;
   --navy-850:#070e29;
   --navy-800:#0a1330;
@@ -83,6 +37,12 @@ html[data-theme="dark"]{
   --shadow:0 24px 60px -20px rgba(0,0,0,.65);
   --nav-scrolled:rgba(7,13,38,.82);
   --nav-glass:rgba(8,14,36,.55);
+
+  --radius:18px;
+  --radius-sm:12px;
+  --maxw:1200px;
+  --font-head:'Sora',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
 }
 
 *{box-sizing:border-box}
@@ -250,14 +210,9 @@ section{position:relative}
 .portrait-glow{position:absolute;inset:-40% -10% auto;height:60%;background:radial-gradient(closest-side,rgba(78,168,255,.5),transparent);filter:blur(40px);z-index:-1}
 
 /* alt hero: split background slider (image left, brand panel + text right) */
-/* theme-aware overlay: deep navy in dark, brand-azure in light; white text both */
 :root{
-  --hs-a:rgba(21,89,192,.30);   /* transition tint toward image */
-  --hs-b:rgba(9,18,46,.94);     /* solid edge behind the text */
-}
-html[data-theme="dark"]{
-  --hs-a:rgba(5,10,32,.34);
-  --hs-b:rgba(4,8,26,.96);
+  --hs-a:rgba(5,10,32,.34);     /* transition tint toward image */
+  --hs-b:rgba(4,8,26,.96);      /* solid edge behind the text */
 }
 .hero-slider{position:relative;min-height:88vh;min-height:max(560px,88svh);overflow:hidden;isolation:isolate;color:#fff}
 .hs-slides{position:absolute;inset:0;z-index:0}
@@ -584,9 +539,8 @@ html[data-theme="dark"]{
   /* keep the top bar from overflowing: solid page CTAs move into page content,
      the menu (☰) and Sign in stay reachable */
   .nav-cta .btn-gold,.nav-cta .btn-azure{display:none}
-  /* Phone top bar = logo + language + ☰ menu. Sign in and theme move off the
+  /* Phone top bar = logo + language + ☰ menu. Sign in moves off the
      bar so the menu button always fits; Sign in appears in the ☰ dropdown. */
-  .nav-cta .theme-toggle{display:none}
   .nav-cta [data-account-cta]{display:none}
   .nav-cta{gap:7px}
   .lang-btn{height:34px;padding:0 9px;font-size:.72rem}
@@ -611,14 +565,6 @@ html[data-theme="dark"]{
   .kpis{grid-template-columns:1fr 1fr}
   .section{padding:64px 0}
 }
-
-/* ---------- Theme toggle ---------- */
-.theme-toggle{
-  width:40px;height:40px;border-radius:999px;border:1px solid var(--line-strong);
-  background:var(--glass);color:var(--text);cursor:pointer;display:inline-grid;place-items:center;
-  font-size:1.05rem;line-height:1;transition:background .25s,transform .25s,border-color .25s;backdrop-filter:blur(8px);
-}
-.theme-toggle:hover{background:var(--glass-2);transform:translateY(-2px)}
 
 /* ---------- Language switcher ---------- */
 .lang-switch{position:relative}

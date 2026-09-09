@@ -28,37 +28,6 @@
     };
   })();
 
-  /* ---------- Theme (light default, dark opt-in) ---------- */
-  const THEME_KEY = "rj_theme";
-  function applyTheme(t) {
-    if (t === "dark") document.documentElement.setAttribute("data-theme", "dark");
-    else document.documentElement.removeAttribute("data-theme");
-  }
-  // set as early as possible to reduce flash
-  applyTheme(localStorage.getItem(THEME_KEY) || "light");
-  function currentTheme() { return localStorage.getItem(THEME_KEY) || "light"; }
-  function toggleTheme() {
-    const next = currentTheme() === "dark" ? "light" : "dark";
-    localStorage.setItem(THEME_KEY, next); applyTheme(next); paintToggle();
-  }
-  function paintToggle() {
-    const b = document.querySelector(".theme-toggle");
-    if (!b) return;
-    const dark = currentTheme() === "dark";
-    b.textContent = dark ? "☀️" : "🌙";
-    b.setAttribute("aria-label", dark ? "Switch to light theme" : "Switch to dark theme");
-    b.setAttribute("title", dark ? "Light mode" : "Dark mode");
-  }
-  // inject the toggle button into the nav CTA area on every page
-  document.querySelectorAll(".nav-cta").forEach(cta => {
-    if (cta.querySelector(".theme-toggle")) return;
-    const btn = document.createElement("button");
-    btn.type = "button"; btn.className = "theme-toggle";
-    btn.addEventListener("click", toggleTheme);
-    cta.insertBefore(btn, cta.firstChild);
-  });
-  paintToggle();
-
   /* ---------- Language switcher (EN / ES / FR / TA / HI / TE via Google Translate) ---------- */
   const LANGS = [
     { code: "en", label: "English",  short: "EN" },
