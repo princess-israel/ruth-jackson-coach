@@ -96,22 +96,21 @@
   });
 
   /* ---------- Accreditation (WIDB / Microsoft / ILO / ITC) ---------- */
-  function msLogo() {
-    return '<svg width="15" height="15" viewBox="0 0 23 23" aria-hidden="true"><rect width="10" height="10" fill="#f25022"/><rect x="12" width="10" height="10" fill="#7fba00"/><rect y="12" width="10" height="10" fill="#00a4ef"/><rect x="12" y="12" width="10" height="10" fill="#ffb900"/></svg>';
+  function orgLogos(cls) {
+    return `<img class="${cls}" src="assets/img/partner-widb.jpg" alt="WIDB">
+      <img class="${cls}" src="assets/img/partner-microsoft.jpg" alt="Microsoft">
+      <img class="${cls}" src="assets/img/partner-ilo.jpg" alt="International Labour Organization (ILO)">
+      <img class="${cls}" src="assets/img/partner-itc.jpg" alt="ITC-ILO">`;
   }
   window.accreditationHTML = function () {
     return `<div class="accred">
       <span class="accred-label">Certified programme by</span>
-      <span class="accred-logos">
-        <span class="org">${msLogo()} Microsoft</span>
-        <span class="org">ILO</span>
-        <span class="org">ITC</span>
-      </span>
-      <span class="accred-sub">Delivered under <b>Women in Digital Business (WIDB)</b> — an initiative of Microsoft, the International Labour Organization (ILO) &amp; the International Trade Centre (ITC). Certificate of completion included.</span>
+      <span class="accred-logos">${orgLogos("org-logo")}</span>
+      <span class="accred-sub">Delivered under <b>Women in Digital Business (WIDB)</b>, an initiative of Microsoft, the International Labour Organization (ILO) &amp; the International Trade Centre (ITC). Certificate of completion included.</span>
     </div>`;
   };
   window.cardAccredHTML = function () {
-    return `<div class="card-accred"><span class="ca-txt">WIDB certified ·</span><span class="org">${msLogo()} Microsoft</span><span class="org">ILO</span><span class="org">ITC</span></div>`;
+    return `<div class="card-accred">${orgLogos("org-logo org-logo-sm")}</div>`;
   };
   // drop the full strip into any [data-accred] placeholder
   document.querySelectorAll("[data-accred]").forEach(el => { el.innerHTML = window.accreditationHTML(); });
