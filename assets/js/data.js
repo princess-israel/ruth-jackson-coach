@@ -91,18 +91,21 @@ window.RJ_PROGRAMS = [
   {
     id: "digital-marketing-social",
     icon: "📣",
-    title: "Digital Marketing",
-    short: "Run campaigns that convert with SEO, social media, paid ads and content, earn a recognised certificate, and win clients who pay for real results. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
+    title: "Digital Marketing & Social Media Management",
+    short: "Get found, get chosen, get paid. Learn to grow any business online through social media management and reach customers anywhere in the world through WiDB.",
     price: 79,
     level: "Beginner",
     hours: 7,
     lessons: 21,
     tags: ["Social Media", "Branding", "Ads"],
     outcomes: [
-      "Build a content plan that posts itself consistently",
-      "Design a recognisable brand voice and visual identity",
-      "Run affordable, high-converting ads on Meta & TikTok",
-      "Measure what works and double down on it"
+      "Manage social media and run ad campaigns that bring in real customers",
+      "Write marketing copy and content that converts",
+      "Use SEO to get found by customers searching online",
+      "Track and improve results with real data",
+      "Chance to work with the WiDB team, opening you to the global market",
+      "Access to WiDB grants worth over $3,000",
+      "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
     ],
     summary: "From zero strategy to a calendar that runs your social presence on autopilot, with templates you keep forever."
   },
