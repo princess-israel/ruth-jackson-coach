@@ -338,7 +338,7 @@ section{position:relative}
 .tags{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
 .tag{font-size:.72rem;padding:5px 11px;border-radius:999px;background:rgba(78,168,255,.12);color:var(--azure);border:1px solid rgba(78,168,255,.2)}
 .program-meta{display:flex;gap:18px;font-size:.8rem;color:var(--muted-2);margin:14px 0 18px}
-.program-meta span{display:flex;align-items:center;gap:6px}
+.program-meta span{display:flex;align-items:center;gap:6px;text-decoration:underline;text-underline-offset:3px}
 .card-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(closest-side,rgba(78,168,255,.18),transparent);top:-80px;right:-60px;pointer-events:none}
 
 /* feature/value cards */
