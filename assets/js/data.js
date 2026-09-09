@@ -108,6 +108,26 @@ window.RJ_PROGRAMS = [
       "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
     ],
     summary: "From zero strategy to a calendar that runs your social presence on autopilot, with templates you keep forever."
+  },
+  {
+    id: "online-gender-based-violence",
+    icon: "🚨",
+    title: "Online Gender-Based Violence",
+    short: "Protect your business and yourself from online abuse. Learn to recognize, prevent, and respond to Online Gender-Based Violence as you grow your digital presence.",
+    price: 79,
+    level: "Beginner",
+    hours: 5,
+    lessons: 8,
+    tags: ["Online Safety", "Digital Security", "Awareness"],
+    outcomes: [
+      "Understand Online GBV: Learn how an increased digital presence can make women entrepreneurs targets of online abuse",
+      "Analyze the Impact of Online GBV: Understand how online abuse can affect your business, personal well-being, and safety",
+      "Recognize the Forms of Online GBV: Identify the most common types of online GBV that women face",
+      "Take Preventive Actions: Gain strategies to strengthen your digital security and reduce risks",
+      "Assess Online Attacks: Discern between minor incidents and critical attacks",
+      "Respond Effectively: Learn how to document and report incidents, engage support networks, and access available resources"
+    ],
+    summary: "A practical safety course for anyone building an online presence, so you can grow with confidence and know exactly what to do if something goes wrong."
   }
 ];
 
@@ -200,5 +220,10 @@ window.RJ_PROGRAM_MODULES = {
     { t: "Module 5: Digital Customer Service Tools", points: ["Introduction to CRM systems (e.g. HubSpot, Zoho, Freshdesk)", "Using email, live chat and social media responsibly", "Managing online reviews and feedback", "Using AI and chatbots in customer support", "Keeping customer data private and secure"] },
     { t: "Module 6: Delivering Memorable Customer Experiences", points: ["What defines a great customer experience (CX)?", "Personalising interactions", "Building loyalty and repeat business", "Managing expectations vs overdelivering", "Following up with customers after service"] },
     { t: "Module 7: Professionalism and Workplace Etiquette", points: ["Personal presentation and grooming", "Time management and prioritisation", "Accountability and reliability"] }
+  ],
+  "online-gender-based-violence": [
+    { t: "Module 1: Introduction", points: ["Why online safety matters for every digital business owner"] },
+    { t: "Module 2: Online Gender-Based Violence", points: ["What is Online Gender-Based Violence?", "Recognizing the Types of Online Gender-Based Violence", "Reacting to Online Gender-Based Violence"] },
+    { t: "Module 3: Your Certificate", points: ["Certification on completion"] }
   ]
 };

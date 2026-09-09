@@ -112,5 +112,6 @@ function pesapal_programs() {
     'cybersecurity-essentials' => ['title' => 'Cyber Security', 'price' => 79],
     'training-of-trainers'     => ['title' => 'Training of Trainers', 'price' => 79],
     'digital-marketing-social' => ['title' => 'Digital Marketing & Social Media Management', 'price' => 79],
+    'online-gender-based-violence' => ['title' => 'Online Gender-Based Violence', 'price' => 79],
   ];
 }
