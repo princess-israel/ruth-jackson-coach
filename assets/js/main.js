@@ -273,7 +273,6 @@
         <span class="card-glow"></span>
         ${img ? `<div class="card-img" style="background-image:url(${img})"></div>` : ""}
         <div class="program-top">
-          <div class="program-ico">${p.icon || "📘"}</div>
           ${price}
         </div>
         <h3>${p.title || ""}</h3>

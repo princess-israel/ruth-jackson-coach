@@ -329,7 +329,7 @@ section{position:relative}
 .empower-band h2{color:#fff}
 .empower-band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,10,32,.92),rgba(5,10,32,.55) 60%,rgba(5,10,32,.3))}
 .empower-band>*{position:relative;z-index:1;max-width:34em}
-.program-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
+.program-top{display:flex;justify-content:flex-end;align-items:flex-start;margin-bottom:18px}
 .program-ico{width:54px;height:54px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;background:linear-gradient(135deg,rgba(78,168,255,.2),rgba(232,182,90,.12));border:1px solid var(--line)}
 .price-tag{font-family:var(--font-head);font-weight:700;font-size:1.2rem;color:var(--gold)}
 .price-tag small{font-size:.7rem;color:var(--muted-2);font-weight:500;display:block;text-align:right}
