@@ -173,7 +173,7 @@
       <div class="footer-bottom">
         <span>© <span data-year></span> Ruth Jackson (Ruth Wanjohi). All rights reserved.</span>
         <span>Microsoft Certified · WIDB Lead Trainer</span>
-        <span class="made-by"><a href="/affiliates.html">Become an affiliate</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> · <a href="/admin.html">Admin</a> &nbsp;·&nbsp; Made by <a href="https://kendesigners.com" target="_blank" rel="noopener">kendesigners.com</a></span>
+        <span class="made-by"><a href="/affiliates.html">Become an affiliate</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/refund.html">Refunds</a> · <a href="/admin.html">Admin</a></span>
       </div>
     </div>`;
   }
