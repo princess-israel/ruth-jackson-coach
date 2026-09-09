@@ -52,12 +52,12 @@
     "lessons": 18,
     "tags": ["Security", "Online Safety", "Fraud"],
     "outcomes": [
-      "<b>Spot and stop cyber threats early.</b> Identify phishing, scams, fake messages, and other common attacks before they cause damage.",
-      "<b>Secure your digital world.</b> Protect emails, passwords, social accounts, business systems, and sensitive information.",
-      "<b>Protect customer data and payments.</b> Reduce the risk of data theft, fraud, and costly security breaches.",
-      "<b>Build safer digital practices.</b> Create simple, effective security habits your team can follow every day.",
-      "<b>Respond with confidence.</b> Know what to do quickly when a cyber threat or security incident occurs.",
-      "<b>Recover safely and minimize damage.</b> Take the right steps to secure your business and get back on track."
+      "<b>Spot and stop cyber threats early.</b><br>Identify phishing, scams, fake messages, and other common attacks before they cause damage.",
+      "<b>Secure your digital world.</b><br>Protect emails, passwords, social accounts, business systems, and sensitive information.",
+      "<b>Protect customer data and payments.</b><br>Reduce the risk of data theft, fraud, and costly security breaches.",
+      "<b>Build safer digital practices.</b><br>Create simple, effective security habits your team can follow every day.",
+      "<b>Respond with confidence.</b><br>Know what to do quickly when a cyber threat or security incident occurs.",
+      "<b>Recover safely and minimize damage.</b><br>Take the right steps to secure your business and get back on track."
     ],
     "summary": "Most small businesses are one careless click away from a costly breach. This course gives you the practical habits and simple tools to keep your money, accounts and customers safe online."
   },
