@@ -71,7 +71,7 @@ window.RJ_PROGRAMS = [
     id: "training-of-trainers",
     icon: "🎓",
     title: "Training of Trainers",
-    short: "Become the trainer other trainers learn from, and build a paid career teaching the WiDB curriculum worldwide.",
+    short: "Turn your expertise into income by teaching others. Design curricula, facilitate engaging sessions and earn a recognised certificate that stands out in the global training market. Bonus: work with the WIDB team and earn a grant of up to $3,000.",
     price: 79,
     level: "Intermediate → Advanced",
     hours: 10,
