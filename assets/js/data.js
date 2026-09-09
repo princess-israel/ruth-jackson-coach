@@ -55,13 +55,12 @@ window.RJ_PROGRAMS = [
     lessons: 18,
     tags: ["Security", "Online Safety", "Fraud"],
     outcomes: [
-      "Spot and prevent common cyber threats before they cause damage",
-      "Secure business data, accounts, and customer information",
-      "Set up safe digital practices for any team",
-      "Respond quickly and confidently when a threat happens",
-      "Chance to work with the WiDB team, opening you to the global market",
-      "Access to WiDB grants worth over $3,000",
-      "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
+      "<b>Spot and stop cyber threats early.</b> Identify phishing, scams, fake messages, and other common attacks before they cause damage.",
+      "<b>Secure your digital world.</b> Protect emails, passwords, social accounts, business systems, and sensitive information.",
+      "<b>Protect customer data and payments.</b> Reduce the risk of data theft, fraud, and costly security breaches.",
+      "<b>Build safer digital practices.</b> Create simple, effective security habits your team can follow every day.",
+      "<b>Respond with confidence.</b> Know what to do quickly when a cyber threat or security incident occurs.",
+      "<b>Recover safely and minimize damage.</b> Take the right steps to secure your business and get back on track."
     ],
     summary: "Most small businesses are one careless click away from a costly breach. This course gives you the practical habits and simple tools to keep your money, accounts and customers safe online."
   },
