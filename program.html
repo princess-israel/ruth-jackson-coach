@@ -101,16 +101,19 @@
 
   await Store.ready(); // load session so checkout knows who's logged in
 
-  // Pull the live catalog so admin-added programs are found & purchasable.
+  // Pull the live catalog for admin-added programs and live prices, but keep the
+  // bundled data.js as the source of truth for title/short/outcomes/summary, so an
+  // older server-side catalog file can't silently override course content edits.
   try {
     const r = await fetch("/api/programs.php?_=" + Date.now(), { cache: "no-store" });
     if (r.ok) {
       const d = await r.json();
       if (d && Array.isArray(d.programs) && d.programs.length) {
-        const map = {};
-        (window.RJ_PROGRAMS || []).forEach(x => map[x.id] = x);
-        d.programs.forEach(x => map[x.id] = x);
-        window.RJ_PROGRAMS = Object.values(map).filter(x => Number(x.price) > 0);
+        const known = {};
+        (window.RJ_PROGRAMS || []).forEach(x => known[x.id] = x);
+        window.RJ_PROGRAMS = d.programs
+          .filter(x => Number(x.price) > 0)
+          .map(x => known[x.id] ? Object.assign({}, x, known[x.id], { price: x.price }) : x);
       }
     }
   } catch (e) {}
