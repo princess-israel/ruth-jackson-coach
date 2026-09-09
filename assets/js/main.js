@@ -129,7 +129,7 @@
   /* Reflect logged-in state in nav (Dashboard link) */
   const acctSlot = document.querySelector("[data-account-cta]");
   if (acctSlot && window.Store) {
-    acctSlot.innerHTML = `<a class="btn btn-ghost btn-sm" href="login.html">Sign in</a>`;
+    acctSlot.innerHTML = `<a class="btn btn-gold btn-sm" href="login.html">Sign in</a>`;
     Store.ready().then(() => {
       const u = Store.currentUser();
       if (u) acctSlot.innerHTML = `<a class="btn btn-gold btn-sm" href="dashboard.html">My Dashboard</a>`;
