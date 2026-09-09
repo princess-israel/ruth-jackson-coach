@@ -594,12 +594,14 @@ font.goog-text-highlight{background:none!important;box-shadow:none!important}
   padding:14px 18px;margin:18px 0;
 }
 .accred .accred-label{font-family:var(--font-head);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.accred .accred-logos{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.accred .accred-logos{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;width:100%}
 .org-logo{height:22px;width:auto;background:#fff;padding:4px 8px;border-radius:7px;object-fit:contain;display:block}
+.org-logo-widb{height:30px;padding:5px 10px;border-radius:8px;border:2px solid var(--gold);box-shadow:0 0 12px rgba(232,182,90,.5)}
 .accred .accred-sub{flex-basis:100%;font-size:.78rem;color:var(--muted)}
 /* compact badge row on course cards */
-.card-accred{display:flex;align-items:center;gap:6px;margin:14px 0 4px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
+.card-accred{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px 0 4px;padding-top:12px;border-top:1px solid var(--line);flex-wrap:wrap}
 .org-logo-sm{height:16px;padding:3px 6px;border-radius:5px}
+.org-logo-sm.org-logo-widb{height:22px;padding:4px 8px}
 
 /* ---------- Course topics list ---------- */
 .topics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 22px;margin:14px 0 0;padding:0;list-style:none}

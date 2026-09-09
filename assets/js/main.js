@@ -97,7 +97,7 @@
 
   /* ---------- Accreditation (WIDB / Microsoft / ILO / ITC) ---------- */
   function orgLogos(cls) {
-    return `<img class="${cls}" src="assets/img/partner-widb.jpg" alt="WIDB">
+    return `<img class="${cls} org-logo-widb" src="assets/img/partner-widb.jpg" alt="WIDB">
       <img class="${cls}" src="assets/img/partner-microsoft.jpg" alt="Microsoft">
       <img class="${cls}" src="assets/img/partner-ilo.jpg" alt="International Labour Organization (ILO)">
       <img class="${cls}" src="assets/img/partner-itc.jpg" alt="ITC-ILO">`;
