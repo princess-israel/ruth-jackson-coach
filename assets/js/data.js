@@ -6,7 +6,7 @@ window.RJ_PROGRAMS = [
     id: "ai-women-entrepreneurs",
     icon: "🤖",
     title: "Artificial Intelligence Academy",
-    short: "Join the AI world and put real AI tools to work in your business this week, with the WiDB team opening doors to the global market.",
+    short: "Use AI to grow your business, cut costs and make more money, with a path to the global market (bonus: WiDB grants worth over $3,000).",
     price: 79,
     level: "Beginner → Intermediate",
     hours: 8,
