@@ -21,7 +21,7 @@ window.RJ_PROGRAMS = [
       "Access to WiDB grants worth over $3,000",
       "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
     ],
-    summary: "Ruth's flagship program, built on the same Microsoft & ITC-ILO curriculum she is certified to deliver. Learn to put practical AI to work in a real small business this week."
+    summary: ""
   },
   {
     id: "graphic-design",
