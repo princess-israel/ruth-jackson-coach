@@ -116,14 +116,16 @@ window.RJ_SIGNATURE = {
   id: "customer-service-excellence",
   icon: "💬",
   title: "Customer Service Excellence",
-  short: "Turn every interaction into a returning customer. Train your team to handle inquiries, resolve complaints and build loyalty across phone, email and in-person, delivered on-site or virtually with practical role-plays tailored to your sector.",
+  short: "Deliver service that keeps clients coming back and builds your company's reputation. Train your team to handle inquiries, resolve complaints and build loyalty across phone, email and in-person, delivered on-site or virtually with practical role-plays tailored to your sector.",
   level: "All levels · Teams welcome",
   tags: ["Customer Service", "Live & Custom", "For Teams"],
   outcomes: [
-    "Turn complaints into loyalty and repeat business",
-    "Communication frameworks that calm any situation",
-    "Phone, chat and in-person service standards",
-    "A service culture your whole team can follow"
+    "Handle customer complaints and difficult conversations with confidence",
+    "Communicate clearly and professionally across calls, chat, and email",
+    "Master emotional composure under pressure, staying professional even in high tension moments",
+    "Turn frustrated customers into loyal, repeat customers",
+    "Apply proven customer care standards used in banks and media call centers",
+    "Build a service culture that reduces complaints and boosts customer retention"
   ],
   summary: "This one is personal. Before coaching, Ruth spent years on the front line of banking customer service, it is her strongest craft. She designs each session around your team and your customers. There is no fixed price; reach out and Ruth will tailor a quote to your needs."
 };
