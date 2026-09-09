@@ -108,60 +108,6 @@ window.RJ_PROGRAMS = [
       "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
     ],
     summary: "From zero strategy to a calendar that runs your social presence on autopilot, with templates you keep forever."
-  },
-  {
-    id: "website-development",
-    icon: "🌐",
-    title: "Build Your Business Website",
-    short: "Launch a professional, sales-ready website without writing code.",
-    price: 79,
-    level: "Beginner",
-    hours: 6,
-    lessons: 18,
-    tags: ["Web", "No-Code", "Conversion"],
-    outcomes: [
-      "Plan a website that actually converts visitors to buyers",
-      "Build and publish using no-code tools",
-      "Connect a domain, email and payment buttons",
-      "Make it fast and mobile-friendly"
-    ],
-    summary: "A practical, click-along build. By the end you have a live website you fully own and can update yourself."
-  },
-  {
-    id: "seo-online-visibility",
-    icon: "🔎",
-    title: "SEO & Online Visibility",
-    short: "Get found on Google by the customers already searching for you.",
-    price: 79,
-    level: "Intermediate",
-    hours: 6,
-    lessons: 17,
-    tags: ["SEO", "Content", "Google"],
-    outcomes: [
-      "Find the keywords your customers actually type",
-      "Write pages and articles that rank",
-      "Set up Google Business Profile for local sales",
-      "Track rankings and traffic for free"
-    ],
-    summary: "The exact, no-jargon SEO routine that grows free, compounding traffic month after month."
-  },
-  {
-    id: "ecommerce-selling-online",
-    icon: "🛒",
-    title: "E-Commerce & Selling Online",
-    short: "Set up a store, take payments and ship, start selling this month.",
-    price: 79,
-    level: "Beginner",
-    hours: 7,
-    lessons: 19,
-    tags: ["E-Commerce", "Payments", "Sales"],
-    outcomes: [
-      "Choose the right platform for your products",
-      "Set up payments, delivery and order tracking",
-      "Photograph and list products that sell",
-      "Run launch promotions that drive first sales"
-    ],
-    summary: "Everything between a product idea and your first online order, in one guided path."
   }
 ];
 
@@ -186,9 +132,6 @@ window.RJ_SIGNATURE = {
 window.RJ_PROGRAM_IMG = {
   "ai-women-entrepreneurs":   "assets/img/program-ai.jpg",
   "digital-marketing-social": "assets/img/program-marketing.jpg",
-  "website-development":      "assets/img/program-website.jpg",
-  "seo-online-visibility":    "assets/img/program-seo.jpg",
-  "ecommerce-selling-online": "assets/img/program-ecommerce.jpg",
   "cybersecurity-essentials": "assets/img/program-cybersecurity.jpg",
   "graphic-design":           "assets/img/program-graphic-design.jpg",
   "training-of-trainers":     "assets/img/program-tot.jpg"
@@ -224,36 +167,6 @@ window.RJ_PROGRAM_MODULES = {
     { t: "Affordable, high-converting ads", d: "Run small Meta & TikTok ad budgets that actually bring customers." },
     { t: "Reading your analytics", d: "Understand which posts work and double down on what's already winning." },
     { t: "Followers into paying customers", d: "Move people from likes to messages to orders with a simple funnel." }
-  ],
-  "website-development": [
-    { t: "Plan a website that sells", d: "Map the pages and journey that turn visitors into enquiries and buyers." },
-    { t: "Choose the right no-code platform", d: "Pick the easiest tool for your needs and budget, no coding required." },
-    { t: "Pages every business needs", d: "Build your home, services, about and contact pages the right way." },
-    { t: "Connect a domain & business email", d: "Get a professional yourname.com address and matching email." },
-    { t: "Add payment & WhatsApp buttons", d: "Let customers pay and reach you directly from your site." },
-    { t: "Fast & mobile-friendly", d: "Make sure your site loads quickly and looks great on phones." },
-    { t: "Basic on-page SEO", d: "Set up titles and text so Google can find and rank your pages." },
-    { t: "Publish & maintain it yourself", d: "Go live and confidently update your own site whenever you need." }
-  ],
-  "seo-online-visibility": [
-    { t: "How Google search works", d: "Understand what Google rewards so you can show up for the right searches." },
-    { t: "Find the keywords customers type", d: "Discover the exact phrases your buyers use, using free tools." },
-    { t: "Write pages & articles that rank", d: "Structure content the way Google and readers both love." },
-    { t: "On-page SEO essentials", d: "Titles, headings, links and images optimised the simple way." },
-    { t: "Google Business Profile", d: "Set up and optimise your profile to win local, ready-to-buy customers." },
-    { t: "Getting found locally", d: "Rank for 'near me' searches in your town or city." },
-    { t: "Track rankings & traffic for free", d: "Use Search Console and free tools to see what's working." },
-    { t: "A monthly SEO routine", d: "A short, repeatable checklist that grows free traffic over time." }
-  ],
-  "ecommerce-selling-online": [
-    { t: "Choose the right platform", d: "Match the best store platform to your products and budget." },
-    { t: "Set up your online store", d: "Build a clean, trustworthy store ready to take orders." },
-    { t: "Take payments (cards & M-Pesa)", d: "Accept money smoothly with the methods your customers use." },
-    { t: "Delivery & order tracking", d: "Set up shipping, delivery and tracking that keeps customers happy." },
-    { t: "Photograph & list products", d: "Make your products look irresistible with simple phone photography." },
-    { t: "Descriptions that convert", d: "Write product copy that answers questions and closes the sale." },
-    { t: "Launch promotions", d: "Run launch offers that drive your first wave of orders." },
-    { t: "Orders & customer follow-up", d: "Handle orders professionally and turn buyers into repeat customers." }
   ],
   "cybersecurity-essentials": [
     { t: "Module 1: Introduction to Cybersecurity for Small Businesses", points: ["What is cybersecurity?", "Why it matters for small businesses", "Common myths about cybersecurity"] },

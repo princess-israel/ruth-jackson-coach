@@ -105,59 +105,5 @@
       "Certification by WiDB, Microsoft, ILO, and ITC that clients and employers trust worldwide"
     ],
     "summary": "From zero strategy to a calendar that runs your social presence on autopilot, with templates you keep forever."
-  },
-  {
-    "id": "website-development",
-    "icon": "🌐",
-    "title": "Build Your Business Website",
-    "short": "Launch a professional, sales-ready website without writing code.",
-    "price": 79,
-    "level": "Beginner",
-    "hours": 6,
-    "lessons": 18,
-    "tags": ["Web", "No-Code", "Conversion"],
-    "outcomes": [
-      "Plan a website that actually converts visitors to buyers",
-      "Build and publish using no-code tools",
-      "Connect a domain, email and payment buttons",
-      "Make it fast and mobile-friendly"
-    ],
-    "summary": "A practical, click-along build. By the end you have a live website you fully own and can update yourself."
-  },
-  {
-    "id": "seo-online-visibility",
-    "icon": "🔎",
-    "title": "SEO & Online Visibility",
-    "short": "Get found on Google by the customers already searching for you.",
-    "price": 79,
-    "level": "Intermediate",
-    "hours": 6,
-    "lessons": 17,
-    "tags": ["SEO", "Content", "Google"],
-    "outcomes": [
-      "Find the keywords your customers actually type",
-      "Write pages and articles that rank",
-      "Set up Google Business Profile for local sales",
-      "Track rankings and traffic for free"
-    ],
-    "summary": "The exact, no-jargon SEO routine that grows free, compounding traffic month after month."
-  },
-  {
-    "id": "ecommerce-selling-online",
-    "icon": "🛒",
-    "title": "E-Commerce & Selling Online",
-    "short": "Set up a store, take payments and ship, start selling this month.",
-    "price": 79,
-    "level": "Beginner",
-    "hours": 7,
-    "lessons": 19,
-    "tags": ["E-Commerce", "Payments", "Sales"],
-    "outcomes": [
-      "Choose the right platform for your products",
-      "Set up payments, delivery and order tracking",
-      "Photograph and list products that sell",
-      "Run launch promotions that drive first sales"
-    ],
-    "summary": "Everything between a product idea and your first online order, in one guided path."
   }
 ]
