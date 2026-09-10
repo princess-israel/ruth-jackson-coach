@@ -249,8 +249,7 @@ section{position:relative}
 .hero-slider h1{font-family:var(--font-head);font-size:clamp(2rem,3.4vw,3.4rem);line-height:1.06;margin:0 0 14px;
   color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
 .hero-slider h1 span{color:var(--gold-soft)}
-.hs-slide--logos h1{color:#0e1c40;text-shadow:none}
-.hs-slide--logos h1 span{color:#0e1c40}
+.hs-logo-grid--inline{display:none}
 .hs-accent{width:54px;height:4px;border-radius:4px;background:var(--gold-soft);margin:0 0 22px}
 .hs-lead{font-size:1.1rem;line-height:1.6;color:rgba(255,255,255,.88);max-width:34em;margin:0 0 28px;text-shadow:0 1px 12px rgba(0,0,0,.4)}
 .hs-cta{display:flex;gap:14px;flex-wrap:wrap}
@@ -284,9 +283,10 @@ section{position:relative}
   .hs-arrow{width:40px;height:40px}
   .hs-prev{left:14px;right:auto}.hs-next{right:14px;left:auto}
   .hs-dots{justify-content:center;left:0;right:0;bottom:20px}
-  .hs-logo-panel{justify-content:center;align-items:flex-start;padding:56px 20px 0}
-  .hs-logo-grid{grid-template-columns:repeat(4,1fr);max-width:520px;gap:12px}
-  .hs-logo-grid img{padding:10px 12px;border-radius:10px}
+  .hs-slide--logos .hs-logo-panel{display:none}
+  .hs-slide--logos .hs-content{align-items:flex-start;padding-top:36px;padding-bottom:36px}
+  .hs-logo-grid--inline{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;gap:12px;margin:0 0 22px}
+  .hs-logo-grid--inline img{padding:10px 12px;border-radius:10px}
 }
 /* small phones: tighten type, keep the subject framed */
 @media (max-width:560px){
