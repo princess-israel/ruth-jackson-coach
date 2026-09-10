@@ -245,8 +245,23 @@ section{position:relative}
 .hs-slide--logos.is-active .hs-logo-grid img:nth-child(3){animation-delay:.49s}
 .hs-slide--logos.is-active .hs-logo-grid img:nth-child(4){animation-delay:.66s}
 @keyframes hsLogoIn{to{opacity:1;transform:translateY(0)}}
+.hs-slide--logos .hs-badge,
+.hs-slide--logos h1,
+.hs-slide--logos .hs-accent,
+.hs-slide--logos .hs-lead,
+.hs-slide--logos .hs-cta{opacity:0;transform:translateY(16px)}
+.hs-slide--logos.is-active .hs-badge{animation:hsLogoIn .7s ease forwards;animation-delay:.8s}
+.hs-slide--logos.is-active h1{animation:hsLogoIn .7s ease forwards;animation-delay:.94s}
+.hs-slide--logos.is-active .hs-accent{animation:hsLogoIn .7s ease forwards;animation-delay:1.08s}
+.hs-slide--logos.is-active .hs-lead{animation:hsLogoIn .7s ease forwards;animation-delay:1.2s}
+.hs-slide--logos.is-active .hs-cta{animation:hsLogoIn .7s ease forwards;animation-delay:1.34s}
 @media (prefers-reduced-motion:reduce){
-  .hs-logo-grid img{opacity:1;transform:none;animation:none}
+  .hs-logo-grid img,
+  .hs-slide--logos .hs-badge,
+  .hs-slide--logos h1,
+  .hs-slide--logos .hs-accent,
+  .hs-slide--logos .hs-lead,
+  .hs-slide--logos .hs-cta{opacity:1;transform:none;animation:none}
 }
 /* opaque on the left (text), fading right so the photo stays visible */
 .hs-slide::after{content:"";position:absolute;inset:0;pointer-events:none;
