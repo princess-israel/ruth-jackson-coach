@@ -249,6 +249,8 @@ section{position:relative}
 .hero-slider h1{font-family:var(--font-head);font-size:clamp(2rem,3.4vw,3.4rem);line-height:1.06;margin:0 0 14px;
   color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
 .hero-slider h1 span{color:var(--gold-soft)}
+.hs-slide--logos h1{color:#0e1c40;text-shadow:none}
+.hs-slide--logos h1 span{color:#0e1c40}
 .hs-accent{width:54px;height:4px;border-radius:4px;background:var(--gold-soft);margin:0 0 22px}
 .hs-lead{font-size:1.1rem;line-height:1.6;color:rgba(255,255,255,.88);max-width:34em;margin:0 0 28px;text-shadow:0 1px 12px rgba(0,0,0,.4)}
 .hs-cta{display:flex;gap:14px;flex-wrap:wrap}
