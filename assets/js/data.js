@@ -156,7 +156,8 @@ window.RJ_PROGRAM_IMG = {
   "digital-marketing-social": "assets/img/program-marketing.jpg",
   "cybersecurity-essentials": "assets/img/program-cybersecurity.jpg",
   "graphic-design":           "assets/img/program-graphic-design.jpg",
-  "training-of-trainers":     "assets/img/program-tot.jpg"
+  "training-of-trainers":     "assets/img/program-tot.jpg",
+  "online-gender-based-violence": "assets/img/program-gbv.jpg"
 };
 window.RJ_ARTICLE_IMG = {
   "ai-for-small-business":       "assets/img/article-ai.jpg",
