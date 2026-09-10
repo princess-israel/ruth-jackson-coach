@@ -300,16 +300,36 @@
   }
   renderPrograms(false);
 
-  // Populate the "jump to a course" dropdown on the programs page
-  const courseJump = document.querySelector("[data-course-jump]");
-  if (courseJump && window.RJ_PROGRAMS) {
-    const options = ['<option value="">Choose a course…</option>']
-      .concat(RJ_PROGRAMS.map(p => `<option value="${p.id}">${p.title}</option>`));
-    courseJump.innerHTML = options.join("");
-    courseJump.addEventListener("change", () => {
-      if (courseJump.value) location.href = `program.html?id=${courseJump.value}`;
+  // Build the "Programs" nav dropdown listing every course
+  (function buildProgramsNavDropdown() {
+    const link = document.querySelector('.nav-links a[href="programs.html"]');
+    const li = link && link.closest("li");
+    if (!li || !window.RJ_PROGRAMS || li.querySelector(".nav-dropdown")) return;
+
+    li.classList.add("has-dropdown");
+
+    const toggle = document.createElement("span");
+    toggle.className = "nav-dropdown-toggle";
+    toggle.setAttribute("aria-label", "Show all courses");
+    toggle.textContent = "▾";
+    li.appendChild(toggle);
+
+    const menu = document.createElement("ul");
+    menu.className = "nav-dropdown";
+    menu.innerHTML = RJ_PROGRAMS.map(p =>
+      `<li><a href="program.html?id=${p.id}">${p.title}</a></li>`
+    ).join("");
+    li.appendChild(menu);
+
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      li.classList.toggle("open");
     });
-  }
+    document.addEventListener("click", (e) => {
+      if (!li.contains(e.target)) li.classList.remove("open");
+    });
+  })();
 
   // Refresh only PRICES from the server (so admin price edits show live).
   // The bundled catalog in data.js is the source of truth for course titles,
