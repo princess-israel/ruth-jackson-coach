@@ -290,9 +290,9 @@ section{position:relative}
   .hero-slider .hs-content{align-items:flex-end;justify-content:flex-start;padding-bottom:58px}
   .hs-content .hs-text{width:100%;max-width:640px}
   .hs-lead{max-width:42em}
-  .hs-arrow{width:40px;height:40px}
+  .hs-arrow{width:36px;height:36px;top:auto;bottom:14px;transform:none}
   .hs-prev{left:14px;right:auto}.hs-next{right:14px;left:auto}
-  .hs-dots{justify-content:center;left:0;right:0;bottom:20px}
+  .hs-dots{justify-content:center;left:0;right:0;bottom:22px}
   .hs-slide--logos .hs-logo-panel{display:none}
   .hs-slide--logos .hs-content{align-items:flex-start;padding-top:36px;padding-bottom:36px}
   .hs-logo-grid--inline{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;gap:12px;margin:0 0 22px}
