@@ -300,6 +300,17 @@
   }
   renderPrograms(false);
 
+  // Populate the "jump to a course" dropdown on the programs page
+  const courseJump = document.querySelector("[data-course-jump]");
+  if (courseJump && window.RJ_PROGRAMS) {
+    const options = ['<option value="">Choose a course…</option>']
+      .concat(RJ_PROGRAMS.map(p => `<option value="${p.id}">${p.title}</option>`));
+    courseJump.innerHTML = options.join("");
+    courseJump.addEventListener("change", () => {
+      if (courseJump.value) location.href = `program.html?id=${courseJump.value}`;
+    });
+  }
+
   // Refresh only PRICES from the server (so admin price edits show live).
   // The bundled catalog in data.js is the source of truth for course titles,
   // descriptions, ordering and which courses appear, so content changes ship
