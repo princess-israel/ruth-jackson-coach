@@ -318,7 +318,7 @@
     menu.className = "nav-dropdown";
     menu.innerHTML = RJ_PROGRAMS.map(p =>
       `<li><a href="program.html?id=${p.id}">${p.title}</a></li>`
-    ).join("");
+    ).join("") + `<li><a href="customer-service.html">Customer Service Excellence</a></li>`;
     li.appendChild(menu);
 
     toggle.addEventListener("click", (e) => {
