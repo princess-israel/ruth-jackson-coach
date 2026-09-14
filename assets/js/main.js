@@ -359,6 +359,26 @@
   })();
 
   // ---------- Articles (blog) ----------
+  // Language of an article; unset means English (keeps older articles working).
+  function artLang(a) { return (a.lang || "en").toLowerCase(); }
+  // Translation group; a standalone article groups by its own slug.
+  function artGroup(a) { return (a.group && String(a.group).trim()) || a.slug; }
+  // Show one card per topic in the reader's language, falling back to the English
+  // version (then whatever exists) when a topic has no article in that language.
+  // So a Hindi visitor sees Hindi where written and English where not yet translated,
+  // and the English grid never shows a stray Hindi headline.
+  function articlesForLang(list, lang) {
+    lang = (lang || "en").toLowerCase();
+    const groups = new Map(); // group key -> preferred article
+    const rank = a => (artLang(a) === lang ? 0 : artLang(a) === "en" ? 1 : 2);
+    list.forEach(a => {
+      const g = artGroup(a), cur = groups.get(g);
+      if (!cur || rank(a) < rank(cur)) groups.set(g, a);
+    });
+    // Preserve the API's original ordering (already sorted newest-first server-side).
+    const chosen = new Set(groups.values());
+    return list.filter(a => chosen.has(a));
+  }
   function articleCardHTML(a) {
     const img = a.image || (window.RJ_ARTICLE_IMG && RJ_ARTICLE_IMG[a.slug]);
     return `<a class="card post-card" href="article.php?slug=${encodeURIComponent(a.slug)}">
@@ -387,7 +407,7 @@
       .then(r => r.ok ? r.json() : null)
       .then(d => {
         if (!d || !Array.isArray(d.articles) || !d.articles.length) return;
-        artGrid.innerHTML = d.articles.slice(0, limit).map(articleCardHTML).join("");
+        artGrid.innerHTML = articlesForLang(d.articles, currentLang()).slice(0, limit).map(articleCardHTML).join("");
         if (window.gsap) gsap.from(artGrid.querySelectorAll(".post-card"),
           { opacity: 0, y: 20, duration: 0.5, ease: "power2.out", stagger: 0.08, clearProps: "all" });
       })
