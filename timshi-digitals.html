@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timshi Digitals — Motion Ads & Digital Skills</title>
+<meta name="description" content="Digital ads that move your brand. Digital skills that bring you wealth. WIDB program — an initiative of Microsoft, ILO and ITC.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#070e29; --navy-btn1:#123163; --navy-btn2:#0b1c44; --card:#0c1e4d;
+  --gold:#E8B84B; --gold-soft:#f6d885; --gold-deep:#c9922e;
+  --cream:#F4EFE6; --muted:#9fb0d4; --line:rgba(232,184,75,.30); --wa:#25D366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;color:var(--cream);min-height:100vh;
+  display:flex;justify-content:center;padding:24px 18px 40px;line-height:1.4;
+  background:radial-gradient(120% 55% at 50% -6%, #10224f 0%, var(--navy) 58%), var(--navy);}
+.wrap{width:100%;max-width:462px;}
+.logo-tiny{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;
+  margin:6px auto 18px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.4);
+  background:linear-gradient(135deg,#123163,#0b1c44);font-family:'Sora',sans-serif;font-weight:800;
+  font-size:18px;color:var(--gold-soft);letter-spacing:.5px;}
+
+/* premium panels (hero + credibility) */
+.panel{border:1px solid var(--line);border-radius:18px;
+  background:linear-gradient(180deg,rgba(232,184,75,.09),rgba(232,184,75,.02));
+  padding:18px;text-align:center;margin-bottom:18px;}
+.panel .big{font-family:'Sora',sans-serif;font-weight:800;font-size:22px;color:var(--gold-soft);
+  line-height:1.22;letter-spacing:-.01em;}
+.panel .sub{font-size:12.5px;color:var(--muted);margin-top:6px;}
+.panel.hero .big{color:#ffffff;font-weight:800;}
+.panel.hero .sub{color:#e7e3da;font-weight:500;}
+.panel .logos{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:15px;flex-wrap:wrap;}
+.panel .logos img{height:26px;background:#fff;padding:6px 9px;border-radius:8px;}
+.panel .logos img.w{height:34px;}
+
+/* NAVY-shade theme buttons: all navy blue, stepping from deepest to lightest shade */
+.btns{display:flex;flex-direction:column;gap:12px;}
+.btn{display:flex;align-items:center;gap:14px;text-decoration:none;padding:18px 19px;border-radius:17px;
+  color:#fff;border:1.5px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.35);
+  transition:transform .16s,border-color .16s,box-shadow .16s;}
+.btn:hover{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 10px 24px rgba(232,184,75,.20);}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+.btn .thumb{width:40px;height:40px;flex:0 0 40px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(232,184,75,.45);}
+.btn .gic{width:40px;flex:0 0 40px;text-align:center;font-size:25px;}
+.btn .label{color:#fff;font-weight:800;font-size:18.5px;letter-spacing:.2px;}
+.btn .arrow{margin-left:auto;color:var(--gold);font-size:22px;}
+
+/* navy-blue shade scale — starts at navy blue, then its shades, deepest to lightest */
+.btn.s1{background:linear-gradient(135deg,#0b1c44,#070e29);}
+.btn.s2{background:linear-gradient(135deg,#10244f,#0a1636);}
+.btn.s3{background:linear-gradient(135deg,#142c5c,#0d1c40);}
+.btn.s4{background:linear-gradient(135deg,#183468,#10224c);}
+.btn.s5{background:linear-gradient(135deg,#1c3c75,#132857);}
+.btn.s6{background:linear-gradient(135deg,#204482,#162e63);}
+.btn.s7{background:linear-gradient(135deg,#244c8f,#19346f);}
+.btn.s8{background:linear-gradient(135deg,#285499,#1c3a7b);}
+
+/* GOLD Contact expander */
+details.contact{margin-top:18px;}
+details.contact summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:13px;
+  padding:16px 18px;border-radius:16px;background:linear-gradient(135deg,var(--gold-soft),var(--gold));
+  box-shadow:0 8px 22px rgba(232,184,75,.32);}
+details.contact summary::-webkit-details-marker{display:none;}
+details.contact summary .gic{width:34px;flex:0 0 34px;text-align:center;font-size:22px;}
+details.contact summary .label{color:#2a1a00;font-weight:800;font-size:17.5px;}
+details.contact summary .chev{margin-left:auto;color:#2a1a00;font-size:16px;transition:transform .2s;}
+details.contact[open] summary .chev{transform:rotate(180deg);}
+.clist{display:flex;flex-direction:column;gap:10px;margin-top:11px;}
+.cbtn{display:flex;align-items:center;gap:12px;text-decoration:none;padding:14px 16px;border-radius:14px;
+  font-weight:700;font-size:15px;background:linear-gradient(135deg,var(--navy-btn1),var(--navy-btn2));
+  color:#fff;border:1.5px solid var(--line);transition:transform .16s,border-color .16s;}
+.cbtn:hover{transform:translateY(-2px);border-color:var(--gold);}
+.cbtn .ci{font-size:20px;width:26px;text-align:center;flex:0 0 26px;}
+.cbtn.wa{background:var(--wa);color:#04220f;border-color:transparent;}
+
+.foot{margin-top:30px;text-align:center;}
+.foot p{color:var(--muted);font-size:12.5px;letter-spacing:.05em;}
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <div class="logo-tiny" aria-label="Timshi Digitals">TD</div>
+
+  <section class="panel hero">
+    <div class="big">Digital ads that move your brand</div>
+    <div class="sub">and digital skills that bring you wealth</div>
+  </section>
+
+  <section class="panel">
+    <div class="big">Join 30,000+ students worldwide</div>
+    <div class="sub">and get certified by Microsoft, ILO, ITC &amp; WIDB</div>
+    <div class="logos">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/International_Labour_Organization_Logo.svg" alt="ILO">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/International_Trade_Centre_logo.svg" alt="ITC International Training Centre">
+    </div>
+  </section>
+
+  <div class="btns">
+    <a class="btn s1" href="https://coachruthjackson.com/timshi-digital-ads.html" target="_blank" rel="noopener">
+      <span class="gic">🎬</span> <span class="label">Get Your Digital Ads</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s2" href="https://coachruthjackson.com/program.html?id=cybersecurity-essentials" target="_blank" rel="noopener">
+      <span class="gic">🛡️</span> <span class="label">Cybersecurity</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s3" href="https://coachruthjackson.com/program.html?id=ai-women-entrepreneurs" target="_blank" rel="noopener">
+      <span class="gic">🤖</span> <span class="label">Artificial Intelligence Academy</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s4" href="https://coachruthjackson.com/program.html?id=graphic-design" target="_blank" rel="noopener">
+      <span class="gic">🎨</span> <span class="label">Graphic Design</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s5" href="https://coachruthjackson.com/customer-service.html" target="_blank" rel="noopener">
+      <span class="gic">🎧</span> <span class="label">Customer Service</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s6" href="https://coachruthjackson.com/program.html?id=digital-marketing-social" target="_blank" rel="noopener">
+      <span class="gic">📈</span> <span class="label">Digital Marketing</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s7" href="https://coachruthjackson.com/" target="_blank" rel="noopener">
+      <span class="gic">📚</span> <span class="label">All Programs</span> <span class="arrow">&rarr;</span>
+    </a>
+    <a class="btn s8" href="https://coachruthjackson.com/affiliates.html" target="_blank" rel="noopener">
+      <span class="gic">🤝</span> <span class="label">Become an Affiliate</span> <span class="arrow">&rarr;</span>
+    </a>
+  </div>
+
+  <details class="contact">
+    <summary><span class="gic">📞</span> <span class="label">Contact Us</span> <span class="chev">▾</span></summary>
+    <div class="clist">
+      <a class="cbtn wa" href="https://wa.me/254729384374?text=Hi%2C%20I%20found%20you%20on%20Timshi%20Digitals" target="_blank" rel="noopener"><span class="ci">💬</span> WhatsApp</a>
+      <a class="cbtn" href="tel:+254729384374"><span class="ci">📞</span> +254 729 384 374</a>
+      <a class="cbtn" href="mailto:info@coachruthjackson.com"><span class="ci">✉️</span> info@coachruthjackson.com</a>
+      <a class="cbtn" href="https://coachruthjackson.com/" target="_blank" rel="noopener"><span class="ci">🌐</span> coachruthjackson.com</a>
+    </div>
+  </details>
+
+  <div class="foot"><p>© Timshi Digitals 2026</p></div>
+
+</main>
+</body>
+</html>
