@@ -20,10 +20,8 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--cream);min-height:100v
   display:flex;justify-content:center;padding:24px 18px 40px;line-height:1.4;
   background:radial-gradient(120% 55% at 50% -6%, #10224f 0%, var(--navy) 58%), var(--navy);}
 .wrap{width:100%;max-width:462px;}
-.logo-tiny{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:12px;
-  margin:6px auto 18px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.4);
-  background:linear-gradient(135deg,#123163,#0b1c44);font-family:'Sora',sans-serif;font-weight:800;
-  font-size:18px;color:var(--gold-soft);letter-spacing:.5px;}
+.logo-tiny{display:block;width:56px;height:56px;object-fit:cover;border-radius:14px;
+  margin:6px auto 18px;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.4);}
 
 /* premium panels (hero + credibility) */
 .panel{border:1px solid var(--line);border-radius:18px;
@@ -85,7 +83,7 @@ details.contact[open] summary .chev{transform:rotate(180deg);}
 <body>
 <main class="wrap">
 
-  <div class="logo-tiny" aria-label="Timshi Digitals">TD</div>
+  <img class="logo-tiny" src="assets/img/timshi-digitals-logo.jpg" alt="Timshi Digitals">
 
   <section class="panel hero">
     <div class="big">Digital ads that move your brand</div>
@@ -96,36 +94,37 @@ details.contact[open] summary .chev{transform:rotate(180deg);}
     <div class="big">Join 30,000+ students worldwide</div>
     <div class="sub">and get certified by Microsoft, ILO, ITC &amp; WIDB</div>
     <div class="logos">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/International_Labour_Organization_Logo.svg" alt="ILO">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/International_Trade_Centre_logo.svg" alt="ITC International Training Centre">
+      <img src="assets/img/partner-microsoft.jpg" alt="Microsoft">
+      <img src="assets/img/partner-ilo.jpg" alt="ILO">
+      <img src="assets/img/partner-itc.jpg" alt="ITC International Training Centre">
+      <img class="w" src="assets/img/partner-widb.jpg" alt="Women in Digital Business">
     </div>
   </section>
 
   <div class="btns">
     <a class="btn s1" href="https://coachruthjackson.com/timshi-digital-ads.html" target="_blank" rel="noopener">
-      <span class="gic">🎬</span> <span class="label">Get Your Digital Ads</span> <span class="arrow">&rarr;</span>
+      <span class="label">Get Your Digital Ads</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s2" href="https://coachruthjackson.com/program.html?id=cybersecurity-essentials" target="_blank" rel="noopener">
-      <span class="gic">🛡️</span> <span class="label">Cybersecurity</span> <span class="arrow">&rarr;</span>
+      <span class="label">Cybersecurity</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s3" href="https://coachruthjackson.com/program.html?id=ai-women-entrepreneurs" target="_blank" rel="noopener">
-      <span class="gic">🤖</span> <span class="label">Artificial Intelligence Academy</span> <span class="arrow">&rarr;</span>
+      <span class="label">Artificial Intelligence Academy</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s4" href="https://coachruthjackson.com/program.html?id=graphic-design" target="_blank" rel="noopener">
-      <span class="gic">🎨</span> <span class="label">Graphic Design</span> <span class="arrow">&rarr;</span>
+      <span class="label">Graphic Design</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s5" href="https://coachruthjackson.com/customer-service.html" target="_blank" rel="noopener">
-      <span class="gic">🎧</span> <span class="label">Customer Service</span> <span class="arrow">&rarr;</span>
+      <span class="label">Customer Service</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s6" href="https://coachruthjackson.com/program.html?id=digital-marketing-social" target="_blank" rel="noopener">
-      <span class="gic">📈</span> <span class="label">Digital Marketing</span> <span class="arrow">&rarr;</span>
+      <span class="label">Digital Marketing</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s7" href="https://coachruthjackson.com/" target="_blank" rel="noopener">
-      <span class="gic">📚</span> <span class="label">All Programs</span> <span class="arrow">&rarr;</span>
+      <span class="label">All Programs</span> <span class="arrow">&rarr;</span>
     </a>
     <a class="btn s8" href="https://coachruthjackson.com/affiliates.html" target="_blank" rel="noopener">
-      <span class="gic">🤝</span> <span class="label">Become an Affiliate</span> <span class="arrow">&rarr;</span>
+      <span class="label">Become an Affiliate</span> <span class="arrow">&rarr;</span>
     </a>
   </div>
 
