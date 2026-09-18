@@ -22,8 +22,20 @@ if (!$a) {
   $desc  = !empty($a['metaDescription']) ? $a['metaDescription'] : ($a['excerpt'] ?? '');
 }
 $canonical = $base . '/article.php?slug=' . urlencode($slug);
+
+// Language + translation siblings (for the <html lang>, text direction and
+// hreflang alternates that tell Google which language version to show whom).
+$lang = $a ? article_lang($a) : 'en';
+$rtl  = in_array($lang, ['ar', 'he', 'fa', 'ur'], true);
+$alts = [];   // hreflang => URL
+if ($a) {
+  foreach (articles_group_siblings(article_group($a)) as $sib) {
+    if (empty($sib['slug'])) continue;
+    $alts[article_lang($sib)] = $base . '/article.php?slug=' . urlencode($sib['slug']);
+  }
+}
 ?><!DOCTYPE html>
-<html lang="en">
+<html lang="<?= e($lang) ?>"<?= $rtl ? ' dir="rtl"' : '' ?>>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +45,14 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 <meta name="keywords" content="<?= e(implode(', ', $a['keywords'] ?? [])) ?>">
 <meta name="author" content="<?= e($a['author'] ?? 'Ruth Jackson') ?>">
 <link rel="canonical" href="<?= e($canonical) ?>">
+<?php if (count($alts) > 1): ?>
+<?php foreach ($alts as $altLang => $altUrl): ?>
+<link rel="alternate" hreflang="<?= e($altLang) ?>" href="<?= e($altUrl) ?>">
+<?php endforeach; ?>
+<?php if (isset($alts['en'])): ?><link rel="alternate" hreflang="x-default" href="<?= e($alts['en']) ?>"><?php endif; ?>
+<?php endif; ?>
 <meta property="og:type" content="article">
+<meta property="og:locale" content="<?= e(['en'=>'en_US','es'=>'es_ES','fr'=>'fr_FR','ta'=>'ta_IN','hi'=>'hi_IN','te'=>'te_IN'][$lang] ?? 'en_US') ?>">
 <meta property="og:title" content="<?= e($a['title']) ?>">
 <meta property="og:description" content="<?= e($desc) ?>">
 <meta property="og:url" content="<?= e($canonical) ?>">
@@ -98,6 +117,17 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 <?php else: ?>
     <article class="article">
       <a href="blog.html" class="muted" style="font-size:.9rem">← All articles</a>
+<?php
+  $LANG_LABELS = ['en'=>'English','es'=>'Español','fr'=>'Français','ta'=>'Tamil','hi'=>'हिन्दी','te'=>'తెలుగు','ar'=>'العربية','sw'=>'Kiswahili'];
+  if (count($alts) > 1):
+?>
+      <div class="art-langs" style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:.85rem">
+        <span class="muted">Read in:</span>
+<?php foreach ($alts as $altLang => $altUrl): $on = $altLang === $lang; ?>
+        <a href="<?= e($altUrl) ?>"<?= $on ? ' aria-current="true" style="font-weight:600;color:var(--azure)"' : ' class="muted"' ?>><?= e($LANG_LABELS[$altLang] ?? strtoupper($altLang)) ?></a>
+<?php endforeach; ?>
+      </div>
+<?php endif; ?>
       <div class="cat" style="color:var(--azure);text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:.78rem;margin:18px 0 8px"><?= e($a['category'] ?? 'Article') ?></div>
       <h1><?= e($a['title']) ?></h1>
       <div class="meta">
