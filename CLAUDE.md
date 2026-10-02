@@ -52,3 +52,7 @@ test PHP on the live server). Use the preview tools to verify front-end changes.
 - **Languages:** EN/SW/AR/ES/HI via the Google-Translate-backed switcher in `main.js`.
 
 See also `README.md`, `CPANEL-SETUP.md`, `PESAPAL-SETUP.md`, and `CLIENT-HANDOFF.md`.
+
+## Instagram carousels
+When asked to create an IG carousel (or any slide/post), follow the house style in
+`social/IG-CAROUSEL-PROMPT.md` (navy, bright gold, white; 1080x1350 PNG). Save to `social/`.
