@@ -570,7 +570,15 @@ section{position:relative}
 .article h1{font-size:clamp(2rem,4vw,3rem);margin-bottom:18px}
 .article .meta{color:var(--muted-2);font-size:.88rem;margin-bottom:30px;display:flex;gap:16px;flex-wrap:wrap}
 .article-body{font-size:1.06rem;color:var(--article-text)}
-.article-body h2{margin-top:40px}
+.article-body{counter-reset:sec}
+.article-body p{margin:0 0 14px;line-height:1.7}
+.article-body h2{margin-top:44px;margin-bottom:16px;color:#ffd34d;font-weight:800;font-size:clamp(1.35rem,2.6vw,1.7rem);line-height:1.25;display:flex;align-items:center;gap:14px;counter-increment:sec}
+.article-body h2::before{content:counter(sec);flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:#ffc21a;color:#050a20;display:grid;place-items:center;font-size:1.1rem;font-weight:800;box-shadow:0 6px 16px -6px rgba(255,194,26,.7)}
+.article-body h2.plain{counter-increment:none}
+.article-body h2.plain::before{display:none}
+.article-body .quick-answer{background:rgba(255,194,26,.1);border:1px solid rgba(255,194,26,.45);border-left:5px solid #ffc21a;border-radius:12px;padding:16px 20px;margin:0 0 28px}
+.article-body .quick-answer p{margin:0}
+.article-body .quick-answer b{color:#ffd34d}
 .article-body h3{margin-top:28px}
 .article-body ul{padding-left:22px}
 .article-body li{margin-bottom:8px}

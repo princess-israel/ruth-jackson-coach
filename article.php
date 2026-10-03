@@ -47,6 +47,14 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
  "publisher":{"@type":"Person","name":"Ruth Jackson"},
  "mainEntityOfPage":<?= json_encode($canonical) ?>}
 </script>
+<?php if (!empty($a['faq'])): ?>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+<?php $fq=[]; foreach ($a['faq'] as $f) { $fq[] = '{"@type":"Question","name":' . json_encode($f['q']) . ',"acceptedAnswer":{"@type":"Answer","text":' . json_encode($f['a']) . '}}'; } echo implode(",\n", $fq); ?>
+
+]}
+</script>
+<?php endif; ?>
 <?php else: ?>
 <meta name="robots" content="noindex">
 <?php endif; ?>

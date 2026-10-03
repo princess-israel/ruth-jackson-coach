@@ -52,3 +52,9 @@ test PHP on the live server). Use the preview tools to verify front-end changes.
 - **Languages:** EN/SW/AR/ES/HI via the Google-Translate-backed switcher in `main.js`.
 
 See also `README.md`, `CPANEL-SETUP.md`, `PESAPAL-SETUP.md`, and `CLIENT-HANDOFF.md`.
+
+## Article format (always follow when writing articles)
+- Short paragraphs (1 to 3 sentences). Open with a `<div class="quick-answer"><p><b>Quick answer:</b> ...</p></div>` direct-answer box (GEO).
+- H2s are questions people search for. They render as bright gold with a gold circle + navy number automatically (`.article-body` CSS counter). Add `class="plain"` to unnumbered H2s (FAQ, contact, People also viewed).
+- Add a `faq` array (`{q, a}`) to the article entry: `article.php` emits FAQPage schema from it.
+- Mention local relevance (Nairobi, Kenya, Africa) naturally for geo targeting.
