@@ -7,7 +7,7 @@ Folder: social/carousels/ai/ | Course: Artificial Intelligence Academy
 
 ### Instagram and Facebook caption
 AI for work and business, made practical.
-5 ideas to start using AI well. Swipe to see all four.
+4 ideas to start using AI well. Swipe to see all four.
 
 1. Start with one task: Pick one repeat task, like drafting emails or summarising notes. Master it before adding more.
 2. Give clear instructions: Say who the reader is, what you need and how long it should be. Clear input gives better output.
@@ -32,7 +32,7 @@ Folder: social/carousels/digital-marketing/ | Course: Digital Marketing & Social
 
 ### Instagram and Facebook caption
 Digital marketing that actually reaches customers.
-5 steps to stop wasting your ad budget. Swipe to see all four.
+4 steps to stop wasting your ad budget. Swipe to see all four.
 
 1. Name one goal: A call, a form fill or a sale. Every post and ad should point to that one action.
 2. Pick one channel first: Fund one platform properly before adding a second. Spread too thin and nothing learns.
@@ -57,7 +57,7 @@ Folder: social/carousels/cyber-security/ | Course: Cyber Security Essentials
 
 ### Instagram and Facebook caption
 Cyber security basics every business needs.
-5 habits that protect your team. Swipe to see all four.
+4 habits that protect your team. Swipe to see all four.
 
 1. Use strong, unique passwords: One password for everything is one key to everything. Use a password manager.
 2. Turn on two-step login: It blocks most account takeovers, even when a password leaks.
@@ -82,7 +82,7 @@ Folder: social/carousels/training-of-trainers/ | Course: Training of Trainers
 
 ### Instagram and Facebook caption
 How to become a confident, certified trainer.
-5 skills great trainers share. Swipe to see all four.
+4 skills great trainers share. Swipe to see all four.
 
 1. Know your learner: Ask who they are and what they need to do differently on Monday.
 2. Design with a goal: Start from the result you want, then build every activity to reach it.
@@ -107,7 +107,7 @@ Folder: social/carousels/graphic-design/ | Course: Graphic Design
 
 ### Instagram and Facebook caption
 Graphic design skills for your brand.
-5 rules for cleaner, stronger visuals. Swipe to see all four.
+4 rules for cleaner, stronger visuals. Swipe to see all four.
 
 1. Keep one brand kit: Choose your colours, fonts and logo once and use them everywhere.
 2. Limit your fonts: Two fonts are enough. Consistency looks professional.
@@ -132,7 +132,7 @@ Folder: social/carousels/customer-service/ | Course: Customer Service Excellence
 
 ### Instagram and Facebook caption
 Customer service that keeps customers coming back.
-5 habits of great service teams. Swipe to see all four.
+4 habits of great service teams. Swipe to see all four.
 
 1. Listen first: Let the customer finish. Repeat the problem back so they know you understood.
 2. Own the problem: Say what you will do and by when, then do it.
@@ -157,7 +157,7 @@ Folder: social/carousels/online-safety-women/ | Course: Online Gender-Based Viol
 
 ### Instagram and Facebook caption
 Staying safe online as a woman in business.
-5 steps against online abuse. Swipe to see all four.
+4 steps against online abuse. Swipe to see all four.
 
 1. Lock down your accounts: Use strong passwords and two-step login on every social account.
 2. Check your privacy settings: Decide who can see your posts, photos and contact details.
