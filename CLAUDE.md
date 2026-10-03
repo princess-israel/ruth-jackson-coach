@@ -58,3 +58,5 @@ See also `README.md`, `CPANEL-SETUP.md`, `PESAPAL-SETUP.md`, and `CLIENT-HANDOFF
 - H2s are questions people search for. They render as bright gold with a gold circle + navy number automatically (`.article-body` CSS counter). Add `class="plain"` to unnumbered H2s (FAQ, contact, People also viewed).
 - Add a `faq` array (`{q, a}`) to the article entry: `article.php` emits FAQPage schema from it.
 - Mention local relevance (Nairobi, Kenya, Africa) naturally for geo targeting.
+- FAQ questions use `<h3 class="faq-q">` (gold, numbered gold circle with navy number) and the FAQ H2 gets `class="plain faq-head"`.
+- WhatsApp is always a green button labelled just "WhatsApp" (`class="btn btn-whatsapp btn-sm"`), never with the number as the label.
