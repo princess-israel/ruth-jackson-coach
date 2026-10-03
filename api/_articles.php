@@ -37,6 +37,27 @@ function articles_find($slug) {
   }
   return null;
 }
+// Language of an article (defaults to English when unset, for backward compatibility).
+function article_lang($a) {
+  $l = isset($a['lang']) ? strtolower(trim($a['lang'])) : '';
+  return $l !== '' ? $l : 'en';
+}
+// Translation-group key. Articles that are translations of each other share a
+// 'group' (usually the English original's slug). A standalone article groups by
+// its own slug, so it is simply a group of one.
+function article_group($a) {
+  $g = isset($a['group']) ? trim($a['group']) : '';
+  return $g !== '' ? $g : ($a['slug'] ?? '');
+}
+// All articles that belong to the same translation group as $group.
+function articles_group_siblings($group) {
+  $out = [];
+  if ($group === '') return $out;
+  foreach (articles_load() as $a) {
+    if (article_group($a) === $group) $out[] = $a;
+  }
+  return $out;
+}
 function articles_save($arr) {
   $d = articles_dir();
   if (!is_dir($d)) @mkdir($d, 0755, true);

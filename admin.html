@@ -168,6 +168,20 @@
           <div class="field"><label>Date</label><input id="af-date" type="date"></div>
           <div class="field"><label>Read time (mins)</label><input id="af-read" type="number" min="1" placeholder="6"></div>
         </div>
+        <div class="pay-row" style="display:grid;grid-template-columns:1fr 2fr;gap:14px">
+          <div class="field"><label>Language</label>
+            <select id="af-lang">
+              <option value="en">English</option>
+              <option value="es">Español (Spanish)</option>
+              <option value="fr">Français (French)</option>
+              <option value="ta">Tamil</option>
+              <option value="hi">Hindi</option>
+              <option value="te">Telugu</option>
+            </select>
+          </div>
+          <div class="field"><label>Translation of <span class="muted" style="font-weight:400">(link to another article)</span></label><input id="af-group" placeholder="English article's slug, e.g. digital-advertising-strategy-for-business"></div>
+        </div>
+        <p class="muted" style="font-size:.8rem;margin:-6px 0 6px">Writing a translation? Set the language above, give it its own unique slug (e.g. add <code>-hi</code>), and put the <b>English original's slug</b> in “Translation of” so Google links them as the same article in different languages. Leave “Translation of” blank for a normal standalone article.</p>
         <div class="field"><label>Excerpt <span class="muted" style="font-weight:400">(short summary on the cards)</span></label><textarea id="af-excerpt" style="min-height:70px"></textarea></div>
         <div class="field"><label>Meta description <span class="muted" style="font-weight:400">(for Google, ~155 chars)</span></label><textarea id="af-meta" style="min-height:70px"></textarea></div>
         <div class="field"><label>Keywords <span class="muted" style="font-weight:400">(comma separated)</span></label><input id="af-keywords" placeholder="AI, small business, marketing"></div>
@@ -521,6 +535,8 @@
     document.getElementById("af-title").value = a.title || "";
     document.getElementById("af-category").value = a.category || "";
     document.getElementById("af-slug").value = a.slug || "";
+    document.getElementById("af-lang").value = a.lang || "en";
+    document.getElementById("af-group").value = a.group || "";
     document.getElementById("af-date").value = a.date || new Date().toISOString().slice(0,10);
     document.getElementById("af-read").value = a.readMins || "";
     document.getElementById("af-excerpt").value = a.excerpt || "";
@@ -565,6 +581,8 @@
       slug: document.getElementById("af-slug").value.trim() || document.getElementById("af-orig-slug").value,
       title,
       category: document.getElementById("af-category").value.trim() || "Article",
+      lang: document.getElementById("af-lang").value || "en",
+      group: document.getElementById("af-group").value.trim(),
       date: document.getElementById("af-date").value || new Date().toISOString().slice(0,10),
       readMins: parseInt(document.getElementById("af-read").value)||null,
       excerpt: document.getElementById("af-excerpt").value.trim(),
