@@ -72,3 +72,10 @@ Read it: https://coachruthjackson.com/article.php?slug=ai-in-customer-service-ke
 To discuss corporate customer service and AI training, reach me on WhatsApp +254 729 384374 or at coachruthjackson.com.
 
 #CustomerService #ArtificialIntelligence #CustomerExperience #CorporateTraining
+
+## Follow Ruth
+
+- TikTok: https://www.tiktok.com/@timshidigitals
+- Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
+- Facebook: https://www.facebook.com/profile.php?id=61560284518376
+- WhatsApp: https://wa.me/254729384374 | Website: https://coachruthjackson.com

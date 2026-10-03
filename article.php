@@ -144,6 +144,9 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
           <a class="btn btn-whatsapp btn-sm" href="https://wa.me/254729384374" target="_blank" rel="noopener">WhatsApp</a>
           <a class="btn btn-ghost btn-sm" href="tel:+254729384374">📞 Call +254 729 384374</a>
           <a class="btn btn-ghost btn-sm" href="mailto:info@coachruthjackson.com">✉️ info@coachruthjackson.com</a>
+          <a class="btn btn-ghost btn-sm" href="https://www.tiktok.com/@timshidigitals" target="_blank" rel="noopener">TikTok</a>
+          <a class="btn btn-ghost btn-sm" href="https://www.instagram.com/timshidigitalswith_ruthjackson" target="_blank" rel="noopener">Instagram</a>
+          <a class="btn btn-ghost btn-sm" href="https://www.facebook.com/profile.php?id=61560284518376" target="_blank" rel="noopener">Facebook</a>
         </div>
       </div>
     </article>

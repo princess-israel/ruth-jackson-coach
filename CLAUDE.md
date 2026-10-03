@@ -60,3 +60,9 @@ See also `README.md`, `CPANEL-SETUP.md`, `PESAPAL-SETUP.md`, and `CLIENT-HANDOFF
 - Mention local relevance (Nairobi, Kenya, Africa) naturally for geo targeting.
 - FAQ questions use `<h3 class="faq-q">` (gold, numbered gold circle with navy number) and the FAQ H2 gets `class="plain faq-head"`.
 - WhatsApp is always a green button labelled just "WhatsApp" (`class="btn btn-whatsapp btn-sm"`), never with the number as the label.
+
+## Social profiles (use exactly these, never invent others)
+- TikTok: https://www.tiktok.com/@timshidigitals
+- Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
+- Facebook: https://www.facebook.com/profile.php?id=61560284518376
+- Footer/contact (main.js, index.html) and article pages already link them. ALWAYS include all three links, plus WhatsApp and the website, in every social post, poster and caption file (`social/*.md`).
