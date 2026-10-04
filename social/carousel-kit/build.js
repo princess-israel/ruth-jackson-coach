@@ -12,19 +12,20 @@ const base = `*{box-sizing:border-box;margin:0}body{width:1080px;height:1350px;p
 .handle{position:absolute;top:62px;left:60px;font-size:28px;font-weight:600;letter-spacing:.02em;white-space:nowrap}`;
 const moon = (size, top, right) => `<div class="abs" style="top:${top + size * .19}px;right:${right + size * .16}px;width:${size * .62}px;height:${size * .62}px;border-radius:50%;box-shadow:0 0 ${size * .3}px ${size * .13}px rgba(255,194,26,.35)"></div><img class="abs" src="${MOON}" style="top:${top}px;right:${right}px;width:${size}px;height:${size}px">`;
 const ruth = (w, left, top, disc) => `<div class="disc" style="width:${disc}px;height:${disc}px;left:${left + 40}px;top:${top + 90}px"></div><img class="abs" src="${PIC}" style="width:${w}px;left:${left}px;top:${top}px">`;
+const swipe = b => `<div class="abs" style="left:60px;bottom:${b}px;display:flex;align-items:center;gap:14px;border:3px solid #ffc21a;border-radius:40px;padding:10px 26px;font-size:28px;font-weight:800;letter-spacing:.16em;color:#ffd34d">SWIPE<svg width="40" height="22" viewBox="0 0 40 22"><path d="M2 11h34M27 3l9 8-9 8" stroke="#ffd34d" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 const cover = () => `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(290, 36, 26)}
 <div class="abs" style="top:250px;left:60px;width:620px;font-size:128px;line-height:1.02;font-weight:900">${T.hook.join('<br>')}</div>
-<div class="abs g" style="top:700px;left:60px;width:520px;font-size:68px;line-height:1.1;font-weight:800">${T.gold}</div>${ruth(640, 480, 610, 560)}`;
+<div class="abs g" style="top:700px;left:60px;width:520px;font-size:68px;line-height:1.1;font-weight:800">${T.gold}</div>${ruth(640, 480, 610, 560)}${swipe(70)}`;
 const tip = i => { const [h, t] = T.tips[i]; return `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(210, 40, 36)}
 <div class="abs" style="top:260px;left:60px;width:150px;height:150px;border-radius:50%;background:#ffc21a;color:#050a20;display:grid;place-items:center;font-size:88px;font-weight:800;box-shadow:0 14px 34px -10px rgba(255,194,26,.7)">${i + 1}</div>
 <div class="abs" style="top:450px;left:60px;width:640px;font-size:92px;line-height:1.04;font-weight:900">${h}</div>
 <div class="abs g" style="top:760px;left:60px;width:470px;font-size:46px;line-height:1.28;font-weight:700">${t}</div>${ruth(520, 560, 790, 450)}
-<div class="abs" style="left:60px;bottom:70px;display:flex;gap:14px">${[0, 1, 2, 3].map(k => `<i style="width:16px;height:16px;border-radius:50%;background:${k == i ? '#ffc21a' : '#33447f'}"></i>`).join('')}</div>`; };
+${swipe(125)}<div class="abs" style="left:60px;bottom:70px;display:flex;gap:14px">${[0, 1, 2, 3].map(k => `<i style="width:16px;height:16px;border-radius:50%;background:${k == i ? '#ffc21a' : '#33447f'}"></i>`).join('')}</div>`; };
 const cta = () => `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(210, 40, 36)}
 <div class="abs" style="top:250px;left:60px;width:900px;font-size:96px;line-height:1.05;font-weight:900;white-space:nowrap">You can learn<br>this with Ruth.</div>
 <div class="abs g" style="top:490px;left:60px;width:640px;font-size:48px;line-height:1.15;font-weight:800">${T.course}</div>
 <div class="abs" style="top:650px;left:60px;background:#25D366;color:#fff;font-size:46px;font-weight:800;padding:24px 70px;border-radius:70px">WhatsApp</div>
-<div class="abs" style="top:830px;left:60px;font-size:27px;line-height:1.65;width:520px;white-space:nowrap">TikTok @timshidigitals<br>Instagram ${HANDLE}<br>Facebook Ruth Jackson<br>coachruthjackson.com</div>${ruth(520, 560, 790, 450)}`;
+<div class="abs" style="top:830px;left:60px;font-size:27px;line-height:1.65;width:520px;white-space:nowrap">TikTok @timshidigitals<br>Instagram ${HANDLE}<br>Facebook Ruth Jackson<br>coachruthjackson.com</div>${ruth(520, 560, 790, 450)}${swipe(70)}`;
 const icon = k => ({
   follow: '<svg width="56" height="56" viewBox="0 0 56 56"><circle cx="24" cy="19" r="9" fill="#050a20"/><path d="M6 46c0-10 8-16 18-16s18 6 18 16z" fill="#050a20"/><path d="M45 14v14M38 21h14" stroke="#050a20" stroke-width="5" stroke-linecap="round"/></svg>',
   save: '<svg width="56" height="56" viewBox="0 0 56 56"><path d="M14 6h28v44L28 38 14 50z" fill="#050a20"/></svg>',
