@@ -63,3 +63,31 @@ TikTok: https://www.tiktok.com/@timshidigitals
 Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
 Facebook: https://www.facebook.com/profile.php?id=61560284518376
 WhatsApp: https://wa.me/254729384374 | Website: https://coachruthjackson.com
+
+
+## Pinterest board titles and descriptions (limit 500 characters each)
+
+Board: Training Tips by Ruth Jackson (main board)
+Description: Practical training tips from Ruth Jackson, trainer at Timshi Universal Institute on the Women in Digital Business programme with Microsoft, ILO and ITC. AI, digital marketing, cyber security, training of trainers, graphic design, customer service and online safety. Save the tips, then learn more at coachruthjackson.com. Nairobi, Kenya and online across Africa.
+
+Board: AI Tips for Business and Work
+Description: Simple, practical AI tips for business owners, teams and professionals. Learn how to give clear instructions, check answers and keep private data safe. From Ruth Jackson, Timshi Universal Institute trainer. AI training in Nairobi, Kenya and online. coachruthjackson.com
+
+Board: Digital Marketing Tips for Small Business
+Description: Practical digital marketing and social media tips to stop wasting your ad budget. One goal, one channel, tested content and fast replies. By Ruth Jackson, Timshi Universal Institute trainer in Nairobi, Kenya. Learn more at coachruthjackson.com
+
+Board: Cyber Security Basics for Business
+Description: Easy cyber security habits that protect your business: strong passwords, two-step login, safe clicking and team training. By Ruth Jackson, Timshi Universal Institute trainer in Nairobi, Kenya. Cyber security essentials training at coachruthjackson.com
+
+Board: Training of Trainers Tips
+Description: Skills every great trainer and facilitator needs: know your learner, design with a goal, make it hands-on and give clear feedback. By Ruth Jackson, certified trainer at Timshi Universal Institute, Nairobi, Kenya. Training of Trainers at coachruthjackson.com
+
+Board: Graphic Design and Branding Tips
+Description: Simple graphic design rules for a professional brand: one brand kit, two fonts, white space and phone-first design. By Ruth Jackson, Timshi Universal Institute trainer in Nairobi, Kenya. Graphic design training at coachruthjackson.com
+
+Board: Customer Service Tips for Teams
+Description: Customer service and customer care tips for teams and corporates: listen first, own the problem, stay calm and follow up. By Ruth Jackson, Timshi Universal Institute trainer in Nairobi, Kenya. Corporate customer service training at coachruthjackson.com
+
+Board: Online Safety for Women in Business
+Description: Practical online safety steps for women in business: secure accounts, privacy settings, saving evidence and getting support. By Ruth Jackson on the Women in Digital Business programme, Timshi Universal Institute, Nairobi, Kenya. coachruthjackson.com
+
