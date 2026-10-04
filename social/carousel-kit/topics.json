@@ -1,0 +1,13 @@
+{
+  "ai": {
+    "course": "Artificial Intelligence Academy",
+    "hook": ["You are", "using AI", "wrong."],
+    "gold": "It is costing you hours.",
+    "tips": [
+      ["Start with one task", "Pick one job you repeat, like drafting emails or summarising notes. Master it before you add more."],
+      ["Give clear instructions", "Tell the AI who will read it, what you need and how long it should be. Clear input gets you better output."],
+      ["Always check the answer", "AI can sound sure and still be wrong. Check facts, names and numbers before you share anything."],
+      ["Protect private data", "Never paste client details or passwords into an AI tool. Set your team's rules first."]
+    ]
+  }
+}
