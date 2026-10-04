@@ -4,7 +4,7 @@ Use this every time you build a carousel for Ruth (Instagram, Facebook, TikTok p
 
 ## Paste-ready prompt
 
-Build a 6-slide carousel, 1080x1350 JPG, for the topic: <TOPIC>. Use Ruth's design exactly:
+Build a 7-slide carousel, 1080x1350 JPG, for the topic: <TOPIC>. Use Ruth's design exactly:
 
 - Colours: navy background (gradient from #14245e to #050a20), white and bright gold (#ffd34d / #ffc21a) only. Font: bold Helvetica/Arial style sans-serif.
 - Top-left on every slide: the handle `@timshidigitalswith_ruthjackson` in tiny white text, one line. No Timshi logo, no partner logos, no pills, no bars, no footers.
@@ -13,6 +13,7 @@ Build a 6-slide carousel, 1080x1350 JPG, for the topic: <TOPIC>. Use Ruth's desi
 - Slide 1 (cover): the viewer-addressing hook in big white bold text (3 short lines, starts with "You" or "Your"), then one gold line with the cost or promise. Nothing else.
 - Slides 2 to 5 (tips): gold circle with the navy number, tip title in big white bold, explanation in bold gold addressed to the viewer ("you"), four small progress dots bottom-left.
 - Slide 6 (call to action): "You can learn this with Ruth." in white, the course name in gold, a green "WhatsApp" button (label only, no number), then small white lines for TikTok, Instagram, Facebook and coachruthjackson.com.
+- Slide 7 (engagement): "Enjoyed this?" in white, then three rows with a gold circle and navy icon: Follow (for practical tips from Ruth), Save for later (so you can come back to it), Share with a friend (who needs to hear this). Same moon, handle and portrait.
 - Copy rules: short sentences, speak to the viewer as "you", no em-dashes, no made-up statistics, fake quotes or client names.
 - Always post the finished slides in the chat so Ruth can see them.
 

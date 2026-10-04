@@ -25,11 +25,21 @@ const cta = () => `<style>${base}</style><div class="handle">${HANDLE}</div>${mo
 <div class="abs g" style="top:490px;left:60px;width:640px;font-size:48px;line-height:1.15;font-weight:800">${T.course}</div>
 <div class="abs" style="top:650px;left:60px;background:#25D366;color:#fff;font-size:46px;font-weight:800;padding:24px 70px;border-radius:70px">WhatsApp</div>
 <div class="abs" style="top:830px;left:60px;font-size:27px;line-height:1.65;width:520px;white-space:nowrap">TikTok @timshidigitals<br>Instagram ${HANDLE}<br>Facebook Ruth Jackson<br>coachruthjackson.com</div>${ruth(520, 560, 790, 450)}`;
+const icon = k => ({
+  follow: '<svg width="56" height="56" viewBox="0 0 56 56"><circle cx="24" cy="19" r="9" fill="#050a20"/><path d="M6 46c0-10 8-16 18-16s18 6 18 16z" fill="#050a20"/><path d="M45 14v14M38 21h14" stroke="#050a20" stroke-width="5" stroke-linecap="round"/></svg>',
+  save: '<svg width="56" height="56" viewBox="0 0 56 56"><path d="M14 6h28v44L28 38 14 50z" fill="#050a20"/></svg>',
+  share: '<svg width="56" height="56" viewBox="0 0 56 56"><path d="M50 7L5 24l16 7 5 18 8-12 12 8z" fill="#050a20"/></svg>' })[k];
+const follow = () => {
+  const rows = [['follow', 'Follow', 'for practical tips from Ruth'], ['save', 'Save for later', 'so you can come back to it'], ['share', 'Share with a friend', 'who needs to hear this']];
+  return `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(210, 40, 36)}
+<div class="abs" style="top:230px;left:60px;font-size:112px;line-height:1.02;font-weight:900">Enjoyed<br>this?</div>
+${rows.map((r, i) => `<div class="abs" style="top:${520 + i * 175}px;left:60px;display:flex;align-items:center;gap:28px"><div style="width:112px;height:112px;border-radius:50%;background:linear-gradient(135deg,#ffd34d,#ffc21a 60%,#e0a010);display:grid;place-items:center;box-shadow:0 14px 34px -10px rgba(255,194,26,.7);flex:0 0 auto">${icon(r[0])}</div><div><div style="font-size:54px;font-weight:900;line-height:1.05;white-space:nowrap">${r[1]}</div><div class="g" style="font-size:32px;font-weight:700;margin-top:6px;white-space:nowrap">${r[2]}</div></div></div>`).join('')}
+${ruth(430, 650, 930, 380)}`; };
 (async () => {
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
   const pg = await b.newPage({ viewport: { width: 1080, height: 1350 } });
   const out = path.join(R, 'social/carousels-v2', slug); fs.mkdirSync(out, { recursive: true });
-  const slides = [cover(), tip(0), tip(1), tip(2), tip(3), cta()];
+  const slides = [cover(), tip(0), tip(1), tip(2), tip(3), cta(), follow()];
   for (let i = 0; i < slides.length; i++) {
     const f = path.join(K, '.tmp.html'); fs.writeFileSync(f, '<!doctype html><meta charset=utf-8><body>' + slides[i]);
     await pg.goto('file://' + f); await pg.waitForTimeout(250);
