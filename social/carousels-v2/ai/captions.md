@@ -73,3 +73,13 @@ To discuss AI training for your team, message me on WhatsApp +254 729 384374 or 
 Follow for more free tips, and save or share this with a colleague who needs it.
 
 #ArtificialIntelligence #AITraining #CorporateTraining #DigitalSkills #Kenya
+
+## Pinterest
+
+Pin image: social/carousels-v2/ai/01.jpg (the hook cover)
+Title: You Are Using AI Wrong: 4 Fixes That Save You Hours
+Description: Using AI wrong and losing hours? Start with one task, give clear instructions, check every answer and protect private data. Four simple AI tips for business owners, teams and professionals, from trainer Ruth Jackson. Follow for more free tips, save this pin and share it with a friend. Learn AI with practical, accredited training from Timshi Universal Institute and the Women in Digital Business programme. Nairobi, Kenya and online across Africa.
+Alt text: Navy blue pin with the headline 'You are using AI wrong. It is costing you hours.' in white and gold, a golden full moon in the top corner and an illustrated portrait of trainer Ruth Jackson on a gold circle.
+Destination link: https://coachruthjackson.com/article.php?slug=ai-skills-corporate-teams
+Board: AI Tips for Business and Work
+Keywords: AI tips for business, how to use AI at work, AI training Kenya, AI for beginners, AI for small business
