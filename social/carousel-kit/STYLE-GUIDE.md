@@ -14,7 +14,7 @@ Build a 7-slide carousel, 1080x1350 JPG, for the topic: <TOPIC>. Use Ruth's desi
 - Slides 2 to 5 (tips): gold circle with the navy number, tip title in big white bold, explanation in bold gold addressed to the viewer ("you"), four small progress dots bottom-left.
 - Slide 6 (call to action): "You can learn this with Ruth." in white, the course name in gold, a green "WhatsApp" button (label only, no number), then small white lines for TikTok, Instagram, Facebook and coachruthjackson.com.
 - Slide 7 (engagement): "Enjoyed this?" in white and "Do these 3 things:" in gold, then three full-width navy cards. Card 1: Ruth's avatar, "Follow" and a gold "+ Follow" button with a tap cursor. Card 2: "Save for later" with an action bar (heart, comment, share) and a glowing gold bookmark being tapped. Card 3: "Share with a friend" with friend avatars and a gold send button. Handle and moon stay; with a small gold-filled "SWIPE →" pill (navy text and arrow) at the bottom-right.
-- Swipe cue: slides 1 to 6 have a small gold outlined "SWIPE →" pill at the bottom-left (above the progress dots on tip slides). Slide 7 has a smaller one.
+- Swipe cue: the cover has a gold-filled "SWIPE →" pill (navy text and arrow) at the bottom-right. Slides 2 to 6 keep the small gold outlined pill at the bottom-left (above the progress dots on tip slides). Slide 7 has a smaller gold-filled one.
 - Copy rules: short sentences, speak to the viewer as "you", no em-dashes, no made-up statistics, fake quotes or client names.
 - Always post the finished slides in the chat so Ruth can see them.
 
