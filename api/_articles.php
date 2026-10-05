@@ -42,3 +42,38 @@ function articles_save($arr) {
   if (!is_dir($d)) @mkdir($d, 0755, true);
   return file_put_contents(articles_file(), json_encode(array_values($arr), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)) !== false;
 }
+
+/** ---- Translations (French, Spanish, Hindi) ----
+ * Translated articles live in data/i18n/articles.<lang>.json, keyed by slug, and are shown
+ * ONLY when the visitor has chosen that language in the site language switcher
+ * (cookie googtrans=/en/<lang>) or opens the page with ?lang=<lang>. English stays the default.
+ */
+function articles_langs() { return ['fr', 'es', 'hi']; }
+function articles_lang() {
+  $l = isset($_GET['lang']) ? strtolower(substr((string)$_GET['lang'], 0, 5)) : '';
+  if (!$l && !empty($_COOKIE['googtrans']) && preg_match('#^/[a-z-]+/([a-z-]+)$#i', $_COOKIE['googtrans'], $m)) $l = strtolower($m[1]);
+  return in_array($l, articles_langs(), true) ? $l : '';
+}
+function articles_i18n_load($lang) {
+  static $cache = [];
+  if (!isset($cache[$lang])) {
+    $f = articles_dir() . '/i18n/articles.' . $lang . '.json';
+    $j = file_exists($f) ? json_decode(file_get_contents($f), true) : [];
+    $cache[$lang] = is_array($j) ? $j : [];
+  }
+  return $cache[$lang];
+}
+function articles_localize($a, $lang) {
+  if (!$lang || !is_array($a) || empty($a['slug'])) return $a;
+  $t = articles_i18n_load($lang);
+  if (empty($t[$a['slug']])) return $a;
+  foreach (['title', 'excerpt', 'metaTitle', 'metaDescription', 'keywords', 'body', 'faq'] as $k) {
+    if (isset($t[$a['slug']][$k]) && $t[$a['slug']][$k] !== '' && $t[$a['slug']][$k] !== []) $a[$k] = $t[$a['slug']][$k];
+  }
+  $a['_lang'] = $lang;
+  return $a;
+}
+function articles_has_lang($slug, $lang) {
+  $t = articles_i18n_load($lang);
+  return !empty($t[$slug]);
+}

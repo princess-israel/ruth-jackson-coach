@@ -3,6 +3,10 @@ require __DIR__ . '/api/_articles.php';
 
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 $a = $slug !== '' ? articles_find($slug) : null;
+$lang = articles_lang();
+if ($a) $a = articles_localize($a, $lang);
+$isTr = $a && !empty($a['_lang']);
+header('Vary: Cookie');
 
 $base = 'https://' . ($_SERVER['HTTP_HOST'] ?? 'coachruthjackson.com');
 function e($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
@@ -23,7 +27,7 @@ if (!$a) {
 }
 $canonical = $base . '/article.php?slug=' . urlencode($slug);
 ?><!DOCTYPE html>
-<html lang="en">
+<html lang="<?= $isTr ? e($a['_lang']) : 'en' ?>">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,7 +36,9 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
 <meta name="description" content="<?= e($desc) ?>">
 <meta name="keywords" content="<?= e(implode(', ', $a['keywords'] ?? [])) ?>">
 <meta name="author" content="<?= e($a['author'] ?? 'Ruth Jackson') ?>">
-<link rel="canonical" href="<?= e($canonical) ?>">
+<link rel="canonical" href="<?= e($canonical . ($isTr ? '&lang=' . $a['_lang'] : '')) ?>">
+<?php foreach (articles_langs() as $__l): if (articles_has_lang($slug, $__l)): ?><link rel="alternate" hreflang="<?= e($__l) ?>" href="<?= e($canonical . '&lang=' . $__l) ?>">
+<?php endif; endforeach; ?><link rel="alternate" hreflang="en" href="<?= e($canonical) ?>">
 <meta property="og:type" content="article">
 <meta property="og:title" content="<?= e($a['title']) ?>">
 <meta property="og:description" content="<?= e($desc) ?>">
@@ -107,7 +113,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
     <article class="article">
       <a href="blog.html" class="muted" style="font-size:.9rem">← All articles</a>
       <div class="cat" style="color:var(--azure);text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-size:.78rem;margin:18px 0 8px"><?= e($a['category'] ?? 'Article') ?></div>
-      <h1><?= e($a['title']) ?></h1>
+      <h1<?= $isTr ? ' translate="no" class="notranslate"' : '' ?>><?= e($a['title']) ?></h1>
       <div class="meta">
         <span>By <?= e($a['author'] ?? 'Ruth Jackson') ?></span>
         <?php if (!empty($a['date'])): ?><span>· <?= e(date('M j, Y', strtotime($a['date']))) ?></span><?php endif; ?>
@@ -118,7 +124,7 @@ $canonical = $base . '/article.php?slug=' . urlencode($slug);
         <p>Trained &amp; certified within the Women in Digital Business ecosystem</p>
         <div class="marquee"><div class="marquee-track" data-partners></div></div>
       </section>
-      <div class="article-body"><?= $a['body'] ?? '' ?></div>
+      <div class="article-body<?= $isTr ? ' notranslate' : '' ?>"<?= $isTr ? ' translate="no"' : '' ?>><?= $a['body'] ?? '' ?></div>
 
       <div class="cta-band reveal" style="margin-top:50px">
         <h2 style="font-size:1.6rem">Ready to turn this into real skills?</h2>

@@ -66,3 +66,8 @@ See also `README.md`, `CPANEL-SETUP.md`, `PESAPAL-SETUP.md`, and `CLIENT-HANDOFF
 - Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
 - Facebook: https://www.facebook.com/profile.php?id=61560284518376
 - Footer/contact (main.js, index.html) and article pages already link them. ALWAYS include all three links, plus WhatsApp and the website, in every social post, poster and caption file (`social/*.md`).
+
+## Article translations (FR / ES / HI)
+- Translations live in `data/i18n/articles.<fr|es|hi>.json`, keyed by article slug, and are overlaid by `api/_articles.php` when the language switcher cookie (`googtrans`) or `?lang=` matches. English stays the default.
+- When a new article is published, add its slug to all three files (same HTML structure, same classes and links, no em-dashes). Translated text is marked `translate="no"` so Google Translate does not re-translate it.
+- Runtime admin edits to English articles do not update the translations.

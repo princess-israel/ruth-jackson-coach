@@ -368,8 +368,8 @@
     return `<a class="card post-card" href="article.php?slug=${encodeURIComponent(a.slug)}">
       ${img ? `<div class="post-img" style="background-image:url(${img})"></div>` : ""}
       <div class="cat">${a.category || "Article"}</div>
-      <h3>${a.title || ""}</h3>
-      <p class="desc">${a.excerpt || ""}</p>
+      <h3${a._lang ? ' translate="no" class="notranslate"' : ""}>${a.title || ""}</h3>
+      <p class="desc${a._lang ? " notranslate" : ""}"${a._lang ? ' translate="no"' : ""}>${a.excerpt || ""}</p>
       ${a.readMins ? `<span class="muted" style="font-size:.8rem;margin-top:12px;display:block">${a.readMins} min read</span>` : ""}
     </a>`;
   }

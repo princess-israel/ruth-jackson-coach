@@ -11,15 +11,17 @@ header('Content-Type: application/json');
 header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 header('Pragma: no-cache');
 header('X-LiteSpeed-Cache-Control: no-cache');
+header('Vary: Cookie');
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
   $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
   if ($slug !== '') {
     $a = articles_find($slug);
     if (!$a) { http_response_code(404); echo json_encode(['error' => 'Article not found']); exit; }
-    echo json_encode(['article' => $a]); exit;
+    echo json_encode(['article' => articles_localize($a, articles_lang())]); exit;
   }
-  echo json_encode(['articles' => articles_sorted()]); exit;
+  $__l = articles_lang();
+  echo json_encode(['articles' => array_map(function ($x) use ($__l) { return articles_localize($x, $__l); }, articles_sorted())]); exit;
 }
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   http_response_code(405); echo json_encode(['error' => 'Method not allowed']); exit;
