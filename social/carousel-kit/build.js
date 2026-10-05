@@ -15,7 +15,7 @@ const ruth = (w, left, top, disc) => `<div class="disc" style="width:${disc}px;h
 const swipe = b => `<div class="abs" style="left:60px;bottom:${b}px;display:flex;align-items:center;gap:14px;border:3px solid #ffc21a;border-radius:40px;padding:10px 26px;font-size:28px;font-weight:800;letter-spacing:.16em;color:#ffd34d">SWIPE<svg width="40" height="22" viewBox="0 0 40 22"><path d="M2 11h34M27 3l9 8-9 8" stroke="#ffd34d" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 const swipeSm = () => `<div class="abs" style="right:60px;bottom:22px;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#ffd34d,#ffc21a 60%,#e0a010);border-radius:30px;padding:7px 20px;font-size:20px;font-weight:900;letter-spacing:.14em;color:#050a20;box-shadow:0 8px 20px -8px rgba(255,194,26,.7)">SWIPE<svg width="28" height="16" viewBox="0 0 40 22"><path d="M2 11h34M27 3l9 8-9 8" stroke="#050a20" stroke-width="4.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 const cover = () => `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(290, 36, 26)}
-<div class="abs" style="top:250px;left:60px;width:620px;font-size:128px;line-height:1.02;font-weight:900">${T.hook.join('<br>')}</div>
+<div class="abs" style="top:250px;left:60px;width:700px;white-space:nowrap;font-size:128px;line-height:1.02;font-weight:900">${T.hook.join('<br>')}</div>
 <div class="abs g" style="top:700px;left:60px;width:520px;font-size:68px;line-height:1.1;font-weight:800">${T.gold}</div>${ruth(640, 480, 610, 560)}${swipe(70)}`;
 const tip = i => { const [h, t] = T.tips[i]; return `<style>${base}</style><div class="handle">${HANDLE}</div>${moon(210, 40, 36)}
 <div class="abs" style="top:260px;left:60px;width:150px;height:150px;border-radius:50%;background:#ffc21a;color:#050a20;display:grid;place-items:center;font-size:88px;font-weight:800;box-shadow:0 14px 34px -10px rgba(255,194,26,.7)">${i + 1}</div>
@@ -48,7 +48,7 @@ ${card(976, `${num(3)}<div style="flex:1"><div style="font-size:48px;font-weight
   const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
   const pg = await b.newPage({ viewport: { width: 1080, height: 1350 } });
   const out = path.join(R, 'social/carousels-v2', slug); fs.mkdirSync(out, { recursive: true });
-  const slides = [cover(), tip(0), tip(1), tip(2), tip(3), cta(), follow()];
+  const slides = process.env.COVER_ONLY ? [cover()] : [cover(), tip(0), tip(1), tip(2), tip(3), cta(), follow()];
   for (let i = 0; i < slides.length; i++) {
     const f = path.join(K, '.tmp.html'); fs.writeFileSync(f, '<!doctype html><meta charset=utf-8><body>' + slides[i]);
     await pg.goto('file://' + f); await pg.waitForTimeout(250);
