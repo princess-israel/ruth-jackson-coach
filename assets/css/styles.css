@@ -313,22 +313,25 @@ section{position:relative}
 @media (max-width:900px){
   .hs-img{background-position:82% 18%}   /* subjects sit on the right of the photos */
   .hs-slide::after{background:linear-gradient(180deg,transparent 0%,rgba(9,18,46,.18) 30%,var(--hs-a) 46%,var(--hs-b) 70%)}
-  .hero-slider .hs-content{align-items:flex-end;justify-content:flex-start;padding-bottom:58px}
+  .hero-slider .hs-content{align-items:flex-end;justify-content:flex-start;padding-bottom:72px}
   .hs-content .hs-text{width:100%;max-width:640px}
   .hs-lead{max-width:42em}
   .hs-arrow{width:36px;height:36px;top:auto;bottom:14px;transform:none}
   .hs-prev{left:14px;right:auto}.hs-next{right:14px;left:auto}
   .hs-dots{justify-content:center;left:0;right:0;bottom:22px}
   .hs-slide--logos .hs-logo-panel{display:none}
-  .hs-slide--logos .hs-content{align-items:flex-start;padding-top:36px;padding-bottom:36px}
-  .hs-logo-grid--inline{display:grid;grid-template-columns:repeat(4,1fr);max-width:520px;gap:12px;margin:0 0 22px}
-  .hs-logo-grid--inline img{padding:10px 12px;border-radius:10px}
-  .hs-text--glass{padding:24px 22px;border-radius:18px}
+  .hero-slider{min-height:max(700px,88svh)}
+  .hero-slider .hs-content{min-height:max(700px,88svh)}
+  .hero-slider .hs-slide--logos .hs-content{align-items:flex-end;padding-top:88px;padding-bottom:72px}
+  .hs-logo-grid--inline{display:grid;grid-template-columns:repeat(4,1fr);max-width:none;gap:8px;margin:0 0 16px}
+  .hs-logo-grid--inline img{max-width:none;height:44px;padding:6px 8px;border-radius:8px}
+  .hs-text--glass{padding:20px 18px;border-radius:18px}
 }
 /* small phones: tighten type, keep the subject framed */
 @media (max-width:560px){
   .hs-img{background-position:85% 16%}
-  .hero-slider .hs-content{padding-bottom:48px}
+  .hero-slider,.hero-slider .hs-content{min-height:max(780px,88svh)}
+  .hero-slider .hs-content{padding-bottom:70px}
   .hero-slider h1{font-size:clamp(1.7rem,7.4vw,2.25rem)}
   .hs-lead{font-size:1rem;margin-bottom:22px}
   .hs-badge{font-size:.66rem;padding:7px 13px;margin-bottom:16px}
