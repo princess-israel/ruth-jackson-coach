@@ -8,10 +8,31 @@ Kept (already on the site): customer service training, how to handle angry custo
 
 Trending (web check, Oct 2026): Kenyan Google searches for "AI jobs" up 230%, "AI course" up 120%, cybersecurity plus AI up 110%, with "learn prompt engineering" a popular query; 2026 topics are AI agents, workflows and vibe coding. Source: https://expression.africa/google-search-trends-reveal-kenyans-are-searching-to-learn-more-ai-skills/. No source ranked digital marketing or customer service trends for Kenya, so those keep the site's existing terms.
 
+Posting order: digital marketing first, then AI, graphic design, cyber security, training of trainers, online safety, customer service.
+
 Posting tip: Instagram first, then TikTok photo carousel, then Facebook. Post one carousel a day, 7 days.
 
+## Digital Marketing and Social Media Management
+Folder: `01-digital-marketing` (9 slides, 8 for AI). Format: Myth vs fact split-screen format. Cover: struck-through 10,000 followers.
+Keywords: social media management, digital marketing course, SEO for small business Kenya, digital advertising strategy, AI content calendar
+
+Caption:
+
+10,000 followers = more sales? Myth. 🔥
+
+6 social media marketing myths, busted: followers, daily posting, ad budgets, SEO, likes and AI.
+
+Get found, get chosen, get paid. Digital Marketing and Social Media Management, $79. Link in bio.
+
+WhatsApp +254 729 384374 | coachruthjackson.com
+TikTok: https://www.tiktok.com/@timshidigitals
+Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
+Facebook: https://www.facebook.com/profile.php?id=61560284518376
+
+#DigitalMarketing #SocialMediaManagement #SocialMediaTips #SEO #MarketingKenya #LearnDigitalMarketing #WiDB #CoachRuthJackson
+
 ## Artificial Intelligence Academy
-Folder: `01-ai-academy` (9 slides, 8 for AI). Format: Chat-interface format. Cover: a typed prompt and an AI reply bubble.
+Folder: `02-ai-academy` (9 slides, 8 for AI). Format: Chat-interface format. Cover: a typed prompt and an AI reply bubble.
 Keywords: AI course with certificate, AI for small business, AI prompts for work, ChatGPT prompts for business, learn prompt engineering, AI jobs Kenya (rising Kenyan searches: AI jobs, AI course, learn prompt engineering)
 
 Caption:
@@ -30,7 +51,7 @@ Facebook: https://www.facebook.com/profile.php?id=61560284518376
 #AIPrompts #AICourse #AIForSmallBusiness #LearnAI #ChatGPTPrompts #AITrainingKenya #WiDB #CoachRuthJackson
 
 ## Graphic Design
-Folder: `02-graphic-design` (9 slides, 8 for AI). Format: Colour-block poster format. Cover: bold shapes and giant BRAND KIT type.
+Folder: `03-graphic-design` (9 slides, 8 for AI). Format: Colour-block poster format. Cover: bold shapes and giant BRAND KIT type.
 Keywords: graphic design for small business, Canva for business, brand kit design, learn graphic design, logo design course
 
 Caption:
@@ -49,7 +70,7 @@ Facebook: https://www.facebook.com/profile.php?id=61560284518376
 #GraphicDesign #CanvaTips #BrandKit #LogoDesign #SmallBusinessKenya #LearnDesign #WiDB #CoachRuthJackson
 
 ## Cyber Security
-Folder: `03-cyber-security` (9 slides, 8 for AI). Format: Terminal and alert format. Cover: a fake M-PESA scam SMS.
+Folder: `04-cyber-security` (9 slides, 8 for AI). Format: Terminal and alert format. Cover: a fake M-PESA scam SMS.
 Keywords: cybersecurity for small business, phishing prevention, how to protect business from cyber attacks, two-factor authentication, AI scams (cybersecurity and AI searches doubled in Kenya)
 
 Caption:
@@ -68,7 +89,7 @@ Facebook: https://www.facebook.com/profile.php?id=61560284518376
 #CyberSecurity #PhishingAwareness #ScamAlert #OnlineSafety #SmallBusinessSecurity #KenyaBusiness #WiDB #CoachRuthJackson
 
 ## Training of Trainers
-Folder: `04-training-of-trainers` (9 slides, 8 for AI). Format: Lesson-plan notebook format. Cover: ruled paper and a 60-minute plan.
+Folder: `05-training-of-trainers` (9 slides, 8 for AI). Format: Lesson-plan notebook format. Cover: ruled paper and a 60-minute plan.
 Keywords: train the trainer, training of trainers, how to become a certified trainer, facilitation skills training, ToT certification
 
 Caption:
@@ -85,25 +106,6 @@ Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
 Facebook: https://www.facebook.com/profile.php?id=61560284518376
 
 #TrainTheTrainer #TrainingOfTrainers #FacilitationSkills #CertifiedTrainer #CorporateTraining #WiDB #CoachRuthJackson
-
-## Digital Marketing and Social Media Management
-Folder: `05-digital-marketing` (9 slides, 8 for AI). Format: Myth vs fact split-screen format. Cover: struck-through 10,000 followers.
-Keywords: social media management, digital marketing course, SEO for small business Kenya, digital advertising strategy, AI content calendar
-
-Caption:
-
-10,000 followers = more sales? Myth. 🔥
-
-6 social media marketing myths, busted: followers, daily posting, ad budgets, SEO, likes and AI.
-
-Get found, get chosen, get paid. Digital Marketing and Social Media Management, $79. Link in bio.
-
-WhatsApp +254 729 384374 | coachruthjackson.com
-TikTok: https://www.tiktok.com/@timshidigitals
-Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
-Facebook: https://www.facebook.com/profile.php?id=61560284518376
-
-#DigitalMarketing #SocialMediaManagement #SocialMediaTips #SEO #MarketingKenya #LearnDigitalMarketing #WiDB #CoachRuthJackson
 
 ## Online Gender-Based Violence
 Folder: `06-online-gbv-safety` (9 slides, 8 for AI). Format: Calm safety-steps format. Cover: shield icon, soft lavender, no photo, gentle tone.
