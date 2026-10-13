@@ -144,3 +144,7 @@ Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
 Facebook: https://www.facebook.com/profile.php?id=61560284518376
 
 #CustomerService #CustomerCare #CustomerExperience #CustomerServiceTraining #NairobiBusiness #KenyaBusiness #CoachRuthJackson
+
+## Scenic background version (2026-10-13)
+
+The same seven carousels were rebuilt over the alpine lake photo, in navy, gold and white, with no closing call-to-action slide. Files: `social/2026-10-13-scenic-carousels/<folder>/slide-0N.png` (1080x1350). Digital marketing is first (8 slides), then AI (7), graphic design, cyber security, training of trainers, online safety, customer service (8 each). Captions above still apply, and they carry the website, WhatsApp and social links, since the slides no longer do.
