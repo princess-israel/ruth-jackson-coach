@@ -61,3 +61,34 @@ Caption: Better AI answers start with a better prompt. Role, goal, context, form
 #AITips #AIPrompts #LearnAI #ChatGPT #SmallBusiness #Kenya #BusinessTips
 
 Follow: https://www.tiktok.com/@timshidigitals | https://www.instagram.com/timshidigitalswith_ruthjackson | https://www.facebook.com/profile.php?id=61560284518376
+
+## LinkedIn
+
+Upload `social/2026-10-13-scenic-carousels/02-ai-academy/ai-carousel-linkedin.pdf` as a document post. LinkedIn turns a PDF into a swipeable carousel. Only the first lines show before "see more", so the hook is up front.
+
+Caption:
+
+Most teams use AI. Few get consistent results from it.
+
+The difference is rarely the tool. It is the prompt.
+
+After training customer care teams, marketing departments and small business owners in Nairobi, I use the same 5-part structure every time:
+
+1. Role: tell the AI who it should act as
+2. Goal: state clearly what you want out
+3. Context: describe your business and your market
+4. Format: ask for a list, a table or a short reply
+5. Tone: choose warm, friendly or formal
+
+Try it on your next customer email, report or social post. Clearer instructions save editing time and make AI output safe to share with clients.
+
+Swipe through the carousel and save it for your team.
+
+If your organisation needs practical AI training with a recognised certificate from WiDB, Microsoft, ILO and ITC, send me a message or WhatsApp +254 729 384374.
+
+Website: https://coachruthjackson.com
+TikTok: https://www.tiktok.com/@timshidigitals
+Instagram: https://www.instagram.com/timshidigitalswith_ruthjackson
+Facebook: https://www.facebook.com/profile.php?id=61560284518376
+
+#AITraining #PromptEngineering #CorporateTraining #CustomerService #Kenya
