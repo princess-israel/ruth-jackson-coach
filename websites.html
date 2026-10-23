@@ -51,33 +51,63 @@ section{padding:84px 0;position:relative}
 .nav .links a:hover{color:var(--gold-soft)}
 @media(max-width:720px){.nav .links{display:none}.nav .btn{margin-left:auto}}
 
-/* hero */
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 70px;overflow:hidden;
-  background:radial-gradient(60% 50% at 30% 30%,rgba(232,184,75,.18),transparent 70%),radial-gradient(50% 45% at 78% 62%,rgba(40,84,153,.55),transparent 70%),radial-gradient(120% 90% at 50% 50%,transparent 55%,rgba(0,0,0,.6))}
-.hero .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
-@media(max-width:860px){.hero .grid{grid-template-columns:1fr}}
+/* hero: monitor showcase */
+.hero{padding:118px 0 56px;overflow:hidden;
+  background:radial-gradient(60% 40% at 50% 0%,rgba(232,184,75,.16),transparent 70%)}
+.hero .intro{text-align:center;max-width:760px;margin:0 auto 34px}
 .badge{display:inline-block;padding:7px 14px;border-radius:999px;font-size:13px;color:var(--gold-soft);margin-bottom:20px}
-.hero h1{font-size:clamp(34px,6.4vw,64px);font-weight:300;letter-spacing:.01em}
+.hero h1{font-size:clamp(32px,6vw,58px);font-weight:300;letter-spacing:.01em}
 .hero h1 b{font-weight:700;color:var(--gold-soft)}
-.hero p.lead{color:var(--silver);font-size:17px;margin:20px 0 28px;max-width:34em}
-.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
-.stage{position:relative;height:380px;perspective:1100px}
-.device{position:absolute;inset:30px 10px 30px 10px;border-radius:16px;border:1px solid var(--hair);background:linear-gradient(180deg,#0f2255,#0a1736);box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(232,184,75,.18);transform:rotateY(-14deg) rotateX(6deg);transform-style:preserve-3d;animation:float 7s ease-in-out infinite;overflow:hidden}
-.device .bar{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--hair)}
-.device .bar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2)}
-.mock{padding:18px}
-.mock .h{height:14px;width:60%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--gold-soft));margin-bottom:10px}
-.mock .l{height:8px;border-radius:4px;background:rgba(255,255,255,.14);margin-bottom:8px}
-.mock .row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
-.mock .row div{height:70px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid var(--hair)}
-.mock .cta{width:90px;height:22px;border-radius:999px;background:var(--gold);margin-top:14px}
-@keyframes float{0%,100%{translate:0 0}50%{translate:0 -12px}}
-.hot{position:absolute;display:flex;align-items:center;gap:8px;font-size:12px;z-index:3}
-.hot i{width:12px;height:12px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(232,184,75,.7);animation:pulse 2s infinite;flex:0 0 12px}
-.hot span{padding:6px 11px;border-radius:12px;white-space:nowrap}
-.hot.a{top:18px;left:-6px}.hot.b{top:170px;right:-4px;flex-direction:row-reverse}.hot.c{bottom:46px;left:14px}
-@keyframes pulse{70%{box-shadow:0 0 0 12px rgba(232,184,75,0)}100%{box-shadow:0 0 0 0 rgba(232,184,75,0)}}
-@media(max-width:520px){.hot.a{left:0}.hot.b{right:0}.hot span{font-size:11px;padding:5px 9px}.stage{height:330px}}
+.hero p.lead{color:var(--silver);font-size:17px;margin:18px auto 26px;max-width:36em}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+
+.stage{position:relative;max-width:980px;margin:0 auto;border-radius:26px;overflow:hidden;padding:36px 6% 0;isolation:isolate}
+.sky{position:absolute;inset:0;z-index:-2;opacity:0;transition:opacity 1.2s}
+.sky.on{opacity:1}
+.sky.s0{background:linear-gradient(180deg,#6a6682,#2b2943)}
+.sky.s1{background:linear-gradient(180deg,#7a6650,#2e2619)}
+.sky.s2{background:linear-gradient(180deg,#4a6798,#182650)}
+.sky.s3{background:linear-gradient(180deg,#86506b,#2c1a33)}
+.stage:before,.stage:after{content:"";position:absolute;z-index:-1;border-radius:50%;background:rgba(7,14,41,.55)}
+.stage:before{left:-18%;bottom:-6%;width:62%;height:46%}
+.stage:after{right:-20%;bottom:-8%;width:66%;height:52%}
+.desk{position:absolute;left:0;right:0;bottom:0;height:20%;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.28))}
+.monitor{position:relative;margin:0 auto;width:100%;border-radius:14px;background:linear-gradient(180deg,#d6d9df,#aeb2bb);padding:9px 9px 26px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.screen{position:relative;aspect-ratio:16/10;overflow:hidden;border-radius:6px;background:#000;container-type:inline-size}
+.neck{width:15%;height:38px;margin:0 auto;background:linear-gradient(90deg,#9ea2ab,#d3d6dc,#9ea2ab)}
+.foot{width:28%;height:12px;margin:0 auto;border-radius:50% 50% 0 0/100% 100% 0 0;background:linear-gradient(180deg,#d3d6dc,#8d919a)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .9s}
+.slide.on{opacity:1}
+.page{position:absolute;left:0;right:0;top:0;height:160%;transition:transform 4.2s cubic-bezier(.45,0,.25,1);background:radial-gradient(70% 55% at 80% 25%,color-mix(in srgb,var(--a) 38%,transparent),transparent 70%),#000}
+.slide.down .page{transform:translateY(0)}
+.slide.down.go .page{transform:translateY(-37.5%)}
+.slide.up .page{transform:translateY(-37.5%)}
+.slide.up.go .page{transform:translateY(0)}
+.slide.reset .page{transition:none}
+.top{height:62.5%;padding:2.2cqw 4cqw;display:flex;flex-direction:column}
+.mnav{display:flex;align-items:center;gap:2cqw;font-size:max(7px,1.5cqw);color:#cfd5e6;padding-bottom:1.6cqw;border-bottom:1px solid rgba(255,255,255,.1)}
+.mnav b{letter-spacing:.2em;font-weight:600;margin-right:auto}
+.mnav i{font-style:normal;padding:.5cqw 1.6cqw;border-radius:99px;background:var(--a);color:#14100a;font-weight:600}
+.mbody{flex:1;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3cqw}
+.mbody h3{font-size:max(15px,6.4cqw);font-weight:300;line-height:1.05;color:#fff;letter-spacing:.01em}
+.mbody p{font-size:max(8px,1.9cqw);color:#a9b2c9;margin-top:1.4cqw}
+.mbody svg{width:100%;height:auto;max-height:100%;color:var(--a)}
+.rows{height:37.5%;padding:2.4cqw 4cqw;display:grid;align-content:start}
+.rows div{display:flex;justify-content:space-between;gap:3cqw;padding:1.5cqw 0;border-bottom:1px solid rgba(255,255,255,.14);font-size:max(8px,2.5cqw);color:#fff}
+.rows div span{font-size:max(7px,1.7cqw);color:#98a2bd;text-align:right}
+.ctl{display:flex;align-items:center;gap:12px;max-width:520px;margin:18px auto 20px}
+.ctl button{width:42px;height:42px;border-radius:50%;border:0;background:#fff;color:#0b1330;cursor:pointer;font-size:15px;display:grid;place-items:center;flex:0 0 42px}
+.ctl button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.prog{flex:1;height:8px;border-radius:99px;background:rgba(255,255,255,.85);overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--gold-deep);border-radius:99px}
+.prog i.run{animation:fill var(--d,5200ms) linear forwards}
+.stage.paused .prog i{animation-play-state:paused}
+@keyframes fill{to{width:100%}}
+.labels{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding-bottom:20px}
+.labels button{padding:7px 14px;border-radius:99px;border:1px solid rgba(255,255,255,.3);background:rgba(7,14,41,.45);color:#e9ecf5;font:500 13px 'Inter',sans-serif;cursor:pointer}
+.labels button[aria-current=true]{background:var(--gold);color:#2a1a00;border-color:var(--gold)}
+.labels button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.page{transition:none}.slide{transition:none}.sky{transition:none}}
 
 /* badges */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:0}
@@ -191,25 +221,46 @@ footer a{color:var(--gold-soft)}
 </nav>
 
 <header class="hero">
-  <div class="wrap grid">
-    <div>
+  <div class="wrap">
+    <div class="intro">
       <span class="badge glass">Websites for businesses, churches and shops</span>
       <h1>Fast websites that <b>get you found</b> on Google.</h1>
       <p class="lead">SEO websites, church websites, business sites and online stores. Mobile-ready, built for Kenya, and live in 3 days. Basic websites from KES 15,000.</p>
-      <div class="ctas">
-        <a class="btn gold" href="#quote">Request a Free Quote</a>
-        <a class="btn" href="#packages">See Packages</a>
-      </div>
+      <div class="ctas"><a class="btn gold" href="#quote">Request a Free Quote</a><a class="btn" href="#packages">See Packages</a></div>
     </div>
-    <div class="stage" aria-hidden="true">
-      <div class="device">
-        <div class="bar"><i></i><i></i><i></i></div>
-        <div class="mock"><div class="h"></div><div class="l" style="width:90%"></div><div class="l" style="width:72%"></div><div class="cta"></div>
-          <div class="row"><div></div><div></div><div></div></div></div>
+    <div class="stage" id="stage">
+      <div class="sky s0 on"></div>
+      <div class="sky s1"></div>
+      <div class="sky s2"></div>
+      <div class="sky s3"></div>
+      <div class="desk"></div>
+      <div class="monitor">
+        <div class="screen" role="img" aria-label="Examples of SEO, church, business and online store websites by Timshi Digitals">
+          <div class="slide down on go" style="--a:#E8B84B"><div class="page">
+            <div class="top"><div class="mnav"><b>TIMSHI</b><span>Home</span><span>About</span><span>Contact</span><i>Get started</i></div>
+              <div class="mbody"><div><h3>SEO Websites</h3><p>Be the first result your customers see.</p></div><svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="10" y="10" width="200" height="30" rx="15" stroke-opacity=".9"/><circle cx="32" cy="25" r="7"/><path d="M37 30l6 6"/><path d="M58 25h90" stroke-opacity=".4"/><rect x="10" y="54" width="200" height="26" rx="8" fill="currentColor" fill-opacity=".18"/><circle cx="26" cy="67" r="8" fill="currentColor" stroke="none"/><path d="M44 62h80M44 72h120" stroke-opacity=".7"/><rect x="10" y="88" width="200" height="22" rx="8" stroke-opacity=".3"/><path d="M44 99h90" stroke-opacity=".3"/><rect x="10" y="116" width="200" height="22" rx="8" stroke-opacity=".2"/><path d="M44 127h70" stroke-opacity=".2"/></svg></div></div>
+            <div class="rows"><div>Fast loading<span>Pages that open in seconds</span></div><div>Google-ready structure<span>Titles, links and speed</span></div><div>Mobile first<span>Built for phones</span></div><div>Local search<span>Nairobi and across Kenya</span></div></div>
+          </div></div>
+          <div class="slide up" style="--a:#F0A857"><div class="page">
+            <div class="top"><div class="mnav"><b>TIMSHI</b><span>Home</span><span>About</span><span>Contact</span><i>Get started</i></div>
+              <div class="mbody"><div><h3>Church Websites</h3><p>Service times, sermons and events in one place.</p></div><svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"><path d="M110 4v22M100 13h20"/><path d="M92 40l18-14 18 14v36H92z"/><path d="M40 76l36-24v24M180 76l-36-24v24" stroke-opacity=".6"/><path d="M40 76h140v64H40z" fill="currentColor" fill-opacity=".1"/><path d="M98 140v-30a12 12 0 0 1 24 0v30" fill="currentColor" fill-opacity=".3"/><circle cx="66" cy="102" r="7" stroke-opacity=".7"/><circle cx="154" cy="102" r="7" stroke-opacity=".7"/><path d="M20 140h180" stroke-opacity=".5"/></svg></div></div>
+            <div class="rows"><div>Service times<span>Always up to date</span></div><div>Sermons and events<span>Share every week</span></div><div>Ministries<span>Let members join</span></div><div>Giving and prayer<span>Simple and secure</span></div></div>
+          </div></div>
+          <div class="slide down" style="--a:#6FA8FF"><div class="page">
+            <div class="top"><div class="mnav"><b>TIMSHI</b><span>Home</span><span>About</span><span>Contact</span><i>Get started</i></div>
+              <div class="mbody"><div><h3>Business Websites</h3><p>Look professional. Win trust. Get calls.</p></div><svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="14" width="200" height="124" rx="10" stroke-opacity=".5"/><rect x="26" y="90" width="26" height="34" rx="3" fill="currentColor" fill-opacity=".25"/><rect x="64" y="72" width="26" height="52" rx="3" fill="currentColor" fill-opacity=".35"/><rect x="102" y="54" width="26" height="70" rx="3" fill="currentColor" fill-opacity=".5"/><path d="M26 66l48-20 40-8 70-14"/><path d="M168 18h16v16"/><rect x="142" y="84" width="52" height="40" rx="6" stroke-opacity=".6"/><path d="M152 98h32M152 110h20" stroke-opacity=".6"/></svg></div></div>
+            <div class="rows"><div>Services pages<span>Show what you offer</span></div><div>WhatsApp button<span>One tap to chat</span></div><div>Contact and map<span>Easy to find you</span></div><div>Basic from KES 15,000<span>Live in 3 days</span></div></div>
+          </div></div>
+          <div class="slide up" style="--a:#F08BB4"><div class="page">
+            <div class="top"><div class="mnav"><b>TIMSHI</b><span>Home</span><span>About</span><span>Contact</span><i>Get started</i></div>
+              <div class="mbody"><div><h3>Online Stores</h3><p>Sell online with secure payments.</p></div><svg viewBox="0 0 220 150" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 20h26l16 70h92l16-52H50"/><circle cx="74" cy="116" r="9"/><circle cx="142" cy="116" r="9"/><rect x="66" y="48" width="30" height="30" rx="5" fill="currentColor" fill-opacity=".3"/><rect x="104" y="48" width="30" height="30" rx="5" fill="currentColor" fill-opacity=".15"/><path d="M178 12l5 10 11 1-8 8 2 11-10-5-10 5 2-11-8-8 11-1z" fill="currentColor" stroke="none"/></svg></div></div>
+            <div class="rows"><div>Product catalogue<span>Photos, prices, filters</span></div><div>Secure payments<span>M-Pesa and cards</span></div><div>Order alerts<span>Know every sale</span></div><div>KES 50,000 to 100,000<span>Set by your needs</span></div></div>
+          </div></div>
+        </div>
       </div>
-      <div class="hot a"><i></i><span class="glass">Loads fast on any phone</span></div>
-      <div class="hot b"><i></i><span class="glass">Found on Google</span></div>
-      <div class="hot c"><i></i><span class="glass">One tap to WhatsApp</span></div>
+      <div class="neck"></div><div class="foot"></div>
+      <div class="ctl"><button type="button" id="pp" aria-label="Pause slideshow">&#10074;&#10074;</button><div class="prog" aria-hidden="true"><i id="pbar"></i></div></div>
+      <div class="labels" id="labels"><button type="button" aria-current="true">SEO</button><button type="button">Church</button><button type="button">Business</button><button type="button">Online stores</button></div>
     </div>
   </div>
 </header>
@@ -388,6 +439,35 @@ footer a{color:var(--gold-soft)}
     var f=e.target,m='Hi Timshi Digitals, I would like a quote.\nName: '+f.name.value+'\nPhone: '+f.phone.value+'\nService: '+f.svc.value+'\nDetails: '+(f.details.value||'-');
     window.open('https://wa.me/254729384374?text='+encodeURIComponent(m),'_blank','noopener');
   });
+
+
+  /* hero slideshow */
+  (function(){
+    var stage=document.getElementById('stage'),sl=stage.querySelectorAll('.slide'),sk=stage.querySelectorAll('.sky'),
+        lb=stage.querySelectorAll('#labels button'),bar=document.getElementById('pbar'),pp=document.getElementById('pp'),
+        reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches,i=0,paused=false,t;
+    function show(n){
+      i=(n+sl.length)%sl.length;
+      sl.forEach(function(s,k){
+        if(k!==i){s.classList.remove('on');return}
+        s.classList.add('reset');s.classList.remove('go');void s.offsetWidth;
+        s.classList.remove('reset');s.classList.add('on');
+        requestAnimationFrame(function(){requestAnimationFrame(function(){s.classList.add('go')})});
+      });
+      sk.forEach(function(s,k){s.classList.toggle('on',k===i)});
+      lb.forEach(function(b,k){b.setAttribute('aria-current',k===i)});
+      bar.classList.remove('run');void bar.offsetWidth;
+      if(reduce){clearTimeout(t);if(!paused)t=setTimeout(function(){show(i+1)},6000)}else bar.classList.add('run');
+    }
+    bar.addEventListener('animationend',function(){if(!paused)show(i+1)});
+    lb.forEach(function(b,k){b.addEventListener('click',function(){show(k)})});
+    pp.addEventListener('click',function(){
+      paused=!paused;stage.classList.toggle('paused',paused);
+      pp.innerHTML=paused?'&#9654;':'&#10074;&#10074;';pp.setAttribute('aria-label',paused?'Play slideshow':'Pause slideshow');
+      if(reduce){clearTimeout(t);if(!paused)t=setTimeout(function(){show(i+1)},6000)}
+    });
+    show(0);
+  })();
 
   var els=document.querySelectorAll('.rv');
   if('IntersectionObserver' in window){
