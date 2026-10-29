@@ -135,13 +135,20 @@ $("#news").addEventListener("submit", e => {
   e.target.reset();
 });
 
-// hero slides
+// hero slides: move down from the top, automatically
 const slides = $$(".slide"), hdots = $$("#heroDots button");
-let hs = 0;
+let hs = 0, busy = false, timer;
 function showSlide(i) {
-  hs = (i + slides.length) % slides.length;
-  slides.forEach((s, n) => s.classList.toggle("on", n === hs));
-  hdots.forEach((d, n) => d.classList.toggle("on", n === hs));
+  i = (i + slides.length) % slides.length;
+  if (i === hs || busy) return;
+  busy = true;
+  const old = slides[hs], next = slides[i];
+  old.classList.remove("on"); old.classList.add("out");
+  next.classList.remove("reset"); next.classList.add("on");
+  hdots.forEach((d, n) => d.classList.toggle("on", n === i));
+  hs = i;
+  setTimeout(() => { old.classList.add("reset"); old.classList.remove("out"); busy = false; }, 1300);
 }
-hdots.forEach((d, n) => d.addEventListener("click", () => showSlide(n)));
-setInterval(() => showSlide(hs + 1), 6000);
+function startSlides() { clearInterval(timer); timer = setInterval(() => showSlide(hs + 1), 5500); }
+hdots.forEach((d, n) => d.addEventListener("click", () => { showSlide(n); startSlides(); }));
+startSlides();
