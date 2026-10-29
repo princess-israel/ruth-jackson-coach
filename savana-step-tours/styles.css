@@ -35,7 +35,15 @@ a{color:inherit}
 
 /* hero */
 .hero{position:relative;min-height:88vh;display:flex;align-items:center;color:#fff;overflow:hidden;background:var(--slate)}
-.hero-sky{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,24,29,.82),rgba(20,24,29,.45) 65%,rgba(20,24,29,.3)),linear-gradient(180deg,rgba(20,24,29,.3),rgba(20,24,29,.6)),url(img/canyon-sunset.jpg) center 30%/cover}
+.hero-sky{position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(20,24,29,.82),rgba(20,24,29,.45) 65%,rgba(20,24,29,.3)),linear-gradient(180deg,rgba(20,24,29,.3),rgba(20,24,29,.6))}
+.slide{position:absolute;inset:0;background-size:cover;opacity:0;transition:opacity 1.2s}
+.slide.on{opacity:1}
+.s1{background-image:url(img/canyon-sunset.jpg);background-position:center 30%}
+.s2{background-image:url(img/whale-lookout.jpg);background-position:center 40%}
+.s3{background-image:url(img/turquoise-lake.jpg);background-position:center 55%}
+.hero-dots{position:absolute;z-index:3;left:max(16px,env(safe-area-inset-left,0px));bottom:28px;display:flex;gap:8px}
+.hero-dots button{width:34px;height:5px;border:0;border-radius:3px;background:rgba(255,255,255,.4);cursor:pointer;padding:0}
+.hero-dots button.on{background:var(--gold)}
 .hero-copy{position:relative;z-index:2;padding-top:40px;padding-bottom:120px}
 .hero h1{color:#fff;font-size:clamp(2.6rem,6vw,4.8rem);max-width:15em}
 .lead{font-size:1.15rem;max-width:36em;color:#f6ead9}
@@ -71,12 +79,12 @@ a{color:inherit}
 .card p{margin:0;font-size:.92rem;color:var(--muted)}
 .card .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between}
 .price{font:700 1.15rem var(--serif);color:var(--slate)}
-.g1{background:url(img/canyon-sunset.jpg) center 70%/cover}
-.g2{background:url(img/turquoise-lake.jpg) center 60%/cover}
+.g1{background:url(img/leopard.jpg) center 40%/cover}
+.g2{background:url(img/bear-lake.jpg) center 55%/cover}
 .g3{background:url(img/alpine-road.jpg) center 30%/cover}
-.g4{background:url(img/bear-lake.jpg) center 55%/cover}
-.g5{background:url(img/coral.jpg) center 40%/cover}
-.g6{background:url(img/canyon-sunset.jpg) center 20%/cover}
+.g4{background:url(img/lantern-dinner.jpg) center 62%/cover}
+.g5{background:url(img/bird.jpg) center 48%/cover}
+.g6{background:url(img/cafe.jpg) center/cover}
 
 /* destinations */
 .dest-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -86,10 +94,10 @@ a{color:inherit}
 .dest span,.dest small{position:relative;z-index:1}
 .dest span{font:600 1.8rem var(--serif)}
 .dest small{font-size:.85rem;opacity:.9}
-.d1{background:url(img/canyon-sunset.jpg) center 55%/cover}
-.d2{background:url(img/alpine-road.jpg) center 35%/cover}
-.d3{background:url(img/bear-lake.jpg) center 55%/cover}
-.d4{background:url(img/turquoise-lake.jpg) center 55%/cover}
+.d1{background:linear-gradient(135deg,#E9B44C,#a9553b)}
+.d2{background:linear-gradient(135deg,#2F5D46,#E9B44C)}
+.d3{background:linear-gradient(135deg,#1c4a3a,#7fa86a)}
+.d4{background:linear-gradient(135deg,#3f6b7a,#2F5D46)}
 
 /* experiences */
 .exp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
@@ -98,13 +106,13 @@ a{color:inherit}
 .exp-grid p{margin:0;font-size:.9rem;color:var(--muted)}
 
 /* callout */
-.callout{background:linear-gradient(rgba(30,36,43,.72),rgba(30,36,43,.72)),url(img/alpine-road.jpg) center 40%/cover;color:#fff;text-align:center;padding:84px 0}
+.callout{background:linear-gradient(120deg,#1E242B,#6b3b34);color:#fff;text-align:center;padding:84px 0}
 .callout h2{color:#fff;max-width:18em;margin:0 auto .5em}
 .callout p{max-width:40em;margin:0 auto 1.6em;color:#eadfcd}
 
 /* video */
 .video-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:center}
-.video-card{border:0;cursor:pointer;height:320px;border-radius:18px;background:linear-gradient(rgba(30,36,43,.25),rgba(30,36,43,.35)),url(img/turquoise-lake.jpg) center 50%/cover;display:flex;align-items:center;justify-content:center}
+.video-card{border:0;cursor:pointer;height:320px;border-radius:18px;background:linear-gradient(rgba(30,36,43,.25),rgba(30,36,43,.35)),url(img/film-poster.jpg) center 72%/cover;display:flex;align-items:center;justify-content:center}
 .play{width:78px;height:78px;border-radius:50%;background:#fff;color:var(--terracotta);display:flex;align-items:center;justify-content:center;font-size:1.6rem;padding-left:5px;transition:.2s}
 .video-card:hover .play{transform:scale(1.1)}
 
@@ -123,9 +131,9 @@ a{color:inherit}
 .post h3{padding:16px 20px 0;margin:0;font-size:1.3rem}
 .post p{padding:6px 20px 20px;margin:0;color:var(--muted);font-size:.92rem}
 .post{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 22px rgba(30,36,43,.08)}
-.t1{background:url(img/alpine-road.jpg) center 60%/cover}
-.t2{background:url(img/coral.jpg) center 35%/cover}
-.t3{background:url(img/turquoise-lake.jpg) center 30%/cover}
+.t1{background:linear-gradient(135deg,#E9B44C,#2F5D46)}
+.t2{background:linear-gradient(135deg,#C86D51,#1E242B)}
+.t3{background:linear-gradient(135deg,#a9c7b0,#C86D51)}
 
 /* faq */
 details{background:#fff;border-radius:12px;margin-bottom:12px;padding:0 20px;border:1px solid #eadfcd}
@@ -183,3 +191,4 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .done pre{white-space:pre-wrap;background:var(--sand-2);border-radius:10px;padding:12px;font:inherit;font-size:.85rem;user-select:all}
 .done .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .nav a:focus-visible,.btn:focus-visible,.chip:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.video-slot video{width:100%;height:100%;border-radius:10px;background:#000}

@@ -4,19 +4,17 @@ const CONFIG = {
   whatsapp: "254700123456",           // portfolio placeholder (not a working number)
   address: "Westlands, Nairobi, Kenya", // portfolio placeholder
   phone: "+254 700 123 456",
-  videoEmbed: ""                      // TODO: paste a YouTube/Vimeo embed URL
+  video: "video/safari-film.mp4"
 };
 
 // Sample tours: replace titles, prices and copy with your real packages.
 const TOURS = [
   {t:"Classic Masai Mara Safari",d:"5 Days",c:"Kenya",cat:"classic",g:"g1",p:1450,s:"Big cats, river crossings and sundowner drives."},
-  {t:"Serengeti & Ngorongoro Explorer",d:"7 Days",c:"Tanzania",cat:"classic",g:"g4",p:2450,s:"The endless plains and the crater floor in one trip."},
-  {t:"Kenya & Tanzania Grand Circuit",d:"10 Days",c:"Kenya • Tanzania",cat:"classic",g:"g3",p:3650,s:"Amboseli, Mara and Serengeti at an unhurried pace."},
-  {t:"Private Tented Camp Honeymoon",d:"6 Days",c:"Kenya",cat:"luxury",g:"g6",p:3200,s:"Bush dinners, balloon flights and a private guide."},
-  {t:"Gorilla Trek & Savannah Combo",d:"6 Days",c:"Uganda • Rwanda",cat:"custom",g:"g2",p:3900,s:"Mountain gorillas, chimps and Queen Elizabeth NP."},
+  {t:"Serengeti & Ngorongoro Explorer",d:"7 Days",c:"Tanzania",cat:"classic",g:"g2",p:2450,s:"The endless plains and the crater floor in one trip."},
+  {t:"Kenya & Tanzania Grand Circuit",d:"10 Days",c:"Kenya \u2022 Tanzania",cat:"classic",g:"g3",p:3650,s:"Amboseli, Mara and Serengeti at an unhurried pace."},
+  {t:"Private Tented Camp Honeymoon",d:"6 Days",c:"Kenya",cat:"luxury",g:"g4",p:3200,s:"Bush dinners, balloon flights and a private guide."},
   {t:"Photographer's Mara Week",d:"7 Days",c:"Kenya",cat:"custom",g:"g5",p:2900,s:"Photo vehicle, golden-hour drives and a pro-minded guide."},
-  {t:"Nairobi & Amboseli Getaway",d:"3 Days",c:"Kenya",cat:"short",g:"g1",p:690,s:"Elephants under Kilimanjaro, easy from Nairobi."},
-  {t:"Lake Nakuru & Naivasha Weekend",d:"2 Days",c:"Kenya",cat:"short",g:"g2",p:420,s:"Flamingos, rhinos and a boat ride among hippos."}
+  {t:"Nairobi & Amboseli Getaway",d:"3 Days",c:"Kenya",cat:"short",g:"g6",p:690,s:"Elephants under Kilimanjaro, easy from Nairobi."}
 ];
 
 // Sample reviews: replace with real guest reviews before launch.
@@ -112,9 +110,7 @@ $("#inqCopy").addEventListener("click", async () => {
 
 // video
 $("#playBtn").addEventListener("click", () => {
-  $("#videoSlot").innerHTML = CONFIG.videoEmbed
-    ? `<iframe src="${CONFIG.videoEmbed}" allow="autoplay; fullscreen" allowfullscreen title="Safari video"></iframe>`
-    : "<p>Safari film coming soon.</p>";
+  $("#videoSlot").innerHTML = `<video controls autoplay muted playsinline src="${CONFIG.video}"></video>`;
   openModal($("#videoModal"));
 });
 
@@ -138,3 +134,14 @@ $("#news").addEventListener("submit", e => {
   $("#newsMsg").textContent = "Sign-ups are not connected yet. Please contact us by email or WhatsApp.";
   e.target.reset();
 });
+
+// hero slides
+const slides = $$(".slide"), hdots = $$("#heroDots button");
+let hs = 0;
+function showSlide(i) {
+  hs = (i + slides.length) % slides.length;
+  slides.forEach((s, n) => s.classList.toggle("on", n === hs));
+  hdots.forEach((d, n) => d.classList.toggle("on", n === hs));
+}
+hdots.forEach((d, n) => d.addEventListener("click", () => showSlide(n)));
+setInterval(() => showSlide(hs + 1), 6000);
