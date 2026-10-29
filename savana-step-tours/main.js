@@ -1,8 +1,9 @@
 // Savana Step Tours: set your real details here.
 const CONFIG = {
-  email: "hello@your-domain.com",     // TODO: replace
-  whatsapp: "254700000000",           // TODO: replace (country code, no +)
-  address: "Your office address, Nairobi, Kenya", // TODO: replace
+  email: "info@savanasteptours.com", // portfolio placeholder
+  whatsapp: "254700123456",           // portfolio placeholder (not a working number)
+  address: "Westlands, Nairobi, Kenya", // portfolio placeholder
+  phone: "+254 700 123 456",
   videoEmbed: ""                      // TODO: paste a YouTube/Vimeo embed URL
 };
 
@@ -34,7 +35,7 @@ $("#yr").textContent = new Date().getFullYear();
 $("#mailLink").textContent = CONFIG.email;
 $("#mailLink").removeAttribute("href");
 $("#waLink").href = "https://wa.me/" + CONFIG.whatsapp;
-$("#addr").textContent = CONFIG.address;
+$("#addr").textContent = CONFIG.phone + " | " + CONFIG.address;
 
 // mobile menu
 const menuBtn = $(".menu-btn"), nav = $("#nav");
@@ -113,7 +114,7 @@ $("#inqCopy").addEventListener("click", async () => {
 $("#playBtn").addEventListener("click", () => {
   $("#videoSlot").innerHTML = CONFIG.videoEmbed
     ? `<iframe src="${CONFIG.videoEmbed}" allow="autoplay; fullscreen" allowfullscreen title="Safari video"></iframe>`
-    : "<p>Add your video link in main.js (CONFIG.videoEmbed).</p>";
+    : "<p>Safari film coming soon.</p>";
   openModal($("#videoModal"));
 });
 
