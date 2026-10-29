@@ -84,7 +84,7 @@ a{color:inherit}
 .card p{margin:0;font-size:.92rem;color:var(--muted)}
 .card .foot{margin-top:auto;padding-top:14px;display:flex;align-items:center;justify-content:space-between}
 .price{font:700 1.15rem var(--serif);color:var(--slate)}
-.g1{background:url(img/leopard.jpg) center 40%/cover}
+.g1{background:url(img/pink-bird.jpg) center 10%/cover}
 .g2{background:url(img/bear-lake.jpg) center 55%/cover}
 .g3{background:url(img/alpine-road.jpg) center 30%/cover}
 .g4{background:url(img/lantern-dinner.jpg) center 62%/cover}
@@ -104,7 +104,7 @@ a{color:inherit}
 .d1{background:url(img/lion-portrait.jpg) center 25%/cover}
 .d2{background:url(img/zebra-leopard.jpg) center/cover}
 .d3{background:url(img/owl-bird.jpg) center 0%/cover}
-.d4{background:url(img/pink-bird.jpg) center 30%/cover}
+.d4{background:url(img/london.jpg) center 45%/cover}
 
 /* experiences */
 .exp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
