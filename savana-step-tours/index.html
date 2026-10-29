@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Savana Step Tours | East Africa Safaris</title>
+<meta name="description" content="Hand-crafted East Africa safaris guided by local experts. Kenya, Tanzania, Uganda and Rwanda. Plan your trip with Savana Step Tours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header" id="top">
+  <div class="wrap bar">
+    <a href="#top" class="logo" aria-label="Savana Step Tours home">
+      <svg viewBox="0 0 40 40" width="34" height="34" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#C86D51"/><path d="M6 28 Q14 18 20 24 T34 20 V32 H6Z" fill="#1E242B"/><circle cx="26" cy="13" r="4" fill="#E9B44C"/></svg>
+      <span>Savana <b>Step Tours</b></span>
+    </a>
+    <button class="menu-btn" aria-label="Menu" aria-expanded="false" aria-controls="nav">&#9776;</button>
+    <nav id="nav" class="nav">
+      <a href="#top">Home</a>
+      <a href="#destinations">Destinations</a>
+      <a href="#experiences">Curated Experiences</a>
+      <a href="#tours">Our Safaris</a>
+      <a href="#about">About Us</a>
+      <a href="#journal">Journal</a>
+      <a href="#contact">Contact</a>
+      <select class="lang" aria-label="Language">
+        <option>EN</option><option>SW</option><option>FR</option><option>DE</option>
+      </select>
+      <button class="btn btn-primary btn-sm" data-inquire="General enquiry">Plan My Trip</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-sky"></div>
+  <div class="hero-sun"></div>
+  <svg class="hero-land" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 220 Q240 150 480 200 T960 190 T1440 210 V320 H0Z" fill="#5a3a2a" opacity=".55"/>
+    <path d="M0 260 Q300 210 620 250 T1440 240 V320 H0Z" fill="#2c2a22"/>
+    <g fill="#1E242B"><path d="M1040 250 h6 v-70 q-34 -4 -46 -24 q22 6 46 4 q-4 -22 -30 -34 q30 4 36 28 q6 -26 40 -32 q-30 14 -30 38 q22 2 44 -6 q-12 20 -40 24 v72 h6z"/></g>
+  </svg>
+  <div class="wrap hero-copy">
+    <p class="eyebrow">Kenya &bull; Tanzania &bull; Uganda &bull; Rwanda</p>
+    <h1>Feel The Experience: Discover East Africa's Wild Beauty</h1>
+    <p class="lead">Witness iconic wildlife, explore untamed landscapes, and sleep under African skies with expert local guides.</p>
+    <div class="cta-row">
+      <a href="#tours" class="btn btn-primary">Explore Safaris</a>
+      <a href="#contact" class="btn btn-outline">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="wrap grid-4">
+    <article><span class="ico">&#9968;</span><h3>Crafted by Locals</h3><p>Itineraries designed by guides who grew up in these landscapes.</p></article>
+    <article><span class="ico">&#128663;</span><h3>Safety First</h3><p>Vetted 4x4 vehicles, certified drivers, and 24/7 ground support.</p></article>
+    <article><span class="ico">&#127807;</span><h3>Conservation-Led</h3><p>A portion of every booking funds community and wildlife initiatives.</p></article>
+    <article><span class="ico">&#128101;</span><h3>Small Groups</h3><p>Private vehicles and small parties for closer, quieter wildlife moments.</p></article>
+  </div>
+</section>
+
+<!-- TOURS -->
+<section class="section" id="tours">
+  <div class="wrap">
+    <p class="eyebrow dark">Our Safaris</p>
+    <h2>Featured Tour Packages</h2>
+    <div class="filters" role="tablist" aria-label="Filter safaris">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="classic">Classic Wildlife</button>
+      <button class="chip" data-filter="luxury">Luxury &amp; Honeymoon</button>
+      <button class="chip" data-filter="custom">Custom Interests</button>
+      <button class="chip" data-filter="short">Short Getaways</button>
+    </div>
+    <div class="cards" id="tourGrid"></div>
+    <p class="fine">Prices are sample figures per person sharing. Replace with your real rates.</p>
+  </div>
+</section>
+
+<!-- DESTINATIONS -->
+<section class="section alt" id="destinations">
+  <div class="wrap">
+    <p class="eyebrow dark">Destinations</p>
+    <h2>Where Will You Go?</h2>
+    <div class="dest-grid">
+      <a href="#tours" class="dest d1" data-pick="Kenya"><span>Kenya</span><small>12 trips</small></a>
+      <a href="#tours" class="dest d2" data-pick="Tanzania"><span>Tanzania</span><small>9 trips</small></a>
+      <a href="#tours" class="dest d3" data-pick="Uganda"><span>Uganda</span><small>6 trips</small></a>
+      <a href="#tours" class="dest d4" data-pick="Rwanda"><span>Rwanda</span><small>4 trips</small></a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="section" id="experiences">
+  <div class="wrap">
+    <p class="eyebrow dark">Curated Experiences</p>
+    <h2>Safaris Tailored To You</h2>
+    <div class="exp-grid">
+      <article><h3>Photography</h3><p>Golden-hour drives, photo vehicles and guides who know where the light falls.</p></article>
+      <article><h3>Birding</h3><p>Over a thousand species across rift valley lakes, forests and plains.</p></article>
+      <article><h3>Family Adventures</h3><p>Child-friendly lodges, shorter drives and junior ranger activities.</p></article>
+      <article><h3>Honeymoons &amp; Anniversaries</h3><p>Private tented camps, bush dinners and sundowners for two.</p></article>
+      <article><h3>Wellness in Nature</h3><p>Slow mornings, guided walks and quiet camps far from the crowds.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- CALLOUT -->
+<section class="callout">
+  <div class="wrap">
+    <p class="eyebrow">Limited dates</p>
+    <h2>Hot Air Balloon Safaris Over the Serengeti at Sunrise</h2>
+    <p>Now booking the 2026 season. Float over the plains as the herds wake, then land to a champagne bush breakfast.</p>
+    <button class="btn btn-primary" data-inquire="Balloon safari">Plan My Trip</button>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section class="section" id="about">
+  <div class="wrap video-wrap">
+    <div>
+      <p class="eyebrow dark">About Us</p>
+      <h2>Watch the Journey</h2>
+      <p>Savana Step Tours is a locally run safari operator. We build every itinerary by hand, so you see the wild places we love at a pace that suits you.</p>
+    </div>
+    <button class="video-card" id="playBtn" aria-label="Play video"><span class="play">&#9654;</span></button>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="section alt">
+  <div class="wrap">
+    <p class="eyebrow dark">Guest Stories</p>
+    <h2>What Travellers Say</h2>
+    <div class="slider" id="slider"></div>
+    <div class="dots" id="dots"></div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="section" id="journal">
+  <div class="wrap">
+    <p class="eyebrow dark">Travel Journal</p>
+    <h2>Guides, Parks &amp; Packing Tips</h2>
+    <div class="cards three">
+      <article class="post"><div class="thumb t1"></div><h3>Best Time to See the Great Migration</h3><p>Month by month: where the herds are and when to book.</p></article>
+      <article class="post"><div class="thumb t2"></div><h3>Maasai Mara vs Serengeti</h3><p>How to choose between East Africa's two great plains.</p></article>
+      <article class="post"><div class="thumb t3"></div><h3>The Safari Packing List</h3><p>What to wear, what to leave, and the one thing everyone forgets.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section alt">
+  <div class="wrap narrow">
+    <p class="eyebrow dark">FAQ</p>
+    <h2>Before You Book</h2>
+    <details><summary>When is the best time to travel?</summary><p>The dry months, roughly June to October, give the best game viewing and the Great Migration river crossings. Green season is quieter and more affordable.</p></details>
+    <details><summary>Do I need a visa or vaccinations?</summary><p>Most visitors need an eTA or visa for Kenya and a visa for Tanzania. Yellow fever and malaria advice varies by traveller. Check official sources and your doctor before you go.</p></details>
+    <details><summary>Can I customise my itinerary?</summary><p>Yes. Every safari is built around you: pace, budget, interests and group size. Send an enquiry and we will shape a plan.</p></details>
+    <details><summary>Is it safe?</summary><p>We use well-maintained 4x4 vehicles, trained drivers and guides, and keep in contact with our ground team throughout your trip.</p></details>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer" id="contact">
+  <div class="wrap foot-grid">
+    <div>
+      <p class="logo-text">Savana <b>Step Tours</b></p>
+      <p>Hand-crafted East Africa safaris, guided by local experts.</p>
+      <div class="social">
+        <a href="#" aria-label="Instagram">Instagram</a>
+        <a href="#" aria-label="Facebook">Facebook</a>
+        <a href="#" aria-label="TikTok">TikTok</a>
+      </div>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <a href="#destinations">Destinations</a>
+      <a href="#experiences">Experiences</a>
+      <a href="#tours">Safaris</a>
+      <a href="#journal">Journal</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <p><a id="mailLink" href="#">email</a></p>
+      <p><a id="waLink" href="#" class="btn btn-whatsapp btn-sm">WhatsApp</a></p>
+      <p id="addr"></p>
+    </div>
+    <div>
+      <h4>Field Notes &amp; Safari Guides</h4>
+      <form id="news" class="news">
+        <input type="email" required placeholder="Your email" aria-label="Email">
+        <button class="btn btn-primary btn-sm">Subscribe</button>
+      </form>
+      <p class="fine light" id="newsMsg"></p>
+    </div>
+  </div>
+  <p class="copy">&copy; <span id="yr"></span> Savana Step Tours. All rights reserved.</p>
+</footer>
+
+<!-- INQUIRY MODAL -->
+<div class="modal" id="inquiry" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="inqTitle">
+    <button class="close" data-close aria-label="Close">&times;</button>
+    <h3 id="inqTitle">Plan My Trip</h3>
+    <p class="fine" id="inqFor"></p>
+    <form id="inqForm">
+      <label>Name<input name="name" required></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Travel dates / month<input name="dates"></label>
+      <label>Travellers<input name="pax" type="number" min="1" value="2"></label>
+      <label>Tell us what you'd love<textarea name="msg" rows="3"></textarea></label>
+      <button class="btn btn-primary" type="submit">Send Enquiry</button>
+    </form>
+  </div>
+</div>
+
+<!-- VIDEO MODAL -->
+<div class="modal" id="videoModal" hidden>
+  <div class="modal-box wide">
+    <button class="close" data-close aria-label="Close">&times;</button>
+    <div class="video-slot" id="videoSlot"></div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
