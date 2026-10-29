@@ -191,7 +191,7 @@
     </div>
     <div>
       <h4>Contact</h4>
-      <p><a id="mailLink" href="#">email</a></p>
+      <p><span id="mailLink">email</span></p>
       <p><a id="waLink" href="#" class="btn btn-whatsapp btn-sm">WhatsApp</a></p>
       <p id="addr"></p>
     </div>
@@ -221,6 +221,11 @@
       <label>Tell us what you'd love<textarea name="msg" rows="3"></textarea></label>
       <button class="btn btn-primary" type="submit">Send Enquiry</button>
     </form>
+    <div class="done" id="inqDone" hidden>
+      <p><b>Your enquiry is ready.</b> It has not been sent yet. Send it on WhatsApp, or copy it and email <span id="inqEmail"></span>.</p>
+      <pre id="inqText"></pre>
+      <div class="row"><a id="inqWa" class="btn btn-whatsapp btn-sm" href="#">WhatsApp</a><button type="button" class="btn btn-primary btn-sm" id="inqCopy">Copy message</button></div>
+    </div>
   </div>
 </div>
 

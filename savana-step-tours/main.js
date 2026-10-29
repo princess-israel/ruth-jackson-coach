@@ -32,7 +32,7 @@ const money = n => "$" + n.toLocaleString("en-US");
 // contact links
 $("#yr").textContent = new Date().getFullYear();
 $("#mailLink").textContent = CONFIG.email;
-$("#mailLink").href = "mailto:" + CONFIG.email;
+$("#mailLink").removeAttribute("href");
 $("#waLink").href = "https://wa.me/" + CONFIG.whatsapp;
 $("#addr").textContent = CONFIG.address;
 
@@ -85,19 +85,28 @@ document.addEventListener("click", e => {
   if (inq) {
     $("#inqFor").textContent = "About: " + inq.dataset.inquire;
     $("#inqForm").dataset.topic = inq.dataset.inquire;
+    $("#inqForm").hidden = false; $("#inqDone").hidden = true; $("#inqCopy").textContent = "Copy message";
     openModal($("#inquiry"));
   }
   if (e.target.closest("[data-close]") || e.target.classList.contains("modal")) closeModals();
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeModals(); });
 
-// inquiry: opens the visitor's email app addressed to CONFIG.email
+// inquiry: shows the message to copy or send on WhatsApp (nothing is sent automatically)
 $("#inqForm").addEventListener("submit", e => {
   e.preventDefault();
   const f = new FormData(e.target);
-  const body = `Name: ${f.get("name")}\nEmail: ${f.get("email")}\nDates: ${f.get("dates")}\nTravellers: ${f.get("pax")}\n\n${f.get("msg")}`;
-  location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("Enquiry: " + e.target.dataset.topic)}&body=${encodeURIComponent(body)}`;
-  closeModals();
+  const text = `Enquiry: ${e.target.dataset.topic}\nName: ${f.get("name")}\nEmail: ${f.get("email")}\nDates: ${f.get("dates")}\nTravellers: ${f.get("pax")}\n\n${f.get("msg")}`;
+  $("#inqText").textContent = text;
+  $("#inqEmail").textContent = CONFIG.email;
+  $("#inqWa").href = "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
+  e.target.hidden = true;
+  $("#inqDone").hidden = false;
+});
+$("#inqCopy").addEventListener("click", async () => {
+  const t = $("#inqText").textContent;
+  try { await navigator.clipboard.writeText(t); $("#inqCopy").textContent = "Copied"; }
+  catch (_) { const r = document.createRange(); r.selectNodeContents($("#inqText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#inqCopy").textContent = "Selected, press copy"; }
 });
 
 // video
@@ -125,6 +134,6 @@ go(0);
 // newsletter (front end only; connect to your email provider)
 $("#news").addEventListener("submit", e => {
   e.preventDefault();
-  $("#newsMsg").textContent = "Thank you! (Connect this form to your email provider to collect signups.)";
+  $("#newsMsg").textContent = "Sign-ups are not connected yet. Please contact us by email or WhatsApp.";
   e.target.reset();
 });
