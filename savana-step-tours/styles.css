@@ -56,7 +56,7 @@ a{color:inherit}
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:1.6em}
 
 /* pillars */
-.pillars{background:linear-gradient(rgba(14,18,24,.68),rgba(14,18,24,.82)),url(img/buffalo-herd.jpg) center 35%/cover;color:#e8e2d4;padding-block:84px}
+.pillars{background:linear-gradient(rgba(14,18,24,.78),rgba(14,18,24,.88)),url(img/leopard-walk.jpg) center 30%/cover;color:#e8e2d4;padding-block:84px}
 .pillars-title{color:#fff;max-width:20em;margin:0 0 1.2em}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
 .pillars article{border-top:2px solid var(--gold);padding-top:20px}
@@ -136,7 +136,7 @@ a{color:inherit}
 .post p{padding:6px 20px 20px;margin:0;color:var(--muted);font-size:.92rem}
 .post{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 22px rgba(30,36,43,.08)}
 .t1{background:url(img/leopard-tree.jpg) center 30%/cover}
-.t2{background:url(img/leopard-walk.jpg) center 22%/cover}
+.t2{background:url(img/buffalo-herd.jpg) center 30%/cover}
 .t3{background:url(img/hawk.jpg) center 30%/cover}
 
 /* faq */
