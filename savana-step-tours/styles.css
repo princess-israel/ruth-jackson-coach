@@ -56,11 +56,12 @@ a{color:inherit}
 .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:1.6em}
 
 /* pillars */
-.pillars{background:var(--slate);color:#e9e3d8;padding:48px 0}
+.pillars{background:linear-gradient(rgba(14,18,24,.68),rgba(14,18,24,.82)),url(img/buffalo-herd.jpg) center 35%/cover;color:#e8e2d4;padding-block:84px}
+.pillars-title{color:#fff;max-width:20em;margin:0 0 1.2em}
 .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.pillars h3{color:#fff;font-size:1.35rem}
-.pillars p{margin:0;font-size:.93rem;color:#c9c3b6}
-.ico{font-size:1.8rem;display:block;margin-bottom:8px}
+.pillars article{border-top:2px solid var(--gold);padding-top:20px}
+.pillars h3{color:#fff;font-size:1.55rem;margin:0 0 .35em}
+.pillars article p{margin:0;font-size:1rem;line-height:1.65;color:#e8e2d4}
 
 /* sections */
 .section{padding:84px 0}
