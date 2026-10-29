@@ -88,6 +88,8 @@ a{color:inherit}
 .g3{background:url(img/alpine-road.jpg) center 30%/cover}
 .g4{background:url(img/lantern-dinner.jpg) center 62%/cover}
 .g5{background:url(img/bird.jpg) center 48%/cover}
+.g7{background:url(img/buffalo.jpg) center 20%/cover}
+.g8{background:url(img/eagle-nest.jpg) center 22%/cover}
 .g6{background:url(img/cafe.jpg) center/cover}
 
 /* destinations */
@@ -98,10 +100,10 @@ a{color:inherit}
 .dest span,.dest small{position:relative;z-index:1}
 .dest span{font:600 1.8rem var(--serif)}
 .dest small{font-size:.85rem;opacity:.9}
-.d1{background:linear-gradient(135deg,#E9B44C,#a9553b)}
-.d2{background:linear-gradient(135deg,#2F5D46,#E9B44C)}
-.d3{background:linear-gradient(135deg,#1c4a3a,#7fa86a)}
-.d4{background:linear-gradient(135deg,#3f6b7a,#2F5D46)}
+.d1{background:url(img/lion-portrait.jpg) center 25%/cover}
+.d2{background:url(img/zebra-leopard.jpg) center/cover}
+.d3{background:url(img/owl-bird.jpg) center 0%/cover}
+.d4{background:url(img/pink-bird.jpg) center 30%/cover}
 
 /* experiences */
 .exp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
@@ -110,7 +112,7 @@ a{color:inherit}
 .exp-grid p{margin:0;font-size:.9rem;color:var(--muted)}
 
 /* callout */
-.callout{background:linear-gradient(120deg,#1E242B,#6b3b34);color:#fff;text-align:center;padding:84px 0}
+.callout{background:linear-gradient(rgba(30,36,43,.72),rgba(30,36,43,.72)),url(img/acacia.jpg) center 30%/cover;color:#fff;text-align:center;padding:84px 0}
 .callout h2{color:#fff;max-width:18em;margin:0 auto .5em}
 .callout p{max-width:40em;margin:0 auto 1.6em;color:#eadfcd}
 
@@ -135,9 +137,9 @@ a{color:inherit}
 .post h3{padding:16px 20px 0;margin:0;font-size:1.3rem}
 .post p{padding:6px 20px 20px;margin:0;color:var(--muted);font-size:.92rem}
 .post{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 6px 22px rgba(30,36,43,.08)}
-.t1{background:linear-gradient(135deg,#E9B44C,#2F5D46)}
-.t2{background:linear-gradient(135deg,#C86D51,#1E242B)}
-.t3{background:linear-gradient(135deg,#a9c7b0,#C86D51)}
+.t1{background:url(img/leopard-tree.jpg) center 30%/cover}
+.t2{background:url(img/leopard-walk.jpg) center 22%/cover}
+.t3{background:url(img/hawk.jpg) center 30%/cover}
 
 /* faq */
 details{background:#fff;border-radius:12px;margin-bottom:12px;padding:0 20px;border:1px solid #eadfcd}

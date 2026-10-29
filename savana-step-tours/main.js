@@ -14,7 +14,9 @@ const TOURS = [
   {t:"Kenya & Tanzania Grand Circuit",d:"10 Days",c:"Kenya \u2022 Tanzania",cat:"classic",g:"g3",p:3650,s:"Amboseli, Mara and Serengeti at an unhurried pace."},
   {t:"Private Tented Camp Honeymoon",d:"6 Days",c:"Kenya",cat:"luxury",g:"g4",p:3200,s:"Bush dinners, balloon flights and a private guide."},
   {t:"Photographer's Mara Week",d:"7 Days",c:"Kenya",cat:"custom",g:"g5",p:2900,s:"Photo vehicle, golden-hour drives and a pro-minded guide."},
-  {t:"Nairobi & Amboseli Getaway",d:"3 Days",c:"Kenya",cat:"short",g:"g6",p:690,s:"Elephants under Kilimanjaro, easy from Nairobi."}
+  {t:"Uganda Birding & Highlands",d:"6 Days",c:"Uganda",cat:"custom",g:"g8",p:2650,s:"Raptors, forest birds and lake views with a birding guide."},
+  {t:"Nairobi & Amboseli Getaway",d:"3 Days",c:"Kenya",cat:"short",g:"g6",p:690,s:"Elephants under Kilimanjaro, easy from Nairobi."},
+  {t:"Lake Nakuru & Naivasha Weekend",d:"2 Days",c:"Kenya",cat:"short",g:"g7",p:420,s:"Buffalo, rhinos and a boat ride among hippos."}
 ];
 
 // Sample reviews: replace with real guest reviews before launch.
