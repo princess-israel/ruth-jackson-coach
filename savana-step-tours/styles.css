@@ -41,10 +41,10 @@ a{color:inherit}
 .slide.out{transform:translateY(100%)}
 .slide.reset{transition:none}
 .slide-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 82%}
-.s1{background:#3b1f1a}
-.s2{background-image:url(img/canyon-sunset.jpg);background-position:center 30%}
-.s3{background-image:url(img/whale-lookout.jpg);background-position:center 40%}
-.s4{background-image:url(img/turquoise-lake.jpg);background-position:center 55%}
+.s1{background-image:url(img/turquoise-lake.jpg);background-position:center 55%}
+.s2{background:#3b1f1a}
+.s3{background-image:url(img/canyon-sunset.jpg);background-position:center 30%}
+.s4{background-image:url(img/whale-lookout.jpg);background-position:center 40%}
 .hero-dots{position:absolute;z-index:3;left:max(16px,env(safe-area-inset-left,0px));bottom:28px;display:flex;gap:8px}
 .hero-dots button{width:34px;height:5px;border:0;border-radius:3px;background:rgba(255,255,255,.4);cursor:pointer;padding:0}
 .hero-dots button.on{background:var(--gold)}
@@ -118,9 +118,6 @@ a{color:inherit}
 
 /* video */
 .video-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:center}
-.video-card{border:0;cursor:pointer;height:320px;border-radius:18px;background:linear-gradient(rgba(30,36,43,.25),rgba(30,36,43,.35)),url(img/film-poster.jpg) center 72%/cover;display:flex;align-items:center;justify-content:center}
-.play{width:78px;height:78px;border-radius:50%;background:#fff;color:var(--terracotta);display:flex;align-items:center;justify-content:center;font-size:1.6rem;padding-left:5px;transition:.2s}
-.video-card:hover .play{transform:scale(1.1)}
 
 /* slider */
 .slider{display:flex;overflow:hidden;scroll-behavior:smooth;scroll-snap-type:x mandatory}
@@ -198,3 +195,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .done .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .nav a:focus-visible,.btn:focus-visible,.chip:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .video-slot video{width:100%;height:100%;border-radius:10px;background:#000}
+.video-box{position:relative;border-radius:18px;overflow:hidden;background:#000;aspect-ratio:16/9;max-width:100%}
+.video-box video{width:100%;height:100%;display:block;object-fit:cover}
+.sound-btn{position:absolute;top:14px;right:14px;border:0;border-radius:999px;background:var(--terracotta);color:#fff;font:600 .85rem var(--sans);padding:.6em 1.2em;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.sound-btn[hidden]{display:none}
+.sound-btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}

@@ -3,8 +3,7 @@ const CONFIG = {
   email: "info@savanasteptours.com", // portfolio placeholder
   whatsapp: "254700123456",           // portfolio placeholder (not a working number)
   address: "Westlands, Nairobi, Kenya", // portfolio placeholder
-  phone: "+254 700 123 456",
-  video: "video/safari-film.mp4"
+  phone: "+254 700 123 456"
 };
 
 // Sample tours: replace titles, prices and copy with your real packages.
@@ -78,7 +77,6 @@ renderTours();
 function openModal(el) { el.hidden = false; document.body.style.overflow = "hidden"; }
 function closeModals() {
   $$(".modal").forEach(m => m.hidden = true);
-  $("#videoSlot").innerHTML = "";
   document.body.style.overflow = "";
 }
 document.addEventListener("click", e => {
@@ -110,11 +108,15 @@ $("#inqCopy").addEventListener("click", async () => {
   catch (_) { const r = document.createRange(); r.selectNodeContents($("#inqText")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); $("#inqCopy").textContent = "Selected, press copy"; }
 });
 
-// video
-$("#playBtn").addEventListener("click", () => {
-  $("#videoSlot").innerHTML = `<video controls autoplay muted playsinline src="${CONFIG.video}"></video>`;
-  openModal($("#videoModal"));
+// film: plays on its own (muted) when in view; the button restarts it with sound
+const film = $("#film"), soundBtn = $("#soundBtn");
+new IntersectionObserver(es => es.forEach(en => {
+  if (en.isIntersecting) film.play().catch(() => {}); else film.pause();
+}), {threshold: .4}).observe(film);
+soundBtn.addEventListener("click", () => {
+  film.muted = false; film.currentTime = 0; film.play().catch(() => {});
 });
+film.addEventListener("volumechange", () => { soundBtn.hidden = !film.muted; });
 
 // reviews slider
 const slider = $("#slider"), dots = $("#dots");
