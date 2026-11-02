@@ -1,0 +1,391 @@
+/* ============================================================
+   main.js, navigation, GSAP scroll/parallax/3D, renderers
+   ============================================================ */
+(function () {
+  "use strict";
+
+  /* ---------- Language switcher (EN / ES / FR / TA / HI / TE via Google Translate) ---------- */
+  const LANGS = [
+    { code: "en", label: "English",  short: "EN" },
+    { code: "es", label: "Español",  short: "ES" },
+    { code: "fr", label: "Français", short: "FR" },
+    { code: "ta", label: "Tamil",    short: "TA" },
+    { code: "hi", label: "Hindi",    short: "HI" },
+    { code: "te", label: "Telugu",   short: "TE" },
+  ];
+  function currentLang() {
+    const m = document.cookie.match(/googtrans=\/[a-z-]+\/([a-z-]+)/i);
+    return (m && m[1]) || "en";
+  }
+  function setLangCookie(lang) {
+    const val = lang === "en" ? "" : "/en/" + lang;
+    const host = location.hostname;
+    const parts = host.split(".");
+    const root = parts.length > 1 ? "." + parts.slice(-2).join(".") : host;
+    const kill = d => { document.cookie = "googtrans=; path=/;" + (d ? " domain=" + d + ";" : "") + " expires=Thu, 01 Jan 1970 00:00:00 GMT"; };
+    kill(); kill(host); if (root !== host) kill(root);
+    if (val) {
+      const exp = "; expires=" + new Date(Date.now() + 180 * 864e5).toUTCString();
+      document.cookie = "googtrans=" + val + "; path=/" + exp;
+      document.cookie = "googtrans=" + val + "; path=/; domain=" + host + exp;
+      if (root !== host) document.cookie = "googtrans=" + val + "; path=/; domain=" + root + exp;
+    }
+  }
+  // Apply text direction for the active language (Arabic = RTL).
+  document.documentElement.setAttribute("dir", currentLang() === "ar" ? "rtl" : "ltr");
+
+  // Load the Google Translate engine once (hidden, we drive it with our own UI).
+  if (!document.getElementById("google_translate_element")) {
+    const holder = document.createElement("div");
+    holder.id = "google_translate_element";
+    holder.style.display = "none";
+    document.body.appendChild(holder);
+    window.googleTranslateElementInit = function () {
+      new google.translate.TranslateElement(
+        { pageLanguage: "en", includedLanguages: LANGS.map(l => l.code).join(","), autoDisplay: false },
+        "google_translate_element");
+    };
+    const s = document.createElement("script");
+    s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+    document.body.appendChild(s);
+  }
+
+  function buildLangSwitch() {
+    const cur = currentLang();
+    const wrap = document.createElement("div");
+    wrap.className = "lang-switch";
+    wrap.innerHTML =
+      `<button type="button" class="lang-btn" aria-label="Change language"><span class="lang-globe">🌐</span><span class="lang-cur">${(LANGS.find(l => l.code === cur) || LANGS[0]).label}</span></button>
+       <div class="lang-menu">${LANGS.map(l => `<button type="button" data-lang="${l.code}" class="${l.code === cur ? "on" : ""}">${l.label}</button>`).join("")}</div>`;
+    const btn = wrap.querySelector(".lang-btn"), menu = wrap.querySelector(".lang-menu");
+    btn.addEventListener("click", e => { e.stopPropagation(); wrap.classList.toggle("open"); });
+    document.addEventListener("click", () => wrap.classList.remove("open"));
+    menu.querySelectorAll("[data-lang]").forEach(b => b.addEventListener("click", () => {
+      setLangCookie(b.dataset.lang);
+      location.reload();
+    }));
+    return wrap;
+  }
+  document.querySelectorAll(".nav-cta").forEach(cta => {
+    if (cta.querySelector(".lang-switch")) return;
+    cta.insertBefore(buildLangSwitch(), cta.firstChild);
+  });
+
+  /* ---------- Accreditation (WIDB / Microsoft / ILO / ITC) ---------- */
+  function orgLogos(cls) {
+    return `<img class="${cls} org-logo-widb" src="assets/img/partner-widb.jpg" alt="WIDB">
+      <img class="${cls}" src="assets/img/partner-microsoft.jpg" alt="Microsoft">
+      <img class="${cls}" src="assets/img/partner-ilo.jpg" alt="International Labour Organization (ILO)">
+      <img class="${cls}" src="assets/img/partner-itc.jpg" alt="ITC-ILO">`;
+  }
+  window.accreditationHTML = function () {
+    return `<div class="accred">
+      <span class="accred-label">Certified programme by</span>
+      <span class="accred-logos">${orgLogos("org-logo")}</span>
+      <span class="accred-sub">Delivered under <b>Women in Digital Business (WIDB)</b>, an initiative of Microsoft, the International Labour Organization (ILO) &amp; the International Trade Centre (ITC). Certificate of completion included.</span>
+    </div>`;
+  };
+  window.cardAccredHTML = function () {
+    return `<div class="card-accred">${orgLogos("org-logo org-logo-sm")}</div>`;
+  };
+  // drop the full strip into any [data-accred] placeholder
+  document.querySelectorAll("[data-accred]").forEach(el => { el.innerHTML = window.accreditationHTML(); });
+
+  /* ---------- Navbar ---------- */
+  const nav = document.querySelector(".nav");
+  if (nav) {
+    const onScroll = () => nav.classList.toggle("scrolled", window.scrollY > 30);
+    onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
+    const burger = nav.querySelector(".hamburger");
+    burger && burger.addEventListener("click", () => nav.classList.toggle("menu-open"));
+    nav.querySelectorAll(".nav-links a").forEach(a => a.addEventListener("click", () => nav.classList.remove("menu-open")));
+  }
+
+  // One canonical footer on every page (overwrites whatever markup the page shipped).
+  const footerEl = document.querySelector("footer.footer");
+  if (footerEl) {
+    footerEl.innerHTML = `
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="index.html"><img class="tui-mark" src="assets/img/tui-logo.png" alt="Timshi Universal Institute"><span class="tui-name">Timshi Universal Institute<small>Learning &amp; Training</small></span></a>
+          <p class="muted" style="margin-top:16px;max-width:26em">Practical AI, digital and customer service skills for entrepreneurs, professionals and teams. Certified within the Women in Digital Business ecosystem.</p>
+          <div class="social-row">
+            <a href="https://www.tiktok.com/@timshidigitals" target="_blank" rel="noopener">TikTok</a>
+            <a href="https://www.instagram.com/timshidigitalswith_ruthjackson" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61560284518376" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+        <div><h4>Programs</h4>
+          <a href="programs.html">All courses</a>
+          <a href="program.html?id=ai-women-entrepreneurs">Artificial Intelligence</a>
+          <a href="program.html?id=digital-marketing-social">Digital Marketing</a>
+          <a href="program.html?id=cybersecurity-essentials">Cyber Security</a>
+          <a href="customer-service.html">Customer Service</a>
+        </div>
+        <div><h4>Institute</h4>
+          <a href="about.html">About TUI</a>
+          <a href="customer-service.html">Training for teams</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div><h4>Contact</h4>
+          <a href="tel:+254729384374">📞 +254 729 384374</a>
+          <a class="btn btn-whatsapp btn-sm" href="https://wa.me/254729384374" target="_blank" rel="noopener" style="margin-top:8px">WhatsApp</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span data-year></span> Timshi Universal Institute. All rights reserved.</span>
+        <span>Certified within the Women in Digital Business programme</span>
+      </div>
+    </div>`;
+  }
+
+  const yr = document.querySelector("[data-year]"); if (yr) yr.textContent = new Date().getFullYear();
+
+  /* ---------- GSAP animations ---------- */
+  function initGSAP() {
+    if (!window.gsap) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Generic reveal
+    gsap.utils.toArray(".reveal").forEach((el) => {
+      gsap.to(el, {
+        opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+        scrollTrigger: { trigger: el, start: "top 86%" }
+      });
+    });
+
+    // Staggered groups
+    gsap.utils.toArray("[data-stagger]").forEach((grp) => {
+      const kids = grp.children;
+      gsap.set(kids, { opacity: 0, y: 30 });
+      gsap.to(kids, {
+        opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.1,
+        scrollTrigger: { trigger: grp, start: "top 82%" }
+      });
+    });
+
+    // Parallax layers (data-parallax = speed factor)
+    gsap.utils.toArray("[data-parallax]").forEach((el) => {
+      const speed = parseFloat(el.dataset.parallax) || 0.2;
+      gsap.to(el, {
+        yPercent: speed * 100, ease: "none",
+        scrollTrigger: { trigger: el.closest("section") || el, start: "top bottom", end: "bottom top", scrub: true }
+      });
+    });
+
+    // Hero headline rise
+    const hero = document.querySelector(".hero");
+    if (hero) {
+      gsap.from(hero.querySelectorAll("[data-hero]"), {
+        opacity: 0, y: 36, duration: 1, ease: "power3.out", stagger: 0.12, delay: 0.15
+      });
+    }
+
+    // Count-up stats
+    gsap.utils.toArray("[data-count]").forEach((el) => {
+      const target = parseFloat(el.dataset.count);
+      const obj = { v: 0 };
+      ScrollTrigger.create({
+        trigger: el, start: "top 90%", once: true,
+        onEnter: () => gsap.to(obj, {
+          v: target, duration: 1.6, ease: "power2.out",
+          onUpdate: () => { el.textContent = Math.round(obj.v).toLocaleString() + (el.dataset.suffix || ""); }
+        })
+      });
+    });
+
+    // Section pin/scale for any [data-zoom]
+    gsap.utils.toArray("[data-zoom]").forEach((el) => {
+      gsap.fromTo(el, { scale: 0.92 }, {
+        scale: 1, ease: "none",
+        scrollTrigger: { trigger: el, start: "top bottom", end: "top center", scrub: true }
+      });
+    });
+  }
+
+  /* ---------- Hero 3D tilt (pointer) ---------- */
+  const tiltEl = document.querySelector("[data-tilt]");
+  if (tiltEl) {
+    const wrap = tiltEl.parentElement;
+    wrap.addEventListener("mousemove", (e) => {
+      const r = wrap.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      tiltEl.style.transform = `rotateY(${px * 12}deg) rotateX(${-py * 12}deg) translateZ(0)`;
+    });
+    wrap.addEventListener("mouseleave", () => { tiltEl.style.transform = "rotateY(0) rotateX(0)"; });
+  }
+
+  /* ---------- Program card renderer ---------- */
+  window.programCardHTML = function (p, opts = {}) {
+    const isFree = !p.price || Number(p.price) <= 0;
+    const tags = Array.isArray(p.tags) ? p.tags : [];
+    const meta = isFree
+      ? `<span>👥 ${p.level || "All levels"}</span>`
+      : `<span>⏱ ${p.hours || 0}h</span><span>📚 ${p.lessons || 0} lessons</span><span>📈 ${p.level || "Beginner"}</span>`;
+    const price = isFree
+      ? `<div class="price-tag">Custom<small>by enquiry</small></div>`
+      : `<div class="price-tag">$${p.price}<small>certificate included</small></div>`;
+    const link = isFree ? "customer-service.html" : `program.html?id=${p.id}`;
+    const ctaLabel = isFree ? "Talk to us" : "Learn more";
+    const img = p.image || (window.RJ_PROGRAM_IMG && RJ_PROGRAM_IMG[p.id]);
+    return `
+      <a class="card program-card" href="${link}">
+        <span class="card-glow"></span>
+        ${img ? `<div class="card-img" style="background-image:url(${img})"></div>` : ""}
+        <div class="program-top">
+          ${price}
+        </div>
+        <h3>${p.title || ""}</h3>
+        <p class="desc">${p.short || ""}</p>
+        <div class="tags">${tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+        <div class="program-meta">${meta}</div>
+        ${window.cardAccredHTML ? window.cardAccredHTML() : ""}
+        <span class="btn ${isFree ? "btn-ghost" : "btn-gold"} btn-block">${ctaLabel}</span>
+      </a>`;
+  };
+
+  // Render into [data-programs] grids (+ optional [data-signature])
+  function renderPrograms(animate) {
+    const grid = document.querySelector("[data-programs]");
+    if (grid && window.RJ_PROGRAMS) {
+      const limit = parseInt(grid.dataset.limit) || RJ_PROGRAMS.length;
+      grid.innerHTML = RJ_PROGRAMS.slice(0, limit).map(p => programCardHTML(p)).join("");
+      if (animate && window.gsap) {
+        gsap.from(grid.querySelectorAll(".program-card"),
+          { opacity: 0, y: 22, duration: 0.5, ease: "power2.out", stagger: 0.08, clearProps: "all" });
+      }
+    }
+    const sig = document.querySelector("[data-signature]");
+    if (sig && window.RJ_SIGNATURE) sig.innerHTML = programCardHTML(window.RJ_SIGNATURE);
+  }
+  renderPrograms(false);
+
+  // Build the "Programs" nav dropdown listing every course
+  (function buildProgramsNavDropdown() {
+    const link = document.querySelector('.nav-links a[href="programs.html"]');
+    const li = link && link.closest("li");
+    if (!li || !window.RJ_PROGRAMS || li.querySelector(".nav-dropdown")) return;
+
+    li.classList.add("has-dropdown");
+
+    const toggle = document.createElement("span");
+    toggle.className = "nav-dropdown-toggle";
+    toggle.setAttribute("aria-label", "Show all courses");
+    toggle.textContent = "▾";
+    li.appendChild(toggle);
+
+    const menu = document.createElement("ul");
+    menu.className = "nav-dropdown";
+    menu.innerHTML = RJ_PROGRAMS.map(p =>
+      `<li><a href="program.html?id=${p.id}">${p.title}</a></li>`
+    ).join("") + `<li><a href="customer-service.html">Customer Service Excellence</a></li>`;
+    li.appendChild(menu);
+
+    toggle.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      li.classList.toggle("open");
+    });
+    document.addEventListener("click", (e) => {
+      if (!li.contains(e.target)) li.classList.remove("open");
+    });
+  })();
+
+  // ---------- Articles (blog) ----------
+  function articleCardHTML(a) {
+    const img = a.image || (window.RJ_ARTICLE_IMG && RJ_ARTICLE_IMG[a.slug]);
+    return `<a class="card post-card" href="article.php?slug=${encodeURIComponent(a.slug)}">
+      ${img ? `<div class="post-img" style="background-image:url(${img})"></div>` : ""}
+      <div class="cat">${a.category || "Article"}</div>
+      <h3${a._lang ? ' translate="no" class="notranslate"' : ""}>${a.title || ""}</h3>
+      <p class="desc${a._lang ? " notranslate" : ""}"${a._lang ? ' translate="no"' : ""}>${a.excerpt || ""}</p>
+      ${a.readMins ? `<span class="muted" style="font-size:.8rem;margin-top:12px;display:block">${a.readMins} min read</span>` : ""}
+    </a>`;
+  }
+  // Render a module accordion into any [data-modules="programId"]
+  document.querySelectorAll("[data-modules]").forEach(el => {
+    const mods = window.RJ_PROGRAM_MODULES && RJ_PROGRAM_MODULES[el.dataset.modules];
+    if (!mods || !mods.length) return;
+    el.innerHTML = '<div class="modules">' + mods.map((m, i) => `
+      <details class="module"${i === 0 ? " open" : ""}>
+        <summary><span class="mod-num">${String(i + 1).padStart(2, "0")}</span><span class="mod-title">${m.t}</span><span class="mod-chev">▾</span></summary>
+        <div class="mod-body">${m.points ? `<ul class="mod-points">${m.points.map(pt => `<li>${pt}</li>`).join("")}</ul>` : (m.d || "")}</div>
+      </details>`).join("") + '</div>';
+  });
+
+  // Partner marquee
+  const mq = document.querySelector("[data-partners]");
+  if (mq && window.RJ_PARTNERS) {
+    // Real brand logos (name baked into the artwork) render as a white chip with no text label.
+    const realLogo = {
+      microsoft: "assets/img/partner-microsoft.jpg",
+      itc:       "assets/img/partner-itc.jpg",
+      labour:    "assets/img/partner-ilo.jpg",
+      "digital business": "assets/img/partner-widb.jpg"
+    };
+    const item = n => {
+      const key = Object.keys(realLogo).find(k => new RegExp(k, "i").test(n));
+      if (key) return `<div class="logo-item logo-chip"><img src="${realLogo[key]}" alt="${n}" loading="lazy"></div>`;
+      return `<div class="logo-item">${partnerLogo(n)}<span>${n}</span></div>`;
+    };
+    const set = RJ_PARTNERS.map(item).join("");
+    mq.innerHTML = set + set; // duplicate for seamless loop
+  }
+  function partnerLogo(name) {
+    if (/timshi/i.test(name)) return `<img src="assets/img/timshi-logo.png" alt="Timshi Universal Institute" style="width:26px;height:26px;border-radius:6px;object-fit:cover">`;
+    if (/ey/i.test(name)) return `<svg width="22" height="22" viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#ffe600"/><text x="12" y="17" font-size="11" font-weight="800" text-anchor="middle" fill="#111">EY</text></svg>`;
+    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e8b65a" stroke-width="1.6"><path d="M4 18l4-9 4 6 4-10 4 13"/></svg>`;
+  }
+
+  document.addEventListener("DOMContentLoaded", initGSAP);
+  if (document.readyState !== "loading") initGSAP();
+
+  // Alt hero: background slider (crossfade + dots + autoplay)
+  function initHeroSlider() {
+    const root = document.querySelector("[data-hero-slider]");
+    if (!root) return;
+    const slides = [...root.querySelectorAll(".hs-slide")];
+    const dotsWrap = root.querySelector("[data-hs-dots]");
+    if (!slides.length) return;
+
+    slides.forEach(s => {
+      const img = s.querySelector(".hs-img") || s;
+      if (img.dataset.bg) img.style.backgroundImage = `url("${img.dataset.bg}")`;
+    });
+
+    let i = slides.findIndex(s => s.classList.contains("is-active"));
+    if (i < 0) i = 0;
+
+    const dots = slides.map((_, n) => {
+      const b = document.createElement("button");
+      b.setAttribute("aria-label", `Slide ${n + 1}`);
+      if (n === i) b.classList.add("is-active");
+      b.addEventListener("click", () => go(n, true));
+      dotsWrap && dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function go(n, manual) {
+      slides[i].classList.remove("is-active");
+      dots[i] && dots[i].classList.remove("is-active");
+      i = (n + slides.length) % slides.length;
+      slides[i].classList.add("is-active");
+      dots[i] && dots[i].classList.add("is-active");
+      if (manual) restart();
+    }
+
+    const prev = root.querySelector("[data-hs-prev]");
+    const next = root.querySelector("[data-hs-next]");
+    prev && prev.addEventListener("click", () => go(i - 1, true));
+    next && next.addEventListener("click", () => go(i + 1, true));
+
+    let timer = setInterval(() => go(i + 1), 6000);
+    function restart() { clearInterval(timer); timer = setInterval(() => go(i + 1), 6000); }
+    root.addEventListener("mouseenter", () => clearInterval(timer));
+    root.addEventListener("mouseleave", restart);
+  }
+  document.addEventListener("DOMContentLoaded", initHeroSlider);
+  if (document.readyState !== "loading") initHeroSlider();
+})();
