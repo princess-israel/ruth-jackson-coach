@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Service","name":"Website design, SEO websites, LMS and logos in Kenya","provider":{"@type":"Organization","name":"Timshi Digitals","url":"https://coachruthjackson.com","telephone":"+254729384374"},"areaServed":"Kenya","offers":[
@@ -23,57 +23,149 @@
 </script>
 <style>
 /* Web services landing page. Uses the site design tokens. */
-.ws-hero{position:relative;padding:130px 0 60px;background:var(--grad-hero);overflow:hidden}
-.ws-top{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
-.ws-top h1{font-size:clamp(2.3rem,5.4vw,4.2rem)}
-.ws-top h1 span{color:var(--gold)}
-.ws-lead{color:var(--muted);font-size:1.1rem;max-width:34em}
-.ws-actions{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 14px}
-.ws-from{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.92rem}
-.ws-from b{color:var(--gold-soft)}
+/* Hero slider (premium sales slides) */
+.ws-hero{position:relative;background:var(--navy-900);overflow:hidden}
+.hs{position:relative}
+.slides{display:flex;transition:transform .8s cubic-bezier(.65,0,.25,1);will-change:transform}
+.slide{flex:0 0 100%;position:relative;min-height:690px;display:flex;align-items:center;padding:120px 0 96px;
+  background:radial-gradient(900px 600px at 80% 20%,color-mix(in srgb,var(--a) 28%,transparent),transparent 62%),radial-gradient(700px 500px at 0% 100%,color-mix(in srgb,var(--a) 14%,transparent),transparent 60%),linear-gradient(180deg,#070e29,#050a20)}
+.slide .wrap{width:100%;max-width:1240px;margin:0 auto;padding:0 28px;display:grid;grid-template-columns:1fr 1.08fr;gap:44px;align-items:center}
+.kick{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;background:color-mix(in srgb,var(--a) 16%,transparent);border:1px solid color-mix(in srgb,var(--a) 50%,transparent);color:var(--a);font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+.kick::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--a);box-shadow:0 0 12px var(--a)}
+.slide .hd{font-family:var(--font-head);font-weight:800;letter-spacing:-.025em;line-height:1.04;font-size:clamp(2.1rem,4.6vw,3.7rem);margin:0 0 16px}
+.slide .hd em{font-style:normal;color:var(--a)}
+.slide .lead{color:var(--muted);font-size:1.08rem;max-width:30em;margin-bottom:20px}
+.from{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.from span{color:var(--muted);font-size:.95rem}
+.from b{font-family:var(--font-head);font-weight:800;font-size:clamp(1.8rem,3.4vw,2.6rem);color:#fff}
+.from i{font-style:normal;font-size:.85rem;font-weight:700;color:#1a1304;background:var(--a);padding:3px 10px;border-radius:99px}
+.pts{list-style:none;padding:0;margin:0 0 26px;display:grid;gap:8px}
+.pts li{display:flex;gap:10px;color:var(--article-text);font-size:.98rem}
+.pts li::before{content:"✓";flex:none;width:20px;height:20px;border-radius:50%;background:color-mix(in srgb,var(--a) 22%,transparent);color:var(--a);font-size:.72rem;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.acts{display:flex;flex-wrap:wrap;gap:12px}
+.btn-a{background:var(--a);color:#120d02;box-shadow:0 14px 34px -12px var(--a)}
+.btn-a:hover{filter:brightness(1.08)}
+.btn-line{border:1px solid var(--line-strong);background:var(--glass);color:var(--text)}
+.slide .copy>*{opacity:0;transform:translateY(22px)}
+.slide.on .copy>*{animation:up .7s cubic-bezier(.2,.7,.2,1) forwards}
+.slide.on .copy>*:nth-child(2){animation-delay:.08s}.slide.on .copy>*:nth-child(3){animation-delay:.16s}
+.slide.on .copy>*:nth-child(4){animation-delay:.24s}.slide.on .copy>*:nth-child(5){animation-delay:.32s}.slide.on .copy>*:nth-child(6){animation-delay:.4s}
+@keyframes up{to{opacity:1;transform:none}}
+.slide .vis{opacity:0;transform:scale(.94) translateX(30px);transition:.9s .15s cubic-bezier(.2,.7,.2,1)}
+.slide.on .vis{opacity:1;transform:none}
+.th-seo{--a:#e8b65a}.th-sch{--a:#ff5a5f}.th-shop{--a:#ff8a2b}.th-lux{--a:#d4a85a}.th-lms{--a:#a98bff}.th-lp{--a:#4ea8ff}.th-logo{--a:#3ddc97}
 
-/* Hero slider */
-.slider{position:relative;border-radius:22px;background:#06091c;border:1px solid var(--line-strong);box-shadow:var(--shadow);overflow:hidden}
-.slides{display:flex;transition:transform .7s cubic-bezier(.65,0,.25,1);will-change:transform}
-.slide{flex:0 0 100%;padding:22px 22px 12px}
-.slide-tag{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:12px;gap:10px}
-.slide-tag b{color:var(--text);font-family:var(--font-head)}
-.slide-tag .chip{padding:4px 10px;border-radius:99px;background:var(--glass-2);border:1px solid var(--line);white-space:nowrap}
-.browser{border-radius:12px;overflow:hidden;background:#0b1233;border:1px solid var(--line-strong);aspect-ratio:16/10.5}
-.bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0f1842;border-bottom:1px solid var(--line)}
-.bar i{width:9px;height:9px;border-radius:50%;background:#3a4a85}
-.bar em{margin-left:10px;flex:1;font-style:normal;font-size:.68rem;color:var(--muted);background:rgba(255,255,255,.06);border-radius:99px;padding:3px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pg{padding:16px;display:grid;gap:10px;height:calc(100% - 33px);align-content:start}
-.pg .nv{display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--muted)}
-.pg .nv b{color:var(--text);font-family:var(--font-head);font-size:.74rem}
-.pg .nv span{display:flex;gap:10px}
-.pg h4{font-size:clamp(.95rem,2vw,1.35rem);margin:6px 0 0;line-height:1.15}
-.pg h4 u{text-decoration:none;color:var(--gold)}
-.pg p{font-size:.64rem;color:var(--muted);margin:0;max-width:26em}
-.pg .cta{display:inline-block;width:max-content;font-size:.6rem;font-weight:700;padding:6px 12px;border-radius:99px;background:var(--gold);color:#1a1304}
-.pg .img{border-radius:8px;min-height:70px;flex:1}
-.pg .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.pg .row div{border-radius:8px;background:var(--glass-2);border:1px solid var(--line);padding:8px;font-size:.58rem;color:var(--muted)}
-.pg .row div b{display:block;color:var(--text);font-size:.78rem;font-family:var(--font-head)}
-/* SEO result mock */
-.serp{display:grid;gap:8px}
-.serp .q{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:7px 14px;font-size:.66rem;color:var(--text)}
-.serp .r{border-radius:8px;padding:8px 10px;background:var(--glass);border:1px solid var(--line);font-size:.58rem;color:var(--muted)}
-.serp .r b{display:block;color:var(--azure);font-size:.72rem;font-weight:600}
-.serp .r.top{border-color:var(--gold);background:rgba(232,182,90,.1)}
-.serp .r.top b{color:var(--gold-soft)}
-.serp .rank{float:right;font-weight:800;color:#1a1304;background:var(--gold);border-radius:99px;padding:1px 8px;font-size:.58rem}
-.g1{background:linear-gradient(135deg,#e8b65a55,#0e1a44 70%)}
-.g2{background:linear-gradient(135deg,#4ea8ff55,#0e1a44 70%)}
-.g3{background:linear-gradient(135deg,#f3a9a055,#0e1a44 70%)}
-.g4{background:linear-gradient(135deg,#9af0c055,#0e1a44 70%)}
-.slider-ctrl{display:flex;align-items:center;justify-content:space-between;padding:6px 22px 18px}
-.dots{display:flex;gap:8px}
-.dots button{width:9px;height:9px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.25);cursor:pointer;transition:.3s}
-.dots button.on{width:28px;background:var(--gold)}
+/* Visuals */
+.vis{position:relative;container-type:inline-size;max-width:640px;width:100%;margin:0 auto}
+.lap{position:relative;filter:drop-shadow(0 40px 50px rgba(0,0,0,.55))}
+.scr{font-size:10px;font-size:1.9cqw;aspect-ratio:16/10.2;border:.6em solid #1a2150;border-bottom-width:.5em;border-radius:1.2em 1.2em 0 0;overflow:hidden;background:#fff;position:relative}
+.base{height:1.3em;width:108%;margin:0 -4%;background:linear-gradient(#d9deef,#8b95bd);border-radius:0 0 2em 2em;position:relative}
+.base::after{content:"";position:absolute;left:50%;top:0;width:14%;height:.5em;transform:translateX(-50%);background:#aab3d6;border-radius:0 0 .6em .6em}
+.fl{position:absolute;z-index:3;padding:.8em 1.1em;border-radius:1em;background:rgba(10,16,48,.82);backdrop-filter:blur(10px);border:1px solid var(--line-strong);box-shadow:0 18px 40px -14px rgba(0,0,0,.7);font-size:10px;font-size:1.9cqw;animation:fl 5s ease-in-out infinite}
+.fl b{display:block;font-family:var(--font-head);font-size:1.5em;color:var(--a)}
+.fl small{color:var(--muted);font-size:.95em}
+@keyframes fl{50%{transform:translateY(-10px)}}
+.pp{width:100%;height:100%;fill:currentColor}
+.in{height:100%;display:flex;flex-direction:column}
+/* SEO */
+.seo{background:#0b1233;padding:1.4em;gap:.9em;color:#dbe3f7}
+.seo .q{background:rgba(255,255,255,.09);border-radius:99px;padding:.7em 1.2em;font-size:1.15em}
+.seo .r{padding:.8em 1em;border-radius:.8em;background:rgba(255,255,255,.04);border:1px solid var(--line);position:relative}
+.seo .r b{display:block;color:#7cb8ff;font-size:1.2em}.seo .r small{color:#7c8cbb;font-size:1em}
+.seo .r.top{background:rgba(232,182,90,.13);border-color:#e8b65a}.seo .r.top b{color:#f3d292}
+.seo .rk{position:absolute;right:.8em;top:.7em;background:#e8b65a;color:#1a1304;font-weight:800;font-style:normal;padding:.1em .7em;border-radius:99px}
+.seo .ch{margin-top:auto;display:flex;align-items:flex-end;gap:.6em;height:6em}
+.seo .ch i{flex:1;border-radius:.4em .4em 0 0;background:linear-gradient(#e8b65a,#e8b65a22)}
+/* School */
+.sch{background:#fff;color:#1b1b2f}
+.sch .nv{display:flex;align-items:center;gap:1em;padding:.9em 1.2em;font-size:.95em}
+.sch .nv .lg{width:2.2em;height:2.2em;border-radius:50%;background:#d81f26;box-shadow:inset 0 0 0 .35em #fff,0 0 0 .2em #d81f26}
+.sch .nv b{font-family:var(--font-head);font-size:1.15em}.sch .nv .lk{margin-left:auto;color:#777;letter-spacing:.02em}
+.sch .nv .bt{background:#d81f26;color:#fff;padding:.5em 1.1em;border-radius:99px;font-weight:700}
+.sch .hr{flex:1;display:grid;grid-template-columns:1fr 1fr;margin:0 1em;border-radius:1em;overflow:hidden;background:linear-gradient(120deg,#7a0f16,#d81f26)}
+.sch .hr .t{padding:1.5em;color:#fff;display:flex;flex-direction:column;justify-content:center;gap:.7em}
+.sch .hr small{opacity:.8;letter-spacing:.12em;text-transform:uppercase;font-size:.85em}
+.sch .hr h5{font-family:var(--font-head);font-size:2.3em;line-height:1;margin:0;letter-spacing:-.02em}
+.sch .hr .b1{background:#fff;color:#d81f26;padding:.5em 1em;border-radius:99px;font-weight:700;display:inline-block;margin-right:.5em}
+.sch .hr .b2{border:1px solid #fff9;padding:.5em 1em;border-radius:99px;display:inline-block}
+.sch .ph{position:relative;background:radial-gradient(circle at 50% 30%,#ffb199 0,#a31219 70%)}
+.sch .ph svg{position:absolute;bottom:0;color:#1f2a55}
+.sch .ph svg:nth-child(1){left:2%;width:42%;height:70%;color:#26336b}.sch .ph svg:nth-child(2){left:30%;width:46%;height:86%;color:#161f47}.sch .ph svg:nth-child(3){right:0;width:40%;height:66%;color:#2e3d7c}
+.sch .st{display:flex;justify-content:space-around;padding:.9em;font-size:.95em;color:#666}
+.sch .st b{display:block;color:#d81f26;font-family:var(--font-head);font-size:1.5em}
+/* Shop */
+.shop{background:#ff8a2b;position:relative;overflow:hidden}
+.shop .big{position:absolute;left:-2%;top:6%;font-family:var(--font-head);font-weight:800;font-size:9.5em;line-height:.9;color:rgba(255,255,255,.22);letter-spacing:-.04em}
+.shop .pn{position:absolute;inset:1.2em 1.2em 4.2em;border-radius:.9em;background:linear-gradient(180deg,#5fb2ff,#cfe9ff 70%);overflow:hidden}
+.shop .pn h5{position:absolute;left:.7em;top:.5em;font-family:var(--font-head);font-weight:800;font-size:4.4em;line-height:1;margin:0;color:#fff;letter-spacing:-.03em}
+.shop .pn p{position:absolute;left:1.2em;bottom:3.4em;margin:0;color:#10224a;font-size:1.05em;max-width:14em}
+.shop .pn .cta{position:absolute;left:1.2em;bottom:1.2em;background:#ff8a2b;color:#fff;font-weight:700;padding:.55em 1.2em;border-radius:.4em;font-size:1em}
+.shop .shoe{position:absolute;right:14%;bottom:2%;width:54%;transform:rotate(-6deg);filter:drop-shadow(0 1.2em 1em rgba(0,0,0,.35))}
+.shop .tb{position:absolute;left:1.2em;right:1.2em;bottom:.8em;display:flex;gap:.6em;font-size:.95em}
+.shop .tb i{font-style:normal;background:#fff;border-radius:99px;padding:.45em 1em;color:#333;font-weight:600}
+.shop .tb i:last-child{margin-left:auto;background:#10224a;color:#fff}
+.ph-mini{position:absolute;z-index:4;right:-3%;bottom:-8%;width:23%;aspect-ratio:9/18;border-radius:1.6em;border:.5em solid #121a45;background:#fff;box-shadow:0 30px 50px -10px rgba(0,0,0,.6);overflow:hidden;padding:.8em;font-size:10px;font-size:1.5cqw;color:#222;display:flex;flex-direction:column;gap:.6em}
+.ph-mini .im{flex:1;border-radius:.8em;background:linear-gradient(135deg,#ffb36b,#ff8a2b)}
+.ph-mini b{font-family:var(--font-head);font-size:1.1em}.ph-mini .ad{background:#10224a;color:#fff;text-align:center;border-radius:.6em;padding:.6em;font-weight:700}
+/* Luxe */
+.lux{background:#15110c;color:#f1e6d2;position:relative;overflow:hidden;font-family:'Playfair Display',Georgia,serif}
+.lux .nv{display:flex;justify-content:space-between;padding:1em 1.4em;font-size:.95em;color:#bda57a;font-family:var(--font-body)}
+.lux .nv b{font-family:'Playfair Display',serif;color:#d4a85a;letter-spacing:.1em}
+.lux .rod{position:absolute;right:0;top:3.6em;width:50%;height:.7em;background:linear-gradient(#e8c985,#8d6b2c);border-radius:99px}
+.lux .dr{position:absolute;right:0;top:4.2em;bottom:0;width:50%;background:repeating-linear-gradient(90deg,#3b3022 0,#7d6a4c 1.4em,#3b3022 2.8em);-webkit-mask:linear-gradient(180deg,#000 60%,transparent);mask:linear-gradient(180deg,#000 60%,transparent)}
+.lux .tx{position:absolute;left:1.6em;top:34%}
+.lux h5{font-size:3em;line-height:1;margin:0;font-weight:500}.lux h5 em{color:#d4a85a;display:block}
+.lux p{font-family:var(--font-body);color:#bda57a;margin:.8em 0 1em;font-size:1em;max-width:18em}
+.lux .cta{display:inline-block;background:#d4a85a;color:#1a1304;font-family:var(--font-body);font-weight:700;padding:.6em 1.3em;border-radius:99px}
+/* LMS */
+.lms{background:#0f1233;display:grid;grid-template-columns:5.5em 1fr;color:#e6e8ff}
+.lms .sd{background:#0a0c26;padding:1em .8em;display:flex;flex-direction:column;gap:.9em;align-items:center}
+.lms .sd i{width:2.2em;height:2.2em;border-radius:.6em;background:rgba(255,255,255,.08)}.lms .sd i:first-child{background:#a98bff}
+.lms .mn{padding:1.2em;display:flex;flex-direction:column;gap:.9em}
+.lms .mn h5{margin:0;font-family:var(--font-head);font-size:1.5em}
+.lms .cs{display:grid;grid-template-columns:repeat(3,1fr);gap:.8em}
+.lms .c{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:.8em;padding:.6em}
+.lms .c .t{height:7.5em;border-radius:.5em;margin-bottom:.5em}
+.lms .c:nth-child(1) .t{background:linear-gradient(135deg,#a98bff,#4e3ab0)}.lms .c:nth-child(2) .t{background:linear-gradient(135deg,#4ea8ff,#1b4aa8)}.lms .c:nth-child(3) .t{background:linear-gradient(135deg,#ff8fb1,#a82b5c)}
+.lms .pr{height:.45em;border-radius:99px;background:rgba(255,255,255,.12);margin-top:.5em;overflow:hidden}.lms .pr u{display:block;height:100%;background:#a98bff;border-radius:99px}
+.lms .cert{margin-top:auto;display:flex;align-items:center;gap:.8em;padding:.8em 1em;border-radius:.8em;background:linear-gradient(90deg,rgba(169,139,255,.25),transparent);border:1px solid rgba(169,139,255,.4)}
+.lms .stt{display:flex;gap:.8em}.lms .stt span{flex:1;background:rgba(255,255,255,.06);border-radius:.8em;padding:.7em 1em;color:#9fa4d8}.lms .stt b{display:block;color:#fff;font-family:var(--font-head);font-size:1.5em}
+/* Landing */
+.lp{background:linear-gradient(135deg,#0d2a63,#0a1330);color:#fff;padding:1.4em;display:flex;flex-direction:column;gap:.8em}
+.lp .nv{display:flex;justify-content:space-between;font-size:.95em;color:#9fb0d8}
+.lp h5{font-family:var(--font-head);font-size:3em;line-height:1;margin:.3em 0 0;letter-spacing:-.02em}.lp h5 em{font-style:normal;color:#4ea8ff}
+.lp p{color:#9fb0d8;margin:0;max-width:20em;font-size:1.05em}
+.lp .fm{display:flex;gap:.6em;margin-top:.4em}.lp .fm span{flex:1;background:rgba(255,255,255,.1);border-radius:99px;padding:.7em 1em;color:#9fb0d8}.lp .fm b{background:#4ea8ff;color:#04122e;border-radius:99px;padding:.7em 1.3em}
+.lp .tr{margin-top:auto;display:flex;gap:1.2em;color:#9fb0d8;font-size:.95em}.lp .tr b{color:#fff;font-size:1.4em;font-family:var(--font-head);display:block}
+/* Logos */
+.lg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2em;font-size:10px;font-size:1.9cqw;padding:1em}
+.lg-grid div{aspect-ratio:1;border-radius:1.4em;display:grid;place-items:center;font-family:var(--font-head);font-weight:800;font-size:3.4em;color:#fff;box-shadow:0 20px 40px -18px rgba(0,0,0,.7);position:relative;overflow:hidden}
+.lg-grid div small{position:absolute;bottom:.7em;font-size:.2em;letter-spacing:.2em;font-weight:600;opacity:.8}
+.lg-grid div:nth-child(1){background:linear-gradient(135deg,#3ddc97,#0c7a4d)}.lg-grid div:nth-child(2){background:linear-gradient(135deg,#ffcc4d,#d9570f)}.lg-grid div:nth-child(3){background:linear-gradient(135deg,#4ea8ff,#1b3fa8)}
+.lg-grid div:nth-child(4){background:linear-gradient(135deg,#ff6b9a,#8f1d4f)}.lg-grid div:nth-child(5){background:#fff;color:#0a1330}.lg-grid div:nth-child(6){background:linear-gradient(135deg,#a98bff,#4a2fb8)}
+/* Controls */
+.hs-ctrl{position:absolute;left:0;right:0;bottom:26px;z-index:6}
+.hs-ctrl .in2{max-width:1240px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.dots{display:flex;gap:8px;align-items:center}
+.dots button{height:8px;width:8px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.28);cursor:pointer;transition:.35s;position:relative;overflow:hidden}
+.dots button.on{width:44px;background:rgba(255,255,255,.2)}
+.dots button.on::after{content:"";position:absolute;inset:0;background:var(--gold);transform-origin:left;animation:prog 6s linear forwards}
+.hs.paused .dots button.on::after{animation-play-state:paused}
+@keyframes prog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 .arrows{display:flex;gap:8px}
-.arrows button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-strong);background:var(--glass);color:var(--text);cursor:pointer;font-size:1rem}
+.arrows button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(10,16,48,.7);color:var(--text);cursor:pointer;font-size:1.05rem}
 .arrows button:hover{border-color:var(--gold);color:var(--gold)}
+@media(max-width:980px){
+  .slide{min-height:auto;padding:100px 0 96px}
+  .slide .wrap{grid-template-columns:1fr;gap:30px}
+  .vis{max-width:520px}
+}
+@media(max-width:640px){
+  .slide .wrap{padding:0 18px}.hs-ctrl .in2{padding:0 18px}
+  .slide .hd{font-size:2.15rem}
+  .acts .btn{flex:1;justify-content:center}
+  .arrows{display:none}
+}
 
 /* Marquee strip */
 .strip{border-block:1px solid var(--line);padding:16px 0;overflow:hidden;background:rgba(255,255,255,.02)}
@@ -82,7 +174,7 @@
 @keyframes mq{to{transform:translateX(-50%)}}
 
 /* Pricing */
-.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.price-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .pcard{position:relative;display:flex;flex-direction:column;padding:28px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);transition:.3s}
 .pcard:hover{transform:translateY(-6px);border-color:var(--line-strong);background:var(--glass-2)}
 .pcard.hot{border-color:var(--gold);background:linear-gradient(180deg,rgba(232,182,90,.1),var(--glass))}
@@ -111,14 +203,11 @@
 .big-cta h2{max-width:16em;margin:0 auto .4em}
 
 @media(max-width:980px){
-  .ws-top{grid-template-columns:1fr}
   .price-grid{grid-template-columns:1fr 1fr}
   .steps{grid-template-columns:1fr 1fr}
 }
 @media(max-width:640px){
-  .ws-hero{padding:110px 0 40px}
   .price-grid,.steps{grid-template-columns:1fr}
-  .slide{padding:16px 14px 8px}
 }
 </style>
 </head>
@@ -144,91 +233,148 @@
 
 <!-- HERO -->
 <section class="ws-hero">
-  <div class="container ws-top">
-    <div>
-      <div class="hero-badges"><span class="pill"><span class="dot"></span>Built in Kenya</span><span class="pill"><span class="dot"></span>Mobile and SEO ready</span><span class="pill"><span class="dot"></span>Pay in KES</span></div>
-      <h1>We build websites that <span>get found</span> on Google</h1>
-      <p class="ws-lead">SEO websites, landing pages, basic websites, learning management systems and logos, made for Kenyan businesses, schools and institutions at honest, affordable prices.</p>
-      <div class="ws-actions">
-        <a class="btn btn-gold" href="#pricing">See prices</a>
-        <a class="btn btn-whatsapp" href="https://wa.me/254729384374?text=Hi%20Ruth%2C%20I%20need%20a%20website" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-      <div class="ws-from"><span>Logos <b>KES 1,000</b></span><span>Landing pages from <b>KES 10,000</b></span><span>Websites from <b>KES 15,000</b></span></div>
-    </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="pp" viewBox="0 0 40 48"><circle cx="20" cy="13" r="10"/><path d="M1 48c0-15 8-21 19-21s19 6 19 21z"/></symbol></svg>
+<div class="hs" id="slider" aria-roledescription="carousel" aria-label="Our website services">
+<div class="slides" id="slides">
 
-    <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Sample websites">
-      <div class="slides" id="slides">
-
-        <div class="slide">
-          <div class="slide-tag"><b>SEO website</b><span class="chip">Ranks on page 1</span></div>
-          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourbusiness.co.ke</em></div>
-            <div class="pg serp">
-              <div class="q">🔍 best bakery in Nairobi</div>
-              <div class="r top"><span class="rank">#1</span><b>Your Bakery | Fresh Cakes in Nairobi</b>yourbakery.co.ke · Order online, delivery across Nairobi</div>
-              <div class="r"><b>Competitor Bakes</b>competitor.co.ke · Cakes and pastries</div>
-              <div class="r"><b>Another Bakery Ltd</b>anotherbakery.com · Wedding cakes Kenya</div>
-            </div></div>
-        </div>
-
-        <div class="slide">
-          <div class="slide-tag"><b>Business website</b><span class="chip">From KES 15,000</span></div>
-          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>greenclinic.co.ke</em></div>
-            <div class="pg">
-              <div class="nv"><b>Green Clinic</b><span><i>Services</i><i>About</i><i>Book</i></span></div>
-              <h4>Care you can <u>trust</u>, close to home.</h4>
-              <p>Book appointments online and find us fast on Google Maps.</p>
-              <span class="cta">Book now</span>
-              <div class="img g4"></div>
-            </div></div>
-        </div>
-
-        <div class="slide">
-          <div class="slide-tag"><b>Learning management system</b><span class="chip">KES 80,000 to 120,000</span></div>
-          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>academy.yourschool.ac.ke</em></div>
-            <div class="pg">
-              <div class="nv"><b>Your Academy</b><span><i>Courses</i><i>My learning</i><i>Certificates</i></span></div>
-              <h4>Learn anywhere. <u>Get certified.</u></h4>
-              <div class="row"><div><b>12</b>Courses</div><div><b>1,240</b>Students</div><div><b>94%</b>Completion</div></div>
-              <div class="img g2"></div>
-            </div></div>
-        </div>
-
-        <div class="slide">
-          <div class="slide-tag"><b>Landing page</b><span class="chip">From KES 10,000</span></div>
-          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourlaunch.co.ke</em></div>
-            <div class="pg">
-              <div class="nv"><b>Launch</b><span><i>Offer</i><i>FAQ</i></span></div>
-              <h4>One page. <u>One goal.</u> More customers.</h4>
-              <p>A fast, focused page built to turn visitors into calls and WhatsApp chats.</p>
-              <span class="cta">Get my offer</span>
-              <div class="img g1"></div>
-            </div></div>
-        </div>
-
-        <div class="slide">
-          <div class="slide-tag"><b>Institution website</b><span class="chip">Custom quote</span></div>
-          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourcollege.ac.ke</em></div>
-            <div class="pg">
-              <div class="nv"><b>Your College</b><span><i>Admissions</i><i>Programs</i><i>News</i></span></div>
-              <h4>Shaping <u>tomorrow's</u> leaders.</h4>
-              <p>Admissions, programs, news and student portal in one trusted home.</p>
-              <span class="cta">Apply today</span>
-              <div class="img g3"></div>
-            </div></div>
-        </div>
-
-      </div>
-      <div class="slider-ctrl">
-        <div class="dots" id="dots"></div>
-        <div class="arrows"><button id="prev" aria-label="Previous slide">&larr;</button><button id="next" aria-label="Next slide">&rarr;</button></div>
-      </div>
-    </div>
+<!-- 1 SEO -->
+<div class="slide th-seo"><div class="wrap">
+  <div class="copy">
+    <span class="kick">SEO websites</span>
+    <h1 class="hd">Be the first business customers <em>find on Google</em></h1>
+    <p class="lead">Fast, search-optimised websites for Nairobi and all of Kenya, built to bring you calls, WhatsApp chats and sales every day.</p>
+    <div class="from"><span>from</span><b>KES 40,000</b><i>up to 80,000</i></div>
+    <ul class="pts"><li>On-page SEO, speed and mobile-first design</li><li>Google Business and Search Console setup</li><li>Blog and keyword pages that keep ranking</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="SEO website">Get my SEO website</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
   </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in seo">
+    <div class="q">⌕ best bakery in Nairobi</div>
+    <div class="r top"><i class="rk">#1</i><b>Your Bakery | Fresh Cakes in Nairobi</b><small>yourbakery.co.ke</small></div>
+    <div class="r"><b>Competitor Bakes</b><small>competitor.co.ke</small></div>
+    <div class="r"><b>Another Bakery Ltd</b><small>anotherbakery.com</small></div>
+    <div class="ch"><i style="height:20%"></i><i style="height:32%"></i><i style="height:28%"></i><i style="height:48%"></i><i style="height:62%"></i><i style="height:78%"></i><i style="height:100%"></i></div>
+  </div></div><div class="base"></div></div>
+  <div class="fl" style="right:-2%;top:-4%"><b>#1</b><small>on Google</small></div>
+  <div class="fl" style="left:-3%;bottom:8%;animation-delay:-2s"><b>+240%</b><small>more visitors</small></div></div>
+</div></div>
+
+<!-- 2 SCHOOL -->
+<div class="slide th-sch"><div class="wrap">
+  <div class="copy">
+    <span class="kick">School websites</span>
+    <h2 class="hd">A school website <em>parents trust</em> at first click</h2>
+    <p class="lead">Show off your school with admissions, programs, news and fee downloads, plus online enquiry forms that fill your classrooms.</p>
+    <div class="from"><span>from</span><b>KES 40,000</b></div>
+    <ul class="pts"><li>Admissions and online enquiry forms</li><li>Programs, staff, events and gallery</li><li>Optional parent and student portal</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="Institution website">Get my school website</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in sch">
+    <div class="nv"><span class="lg"></span><b>Bright Future Academy</b><span class="lk">Home &nbsp; About &nbsp; Admissions</span><span class="bt">Apply</span></div>
+    <div class="hr"><div class="t"><small>Bringing talent to life</small><h5>Bright minds.<br>Bright future.</h5><div><span class="b1">Enquire now</span><span class="b2">About us</span></div></div>
+      <div class="ph"><svg class="pp"><use href="#pp"/></svg><svg class="pp"><use href="#pp"/></svg><svg class="pp"><use href="#pp"/></svg></div></div>
+    <div class="st"><div><b>1,500+</b>Students</div><div><b>120+</b>Teachers</div><div><b>98%</b>Parent rating</div></div>
+  </div></div><div class="base"></div></div>
+  <div class="fl" style="right:-2%;top:6%"><b>Admissions</b><small>open online</small></div></div>
+</div></div>
+
+<!-- 3 E-COMMERCE -->
+<div class="slide th-shop"><div class="wrap">
+  <div class="copy">
+    <span class="kick">E-commerce websites</span>
+    <h2 class="hd">Open your <em>online shop</em> and sell 24/7</h2>
+    <p class="lead">A beautiful store that works on every phone, so customers can browse, order and pay while you sleep.</p>
+    <div class="from"><span>from</span><b>KES 40,000</b></div>
+    <ul class="pts"><li>Product catalogue, cart and checkout</li><li>Online payment setup</li><li>Order and stock management</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="E-commerce website">Start my online shop</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in shop">
+    <div class="big">KICKS</div>
+    <div class="pn"><h5>STEP<br>UP</h5><p>Designed to move. Built to stand out.</p><span class="cta">Shop collection</span>
+      <svg class="shoe" viewBox="0 0 220 110"><path d="M8 74c2-28 26-34 48-34l22-2c14-18 40-22 58-4l24 14c36 4 54 14 54 32z" fill="#fff"/><path d="M78 38c14 6 30 8 46 2" stroke="#ff8a2b" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M40 58l30 4M116 52l24 12" stroke="#10224a" stroke-width="5" stroke-linecap="round"/><rect x="4" y="74" width="212" height="18" rx="9" fill="#10224a"/><rect x="4" y="82" width="212" height="5" fill="#ff8a2b"/></svg></div>
+    <div class="tb"><i>Category</i><i>Size</i><i>Price</i><i>Cart (2)</i></div>
+  </div></div><div class="base"></div></div>
+  <div class="ph-mini"><div class="im"></div><b>Air Runner</b><span>KES 4,500</span><div class="ad">Add to cart</div></div>
+  <div class="fl" style="right:-2%;top:-5%"><b>New order</b><small>KES 9,000 paid</small></div></div>
+</div></div>
+
+<!-- 4 BUSINESS (luxury) -->
+<div class="slide th-lux"><div class="wrap">
+  <div class="copy">
+    <span class="kick">Business websites</span>
+    <h2 class="hd">A <em>premium website</em> that makes your brand look expensive</h2>
+    <p class="lead">For interiors, salons, shops, clinics, restaurants and service businesses. Look professional and let customers reach you in one tap.</p>
+    <div class="from"><span>from</span><b>KES 15,000</b></div>
+    <ul class="pts"><li>Up to 5 beautiful pages</li><li>Gallery, services and contact form</li><li>WhatsApp, call buttons and Google Maps</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="Basic website">Get my website</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in lux">
+    <div class="nv"><b>LUXE INTERIORS</b><span>Home &nbsp; Products &nbsp; Gallery &nbsp; Contact</span></div>
+    <div class="rod"></div><div class="dr"></div>
+    <div class="tx"><h5>Premium<em>Curtains &amp; Blinds</em></h5><p>Bring elegance to every room, tailored and installed.</p><span class="cta">Book a free visit</span></div>
+  </div></div><div class="base"></div></div>
+  <div class="fl" style="right:-2%;bottom:14%"><b>WhatsApp</b><small>tap to chat</small></div></div>
+</div></div>
+
+<!-- 5 LMS -->
+<div class="slide th-lms"><div class="wrap">
+  <div class="copy">
+    <span class="kick">Learning management systems</span>
+    <h2 class="hd">Launch your own <em>online academy</em></h2>
+    <p class="lead">Sell and run courses with lessons, quizzes, certificates and student dashboards. Perfect for trainers, schools and companies.</p>
+    <div class="from"><span>from</span><b>KES 80,000</b><i>up to 120,000</i></div>
+    <ul class="pts"><li>Courses, lessons, quizzes and certificates</li><li>Student progress and admin panel</li><li>Online payments and enrolment</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="Learning management system">Build my LMS</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in lms">
+    <div class="sd"><i></i><i></i><i></i><i></i></div>
+    <div class="mn"><h5>My learning</h5>
+      <div class="cs"><div class="c"><div class="t"></div>Digital Marketing<div class="pr"><u style="width:72%"></u></div></div><div class="c"><div class="t"></div>AI for Business<div class="pr"><u style="width:45%"></u></div></div><div class="c"><div class="t"></div>Customer Care<div class="pr"><u style="width:90%"></u></div></div></div>
+      <div class="stt"><span><b>12</b>Courses</span><span><b>1,240</b>Students</span><span><b>94%</b>Completion</span></div>
+      <div class="cert">🎓 <span>Certificate ready to download</span></div></div>
+  </div></div><div class="base"></div></div>
+  <div class="fl" style="right:-2%;top:2%"><b>1,240</b><small>active students</small></div></div>
+</div></div>
+
+<!-- 6 LANDING PAGE -->
+<div class="slide th-lp"><div class="wrap">
+  <div class="copy">
+    <span class="kick">Landing pages</span>
+    <h2 class="hd">One page. One goal. <em>More customers.</em></h2>
+    <p class="lead">A fast, focused page for your offer, event or ad campaign, built to turn visitors into enquiries.</p>
+    <div class="from"><span>from</span><b>KES 10,000</b></div>
+    <ul class="pts"><li>Conversion-focused design</li><li>WhatsApp and call buttons</li><li>Ready in days, not weeks</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="Landing page">Start my landing page</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lap"><div class="scr"><div class="in lp">
+    <div class="nv"><b>Launch</b><span>Offer &nbsp; Reviews &nbsp; FAQ</span></div>
+    <h5>Get more clients <em>this month.</em></h5><p>Leave your number and we will call you back today.</p>
+    <div class="fm"><span>+254…</span><b>Call me</b></div>
+    <div class="tr"><div><b>500+</b>Happy clients</div><div><b>4.9★</b>Rating</div><div><b>24h</b>Response</div></div>
+  </div></div><div class="base"></div></div>
+  <div class="fl" style="left:-3%;bottom:10%"><b>+38 leads</b><small>this week</small></div></div>
+</div></div>
+
+<!-- 7 LOGOS -->
+<div class="slide th-logo"><div class="wrap">
+  <div class="copy">
+    <span class="kick">Logo design</span>
+    <h2 class="hd">A professional logo for just <em>KES 1,000</em></h2>
+    <p class="lead">Start your brand the right way. Clean, modern logos ready for your website, social media, receipts and signage.</p>
+    <div class="from"><span>only</span><b>KES 1,000</b></div>
+    <ul class="pts"><li>Modern, memorable designs</li><li>Ready for social media and print</li><li>Fast turnaround</li></ul>
+    <div class="acts"><a class="btn btn-a" href="#enquire" data-pick="Logo design">Get my logo</a><a class="btn btn-line" href="#pricing">See all prices</a></div>
+  </div>
+  <div class="vis"><div class="lg-grid"><div>A<small>AFRIKA</small></div><div>K<small>KOFFEE</small></div><div>T<small>TECHNO</small></div><div>S<small>SALON</small></div><div>M<small>MAMA</small></div><div>L<small>LEARN</small></div></div></div>
+</div></div>
+
+</div>
+<div class="hs-ctrl"><div class="in2"><div class="dots" id="dots"></div><div class="arrows"><button id="prev" aria-label="Previous slide">&larr;</button><button id="next" aria-label="Next slide">&rarr;</button></div></div></div>
+</div>
 </section>
 
 <div class="strip" aria-hidden="true"><div>
-  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>Institution websites</span><span>Logos KES 1,000</span>
-  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>Institution websites</span><span>Logos KES 1,000</span>
+  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>School websites</span><span>E-commerce</span><span>Logos KES 1,000</span>
+  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>School websites</span><span>E-commerce</span><span>Logos KES 1,000</span>
 </div></div>
 
 <!-- PRICING -->
@@ -262,10 +408,15 @@
         <ul><li>Courses, lessons, quizzes and certificates</li><li>Student dashboards and progress</li><li>Admin panel and online payments</li></ul>
         <a class="btn btn-azure" href="#enquire" data-pick="Learning management system">Build my LMS</a></div>
 
-      <div class="pcard"><div class="ico">🏫</div><h3>Institution websites</h3><p class="sub">Schools, colleges, NGOs and organisations.</p>
-        <div class="amt">Custom quote</div>
+      <div class="pcard"><div class="ico">🏫</div><h3>School and institution websites</h3><p class="sub">Schools, colleges, NGOs and organisations.</p>
+        <div class="amt"><small>from</small> KES 40,000</div>
         <ul><li>Admissions, programs and news</li><li>Staff, events and downloads</li><li>Optional student portal or LMS</li></ul>
-        <a class="btn btn-azure" href="#enquire" data-pick="Institution website">Request a quote</a></div>
+        <a class="btn btn-azure" href="#enquire" data-pick="Institution website">Get my school website</a></div>
+
+      <div class="pcard"><div class="ico">🛒</div><h3>E-commerce website</h3><p class="sub">An online shop that sells 24/7.</p>
+        <div class="amt"><small>from</small> KES 40,000</div>
+        <ul><li>Product catalogue, cart and checkout</li><li>Online payment setup</li><li>Order and stock management</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="E-commerce website">Start my online shop</a></div>
 
     </div>
   </div>
@@ -312,7 +463,7 @@
           <div class="field"><label>Phone / WhatsApp</label><input id="ws-phone" required placeholder="+254…"></div>
         </div>
         <div class="field"><label>What do you need?</label>
-          <select id="ws-type"><option>Logo design</option><option>Landing page</option><option>Basic website</option><option selected>SEO website</option><option>Learning management system</option><option>Institution website</option><option>Not sure yet</option></select></div>
+          <select id="ws-type"><option>Logo design</option><option>Landing page</option><option>Basic website</option><option selected>SEO website</option><option>Learning management system</option><option>Institution website</option><option>E-commerce website</option><option>Not sure yet</option></select></div>
         <div class="field"><label>Tell us about your business</label><textarea id="ws-msg" placeholder="e.g. I run a salon in Nairobi and want customers to find me on Google…"></textarea></div>
         <button class="btn btn-gold btn-block" type="submit">Send my request</button>
       </form>
@@ -340,19 +491,22 @@
 <script src="assets/js/chat.js"></script>
 <script>
 (function(){
-  var track=document.getElementById("slides"), n=track.children.length, i=0, timer;
+  var hs=document.getElementById("slider"),track=document.getElementById("slides"),sl=[].slice.call(track.children),n=sl.length,i=0,timer;
   var dots=document.getElementById("dots");
   for(var k=0;k<n;k++){var b=document.createElement("button");b.setAttribute("aria-label","Slide "+(k+1));(function(k){b.onclick=function(){go(k,true)}})(k);dots.appendChild(b)}
   function go(x,user){i=(x+n)%n;track.style.transform="translateX(-"+(i*100)+"%)";
-    [].forEach.call(dots.children,function(d,j){d.className=j===i?"on":""});
-    if(user)restart()}
-  function restart(){clearInterval(timer);timer=setInterval(function(){go(i+1)},4500)}
-  document.getElementById("next").onclick=function(){go(i+1,true)};
-  document.getElementById("prev").onclick=function(){go(i-1,true)};
-  var sx=null,s=document.getElementById("slider");
-  s.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
-  s.addEventListener("touchend",function(e){if(sx===null)return;var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40)go(i+(d<0?1:-1),true);sx=null});
-  go(0);restart();
+    sl.forEach(function(s,j){s.classList.toggle("on",j===i)});
+    [].forEach.call(dots.children,function(d,j){d.className="";void d.offsetWidth;d.className=j===i?"on":""});
+    restart()}
+  function restart(){clearInterval(timer);timer=setInterval(function(){if(!hs.classList.contains("paused"))go(i+1)},6000)}
+  document.getElementById("next").onclick=function(){go(i+1)};
+  document.getElementById("prev").onclick=function(){go(i-1)};
+  hs.addEventListener("mouseenter",function(){hs.classList.add("paused")});
+  hs.addEventListener("mouseleave",function(){hs.classList.remove("paused")});
+  var sx=null;
+  hs.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+  hs.addEventListener("touchend",function(e){if(sx===null)return;var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)go(i+(d<0?1:-1));sx=null});
+  go(0);
 })();
 
 document.querySelectorAll("[data-pick]").forEach(function(a){
