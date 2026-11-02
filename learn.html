@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learn, Timshi Universal Institute</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#070e29">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<style>
+.lms{display:grid;grid-template-columns:320px 1fr;min-height:100vh}
+.lms-side{background:var(--navy-850);border-right:1px solid var(--line);padding:22px;overflow-y:auto;max-height:100vh;position:sticky;top:0}
+.lms-main{padding:32px clamp(18px,4vw,48px);max-width:900px}
+.lms-mod{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:20px 0 6px}
+.lms-item{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:.92rem;color:var(--muted)}
+.lms-item:hover{background:var(--glass)}
+.lms-item.active{background:var(--glass-2,var(--glass));color:#fff}
+.lms-tick{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;font-size:.7rem}
+.lms-item.done .lms-tick{background:var(--gold);border-color:var(--gold);color:#1a1304;font-weight:800}
+.lms-video{position:relative;padding-top:56.25%;border-radius:14px;overflow:hidden;background:#000;margin-bottom:22px}
+.lms-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lms-body{line-height:1.75}
+.lms-body img,.lms-body video{max-width:100%;height:auto}
+.lms-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+@media(max-width:900px){.lms{grid-template-columns:1fr}.lms-side{position:static;max-height:none;border-right:0;border-bottom:1px solid var(--line)}}
+</style>
+</head>
+<body>
+<div class="lms">
+  <aside class="lms-side">
+    <a class="btn btn-ghost btn-sm" href="dashboard.html">← My dashboard</a>
+    <h2 id="course-title" style="font-size:1.15rem;margin:18px 0 8px"></h2>
+    <div class="progress"><i id="bar" style="width:0%"></i></div>
+    <div class="muted" id="pct" style="font-size:.8rem;margin-top:6px"></div>
+    <div id="toc"></div>
+    <a class="btn btn-gold btn-sm hide" id="cert-link" style="margin-top:20px">🎓 Get your certificate</a>
+  </aside>
+  <main class="lms-main" id="main"><p class="muted">Loading your course…</p></main>
+</div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script>
+(async function(){
+  await Store.ready();
+  const user = Store.currentUser();
+  const pid = new URLSearchParams(location.search).get("course") || "";
+  if(!user){ location.href="login.html?next="+encodeURIComponent("learn.html?course="+pid); return; }
+  const main = document.getElementById("main");
+  const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const prog = Store.programById(pid);
+  document.getElementById("course-title").textContent = prog ? prog.title : "Your course";
+
+  let data;
+  try{
+    data = await fetch("/api/lms.php?program="+encodeURIComponent(pid),{headers:{Authorization:"Bearer "+Store.token()},cache:"no-store"})
+      .then(async r=>{ const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||"Could not load course."); return d; });
+  }catch(e){ main.innerHTML=`<div class="panel"><h3>Course unavailable</h3><p class="muted">${esc(e.message)}</p><a class="btn btn-gold btn-sm" href="dashboard.html">Back to dashboard</a></div>`; return; }
+
+  const lessons = data.lessons, done = new Set(data.completed);
+  if(!lessons.length){
+    main.innerHTML=`<div class="panel"><h3>Lessons coming soon</h3><p class="muted">Ruth is still adding the lessons for this course. Meanwhile, use the check-in guide to join the training group.</p><a class="btn btn-gold btn-sm" href="onboarding.html">Open check-in guide</a></div>`;
+    return;
+  }
+  let cur = Math.max(0, lessons.findIndex(l=>!done.has(l.id)));
+  const hashId = location.hash.slice(1);
+  if(hashId){ const i=lessons.findIndex(l=>l.id===hashId); if(i>=0) cur=i; }
+
+  function updateProgress(){
+    const pct = Math.round(done.size/lessons.length*100);
+    document.getElementById("bar").style.width = pct+"%";
+    document.getElementById("pct").textContent = `${done.size} of ${lessons.length} lessons complete (${pct}%)`;
+    const c = document.getElementById("cert-link");
+    c.classList.toggle("hide", done.size < lessons.length);
+    c.href = "certificate.html?course="+encodeURIComponent(pid);
+  }
+  function renderToc(){
+    let html="", mod=null;
+    lessons.forEach((l,i)=>{
+      if(l.module!==mod){ mod=l.module; html+=`<div class="lms-mod">${esc(mod)}</div>`; }
+      html+=`<div class="lms-item ${i===cur?"active":""} ${done.has(l.id)?"done":""}" data-i="${i}"><span class="lms-tick">${done.has(l.id)?"✓":""}</span>${esc(l.title)}</div>`;
+    });
+    const t=document.getElementById("toc"); t.innerHTML=html;
+    t.querySelectorAll(".lms-item").forEach(el=>el.onclick=()=>{ cur=+el.dataset.i; render(); window.scrollTo({top:0,behavior:"smooth"}); });
+  }
+  function render(){
+    const l=lessons[cur];
+    history.replaceState(null,"","#"+l.id);
+    main.innerHTML=`
+      <div class="eyebrow">${esc(l.module)}</div>
+      <h1 style="font-size:clamp(1.5rem,3vw,2.1rem);margin:8px 0 22px">${esc(l.title)}</h1>
+      ${l.embed?`<div class="lms-video"><iframe src="${esc(l.embed)}" title="${esc(l.title)}" allow="accelerometer;encrypted-media;picture-in-picture;fullscreen" allowfullscreen loading="lazy"></iframe></div>`:""}
+      <div class="lms-body">${l.content||""}</div>
+      ${l.resource_url?`<p style="margin-top:22px"><a class="btn btn-ghost btn-sm" href="${esc(l.resource_url)}" target="_blank" rel="noopener">📎 ${esc(l.resource_label||"Download resource")}</a></p>`:""}
+      <div class="lms-actions">
+        <button class="btn btn-ghost" id="prev" ${cur===0?"disabled":""}>← Previous</button>
+        <button class="btn btn-gold" id="complete">${done.has(l.id)?"✓ Completed (undo)":"Mark complete"}</button>
+        <button class="btn btn-azure" id="next" ${cur===lessons.length-1?"disabled":""}>Next →</button>
+      </div>
+      <p class="muted" id="msg" style="font-size:.84rem;margin-top:12px"></p>`;
+    document.getElementById("prev").onclick=()=>{cur--;render();};
+    document.getElementById("next").onclick=()=>{cur++;render();};
+    document.getElementById("complete").onclick=async ()=>{
+      const want=!done.has(l.id), btn=document.getElementById("complete"); btn.disabled=true;
+      try{
+        const d=await fetch("/api/lms.php",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+Store.token()},body:JSON.stringify({action:"complete",lesson_id:l.id,done:want})})
+          .then(async r=>{ const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||"Could not save."); return j; });
+        done.clear(); d.completed.forEach(x=>done.add(x));
+        if(want && cur<lessons.length-1){ cur++; }
+        render();
+      }catch(e){ btn.disabled=false; document.getElementById("msg").textContent=e.message; }
+    };
+    renderToc(); updateProgress();
+  }
+  render();
+})();
+</script>
+</body>
+</html>

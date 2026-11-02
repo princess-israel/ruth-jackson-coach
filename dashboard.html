@@ -147,7 +147,7 @@
           </div>
           <div class="progress"><i style="width:${e.progress||0}%"></i></div>
           <div class="muted" style="font-size:.8rem;margin-top:6px">${e.status==="active"?`${e.progress||0}% complete`:"Ruth is preparing your access link, check Messages 💬"}</div>
-          ${e.status==="active"?`<a class="btn btn-azure btn-sm" href="onboarding.html" style="margin-top:10px">✅ Check in &amp; open course</a>`:""}
+          ${e.status==="active"?`<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><a class="btn btn-gold btn-sm" href="learn.html?course=${encodeURIComponent(e.programId)}">▶ ${e.progress>5?"Continue learning":"Start learning"}</a><a class="btn btn-azure btn-sm" href="onboarding.html">✅ Check in &amp; open course</a></div>`:""}
         </div>
       </div>`;
     }).join("");

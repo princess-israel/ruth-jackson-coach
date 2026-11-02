@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Certificate, Timshi Universal Institute</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#e9ecf3;font-family:Inter,system-ui,sans-serif;color:#0a1330;display:flex;flex-direction:column;align-items:center;padding:24px}
+.cert{background:#fff;width:100%;max-width:960px;aspect-ratio:1.414;border:14px solid #0a1330;outline:3px solid #e8b65a;outline-offset:-24px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;box-sizing:border-box}
+.cert small{letter-spacing:.3em;text-transform:uppercase;color:#a47a22;font-weight:600}
+.cert h1{font-family:Sora,sans-serif;font-size:clamp(1.6rem,4vw,2.8rem);margin:14px 0 6px}
+.cert .name{font-family:Sora,sans-serif;font-size:clamp(1.5rem,4vw,2.6rem);color:#a47a22;border-bottom:2px solid #e8b65a;padding:6px 28px;margin:18px 0}
+.cert p{margin:6px 0;max-width:640px;line-height:1.6}
+.cert .meta{margin-top:28px;font-size:.82rem;color:#4a5578}
+.bar{margin-top:20px;display:flex;gap:10px}
+.bar a,.bar button{background:#e8b65a;color:#1a1304;border:0;border-radius:10px;padding:12px 20px;font-weight:600;cursor:pointer;text-decoration:none;font-size:.95rem}
+.err{background:#fff;padding:32px;border-radius:14px;max-width:480px;text-align:center}
+@media print{body{background:#fff;padding:0}.bar{display:none}.cert{max-width:none;border-width:14px}}
+</style>
+</head>
+<body>
+<div id="out"><p>Loading…</p></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script>
+(async function(){
+  await Store.ready();
+  const out=document.getElementById("out");
+  const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const pid=new URLSearchParams(location.search).get("course")||"";
+  if(!Store.currentUser()){ location.href="login.html?next="+encodeURIComponent("certificate.html?course="+pid); return; }
+  try{
+    const d=await fetch("/api/lms.php?certificate="+encodeURIComponent(pid),{headers:{Authorization:"Bearer "+Store.token()},cache:"no-store"})
+      .then(async r=>{ const j=await r.json().catch(()=>({})); if(!r.ok) throw new Error(j.error||"Certificate unavailable."); return j; });
+    const c=d.certificate, p=Store.programById(pid)||{title:pid};
+    const date=new Date(c.date).toLocaleDateString(undefined,{year:"numeric",month:"long",day:"numeric"});
+    out.innerHTML=`<div class="cert">
+      <small>Timshi Universal Institute</small>
+      <h1>Certificate of Completion</h1>
+      <p>This certifies that</p>
+      <div class="name">${esc(c.name)}</div>
+      <p>has successfully completed the course</p>
+      <p><b style="font-size:1.25rem">${esc(p.title)}</b></p>
+      <div class="meta">Awarded ${esc(date)} · Certificate ID ${esc(c.code)}<br>Trainer: Ruth Jackson · coachruthjackson.com</div>
+    </div>
+    <div class="bar"><button onclick="window.print()">Print or save as PDF</button><a href="learn.html?course=${encodeURIComponent(pid)}">Back to course</a></div>`;
+  }catch(e){ out.innerHTML=`<div class="err"><h2>Not yet available</h2><p>${esc(e.message)}</p><div class="bar" style="justify-content:center"><a href="learn.html?course=${encodeURIComponent(pid)}">Back to course</a></div></div>`; }
+})();
+</script>
+</body>
+</html>

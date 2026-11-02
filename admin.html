@@ -37,6 +37,7 @@
       <li><a data-view="enrollments">🎓 Enrollments</a></li>
       <li><a data-view="orders">💳 Orders</a></li>
       <li><a data-view="programs">📚 Programs</a></li>
+      <li><a data-view="lessons">🧑‍🏫 Lessons (LMS)</a></li>
       <li><a data-view="articles">✍️ Articles</a></li>
       <li><a data-view="inbox">💬 Inbox <span id="inbox-badge"></span></a></li>
       <li><a data-view="students">👥 Students</a></li>
@@ -141,6 +142,39 @@
           <button class="btn btn-ghost" id="pf-cancel">Cancel</button>
           <span id="pf-id-note" class="muted" style="align-self:center;font-size:.82rem"></span>
         </div>
+      </div>
+    </section>
+
+    <!-- LESSONS (LMS) -->
+    <section data-pane="lessons" class="hide">
+      <div class="panel">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+          <h3 style="margin:0">🧑‍🏫 Course lessons</h3>
+          <div style="display:flex;gap:10px;flex-wrap:wrap"><select class="field" style="margin:0" id="ls-program"></select><button class="btn btn-gold btn-sm" id="ls-add">+ Add lesson</button></div>
+        </div>
+        <p class="muted" style="font-size:.86rem">Lessons appear in the student course player (learn.html) for enrolled students. Students track progress and earn a certificate at 100%.</p>
+        <div id="ls-notice"></div>
+        <div style="overflow-x:auto"><table class="table" id="ls-table"></table></div>
+      </div>
+      <div class="panel hide" id="ls-form">
+        <h3 id="ls-form-title">Add lesson</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr 100px;gap:14px">
+          <div class="field"><label>Lesson title</label><input id="ls-title"></div>
+          <div class="field"><label>Module</label><input id="ls-module" placeholder="Module 1"></div>
+          <div class="field"><label>Order</label><input id="ls-pos" type="number" value="1"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:160px 1fr;gap:14px">
+          <div class="field"><label>Type</label><select id="ls-kind"><option value="text">Reading</option><option value="video">Video</option></select></div>
+          <div class="field"><label>YouTube or Vimeo link <span class="muted" style="font-weight:400">(video lessons)</span></label><input id="ls-video" placeholder="https://www.youtube.com/watch?v=..."></div>
+        </div>
+        <div class="field"><label>Lesson content <span class="muted" style="font-weight:400">(HTML allowed: p, h3, ul, a, img)</span></label><textarea id="ls-content" style="min-height:200px"></textarea></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field"><label>Resource link (optional)</label><input id="ls-res" placeholder="https://..."></div>
+          <div class="field"><label>Resource label</label><input id="ls-reslabel" placeholder="Download worksheet"></div>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center;margin-bottom:16px"><input type="checkbox" id="ls-pub" checked> Published (visible to students)</label>
+        <input type="hidden" id="ls-id">
+        <div style="display:flex;gap:10px"><button class="btn btn-gold" id="ls-save">Save lesson</button><button class="btn btn-ghost" id="ls-cancel">Cancel</button></div>
       </div>
     </section>
 
@@ -251,7 +285,7 @@
   const side=document.getElementById("side"), mb=document.getElementById("menu-btn");
   if(window.matchMedia("(max-width:980px)").matches){ mb.style.display="inline-flex"; mb.onclick=()=>side.classList.toggle("open"); }
 
-  const titles={overview:"Overview",enrollments:"Enrollments",orders:"Orders",programs:"Programs",articles:"Articles",inbox:"Inbox",students:"Students",affiliates:"Affiliates"};
+  const titles={overview:"Overview",enrollments:"Enrollments",orders:"Orders",programs:"Programs",lessons:"Lessons (LMS)",articles:"Articles",inbox:"Inbox",students:"Students",affiliates:"Affiliates"};
   document.querySelectorAll(".dash-nav a[data-view]").forEach(a=>{
     a.onclick=()=>{
       document.querySelectorAll(".dash-nav a").forEach(x=>x.classList.remove("active"));
@@ -686,7 +720,43 @@
     }));
   }
 
-  function renderAll(){ renderOverview(); renderEnrollments(); renderOrders(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog(); loadArticles(); }
+  /* ---------- Lessons manager (LMS) ---------- */
+  const lsEsc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const lsNote = m => document.getElementById("ls-notice").innerHTML = m ? `<div class="notice ${m.ok?"ok":"err"}">${lsEsc(m.text)}</div>` : "";
+  let lsList = [];
+  const lsProg = () => document.getElementById("ls-program").value;
+  async function lsApi(opts){ const r=await fetch("/api/admin/lessons.php"+(opts.q||""),{method:opts.body?"POST":"GET",headers:{"Content-Type":"application/json","Authorization":"Bearer "+adminToken},body:opts.body?JSON.stringify(opts.body):undefined}); const d=await r.json().catch(()=>({})); if(!r.ok) throw new Error(d.error||"Request failed"); return d; }
+  async function renderLessons(){
+    const sel=document.getElementById("ls-program");
+    if(!sel.options.length){ sel.innerHTML=catalog.map(p=>`<option value="${lsEsc(p.id)}">${lsEsc(p.title)}</option>`).join(""); sel.onchange=renderLessons; }
+    if(!sel.value || document.querySelector('[data-pane="lessons"]').classList.contains("hide")) return;
+    try{ lsList=(await lsApi({q:"?program="+encodeURIComponent(sel.value)})).lessons||[]; lsNote(null); }
+    catch(e){ lsList=[]; lsNote({ok:false,text:e.message+" (Run db/lms-migration.sql once if the tables are missing.)"}); }
+    const t=document.getElementById("ls-table");
+    t.innerHTML = lsList.length ? `<thead><tr><th>#</th><th>Module</th><th>Lesson</th><th>Type</th><th>Status</th><th></th></tr></thead><tbody>${lsList.map(l=>`<tr><td>${l.position}</td><td>${lsEsc(l.module_title)}</td><td>${lsEsc(l.title)}</td><td>${l.kind}</td><td>${+l.published?"Published":'<span class="muted">Draft</span>'}</td><td><button class="btn btn-ghost btn-sm" data-ledit="${l.id}">Edit</button> <button class="btn btn-ghost btn-sm" data-ldel="${l.id}" style="color:var(--rose)">Delete</button></td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="muted">No lessons yet for this course.</td></tr></tbody>`;
+    t.querySelectorAll("[data-ledit]").forEach(b=>b.onclick=()=>lsOpen(lsList.find(x=>x.id===b.dataset.ledit)));
+    t.querySelectorAll("[data-ldel]").forEach(b=>b.onclick=async()=>{ if(!confirm("Delete this lesson and its student progress?")) return; try{ await lsApi({body:{action:"delete",id:b.dataset.ldel}}); renderLessons(); }catch(e){ lsNote({ok:false,text:e.message}); } });
+  }
+  function lsOpen(l){
+    l=l||{}; const $=id=>document.getElementById(id);
+    $("ls-form").classList.remove("hide"); $("ls-form-title").textContent=l.id?"Edit lesson":"Add lesson";
+    $("ls-id").value=l.id||""; $("ls-title").value=l.title||""; $("ls-module").value=l.module_title||"Module 1";
+    $("ls-pos").value=l.position!=null?l.position:(lsList.length+1); $("ls-kind").value=l.kind||"text";
+    $("ls-video").value=l.video_url||""; $("ls-content").value=l.content||""; $("ls-res").value=l.resource_url||"";
+    $("ls-reslabel").value=l.resource_label||""; $("ls-pub").checked=l.id?!!+l.published:true;
+    $("ls-form").scrollIntoView({behavior:"smooth"});
+  }
+  document.getElementById("ls-add").onclick=()=>lsOpen();
+  document.getElementById("ls-cancel").onclick=()=>document.getElementById("ls-form").classList.add("hide");
+  document.getElementById("ls-save").onclick=async()=>{
+    const $=id=>document.getElementById(id).value;
+    try{
+      await lsApi({body:{action:"save",lesson:{id:$("ls-id"),program_id:lsProg(),title:$("ls-title"),module_title:$("ls-module"),position:+$("ls-pos"),kind:$("ls-kind"),video_url:$("ls-video"),content:$("ls-content"),resource_url:$("ls-res"),resource_label:$("ls-reslabel"),published:document.getElementById("ls-pub").checked}}});
+      document.getElementById("ls-form").classList.add("hide"); renderLessons();
+    }catch(e){ lsNote({ok:false,text:e.message}); }
+  };
+
+  function renderAll(){ renderOverview(); renderEnrollments(); renderOrders(); renderStudents(); renderInbox(); renderAffiliates(); loadCatalog().then(renderLessons); loadArticles(); }
   await loadData(); renderAll();
 })();
 </script>
