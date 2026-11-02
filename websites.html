@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Website Design in Kenya, SEO Websites, LMS &amp; Logos | Ruth Jackson</title>
+<meta name="description" content="Affordable website design in Kenya. Landing pages from KES 10,000, basic websites from KES 15,000, SEO websites KES 40,000 to 80,000, learning management systems KES 80,000 to 120,000, and logos at KES 1,000.">
+<meta name="keywords" content="website design Kenya, SEO websites Kenya, landing page Kenya, LMS Kenya, learning management system, logo design Kenya, institution website, Nairobi web design">
+<link rel="canonical" href="https://coachruthjackson.com/websites.html">
+<meta name="theme-color" content="#070e29">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/styles.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Service","name":"Website design, SEO websites, LMS and logos in Kenya","provider":{"@type":"Organization","name":"Timshi Digitals","url":"https://coachruthjackson.com","telephone":"+254729384374"},"areaServed":"Kenya","offers":[
+{"@type":"Offer","name":"Logo design","priceCurrency":"KES","price":"1000"},
+{"@type":"Offer","name":"Landing page","priceCurrency":"KES","price":"10000"},
+{"@type":"Offer","name":"Basic website","priceCurrency":"KES","price":"15000"},
+{"@type":"Offer","name":"SEO website","priceCurrency":"KES","price":"40000"},
+{"@type":"Offer","name":"Learning management system","priceCurrency":"KES","price":"80000"}]}
+</script>
+<style>
+/* Web services landing page. Uses the site design tokens. */
+.ws-hero{position:relative;padding:130px 0 60px;background:var(--grad-hero);overflow:hidden}
+.ws-top{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center}
+.ws-top h1{font-size:clamp(2.3rem,5.4vw,4.2rem)}
+.ws-top h1 span{color:var(--gold)}
+.ws-lead{color:var(--muted);font-size:1.1rem;max-width:34em}
+.ws-actions{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 14px}
+.ws-from{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.92rem}
+.ws-from b{color:var(--gold-soft)}
+
+/* Hero slider */
+.slider{position:relative;border-radius:22px;background:#06091c;border:1px solid var(--line-strong);box-shadow:var(--shadow);overflow:hidden}
+.slides{display:flex;transition:transform .7s cubic-bezier(.65,0,.25,1);will-change:transform}
+.slide{flex:0 0 100%;padding:22px 22px 12px}
+.slide-tag{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--muted);margin-bottom:12px;gap:10px}
+.slide-tag b{color:var(--text);font-family:var(--font-head)}
+.slide-tag .chip{padding:4px 10px;border-radius:99px;background:var(--glass-2);border:1px solid var(--line);white-space:nowrap}
+.browser{border-radius:12px;overflow:hidden;background:#0b1233;border:1px solid var(--line-strong);aspect-ratio:16/10.5}
+.bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0f1842;border-bottom:1px solid var(--line)}
+.bar i{width:9px;height:9px;border-radius:50%;background:#3a4a85}
+.bar em{margin-left:10px;flex:1;font-style:normal;font-size:.68rem;color:var(--muted);background:rgba(255,255,255,.06);border-radius:99px;padding:3px 12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pg{padding:16px;display:grid;gap:10px;height:calc(100% - 33px);align-content:start}
+.pg .nv{display:flex;justify-content:space-between;align-items:center;font-size:.6rem;color:var(--muted)}
+.pg .nv b{color:var(--text);font-family:var(--font-head);font-size:.74rem}
+.pg .nv span{display:flex;gap:10px}
+.pg h4{font-size:clamp(.95rem,2vw,1.35rem);margin:6px 0 0;line-height:1.15}
+.pg h4 u{text-decoration:none;color:var(--gold)}
+.pg p{font-size:.64rem;color:var(--muted);margin:0;max-width:26em}
+.pg .cta{display:inline-block;width:max-content;font-size:.6rem;font-weight:700;padding:6px 12px;border-radius:99px;background:var(--gold);color:#1a1304}
+.pg .img{border-radius:8px;min-height:70px;flex:1}
+.pg .row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pg .row div{border-radius:8px;background:var(--glass-2);border:1px solid var(--line);padding:8px;font-size:.58rem;color:var(--muted)}
+.pg .row div b{display:block;color:var(--text);font-size:.78rem;font-family:var(--font-head)}
+/* SEO result mock */
+.serp{display:grid;gap:8px}
+.serp .q{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border-radius:99px;padding:7px 14px;font-size:.66rem;color:var(--text)}
+.serp .r{border-radius:8px;padding:8px 10px;background:var(--glass);border:1px solid var(--line);font-size:.58rem;color:var(--muted)}
+.serp .r b{display:block;color:var(--azure);font-size:.72rem;font-weight:600}
+.serp .r.top{border-color:var(--gold);background:rgba(232,182,90,.1)}
+.serp .r.top b{color:var(--gold-soft)}
+.serp .rank{float:right;font-weight:800;color:#1a1304;background:var(--gold);border-radius:99px;padding:1px 8px;font-size:.58rem}
+.g1{background:linear-gradient(135deg,#e8b65a55,#0e1a44 70%)}
+.g2{background:linear-gradient(135deg,#4ea8ff55,#0e1a44 70%)}
+.g3{background:linear-gradient(135deg,#f3a9a055,#0e1a44 70%)}
+.g4{background:linear-gradient(135deg,#9af0c055,#0e1a44 70%)}
+.slider-ctrl{display:flex;align-items:center;justify-content:space-between;padding:6px 22px 18px}
+.dots{display:flex;gap:8px}
+.dots button{width:9px;height:9px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.25);cursor:pointer;transition:.3s}
+.dots button.on{width:28px;background:var(--gold)}
+.arrows{display:flex;gap:8px}
+.arrows button{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-strong);background:var(--glass);color:var(--text);cursor:pointer;font-size:1rem}
+.arrows button:hover{border-color:var(--gold);color:var(--gold)}
+
+/* Marquee strip */
+.strip{border-block:1px solid var(--line);padding:16px 0;overflow:hidden;background:rgba(255,255,255,.02)}
+.strip div{display:flex;gap:44px;width:max-content;animation:mq 28s linear infinite;font-family:var(--font-head);font-weight:600;color:var(--muted);white-space:nowrap}
+.strip span::before{content:"✳ ";color:var(--gold)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* Pricing */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{position:relative;display:flex;flex-direction:column;padding:28px;border-radius:var(--radius);background:var(--glass);border:1px solid var(--line);transition:.3s}
+.pcard:hover{transform:translateY(-6px);border-color:var(--line-strong);background:var(--glass-2)}
+.pcard.hot{border-color:var(--gold);background:linear-gradient(180deg,rgba(232,182,90,.1),var(--glass))}
+.pcard .badge{position:absolute;top:-12px;right:22px;background:var(--gold);color:#1a1304;font-size:.72rem;font-weight:800;padding:4px 12px;border-radius:99px}
+.pcard .ico{font-size:1.7rem;margin-bottom:6px}
+.pcard h3{margin-bottom:4px}
+.pcard .amt{font-family:var(--font-head);font-size:1.7rem;font-weight:800;color:var(--gold-soft);margin:6px 0 2px}
+.pcard .amt small{font-size:.8rem;color:var(--muted);font-weight:500}
+.pcard .sub{color:var(--muted);font-size:.92rem}
+.pcard ul{list-style:none;padding:0;margin:16px 0 22px;display:grid;gap:8px;flex:1}
+.pcard li{display:flex;gap:10px;font-size:.93rem;color:var(--article-text)}
+.pcard li::before{content:"✓";color:var(--gold);font-weight:800}
+.pcard .btn{justify-content:center}
+
+/* Process + why */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
+.step{padding:24px;border-radius:var(--radius);border:1px solid var(--line);background:var(--glass)}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:var(--font-head);font-weight:800;font-size:1.8rem;color:var(--gold)}
+.step h3{font-size:1.1rem;margin:8px 0 6px}
+.faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.faq summary{cursor:pointer;font-family:var(--font-head);font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";color:var(--gold);font-size:1.3rem;line-height:1}
+.faq details[open] summary::after{content:"\2013"}
+.faq p{margin:10px 0 0;color:var(--muted)}
+.big-cta{padding:60px 28px;border-radius:26px;text-align:center;background:radial-gradient(700px 300px at 50% 0,rgba(232,182,90,.18),transparent 70%),var(--navy-800);border:1px solid var(--line-strong)}
+.big-cta h2{max-width:16em;margin:0 auto .4em}
+
+@media(max-width:980px){
+  .ws-top{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  .ws-hero{padding:110px 0 40px}
+  .price-grid,.steps{grid-template-columns:1fr}
+  .slide{padding:16px 14px 8px}
+}
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="index.html"><span class="logo">RJ</span><span>Ruth Jackson<small>AI Coach</small></span></a>
+    <nav><ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="websites.html">Websites</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="blog.html">Insights</a></li>
+      <li><a href="timshi-digital-ads.html">Timshi Digital Ads</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="affiliates.html">Become an affiliate</a></li>
+      <li class="nav-signin"><a href="login.html">Sign in</a></li>
+    </ul></nav>
+    <div class="nav-cta"><span data-account-cta></span>
+    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="ws-hero">
+  <div class="container ws-top">
+    <div>
+      <div class="hero-badges"><span class="pill"><span class="dot"></span>Built in Kenya</span><span class="pill"><span class="dot"></span>Mobile and SEO ready</span><span class="pill"><span class="dot"></span>Pay in KES</span></div>
+      <h1>We build websites that <span>get found</span> on Google</h1>
+      <p class="ws-lead">SEO websites, landing pages, basic websites, learning management systems and logos, made for Kenyan businesses, schools and institutions at honest, affordable prices.</p>
+      <div class="ws-actions">
+        <a class="btn btn-gold" href="#pricing">See prices</a>
+        <a class="btn btn-whatsapp" href="https://wa.me/254729384374?text=Hi%20Ruth%2C%20I%20need%20a%20website" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+      <div class="ws-from"><span>Logos <b>KES 1,000</b></span><span>Landing pages from <b>KES 10,000</b></span><span>Websites from <b>KES 15,000</b></span></div>
+    </div>
+
+    <div class="slider" id="slider" aria-roledescription="carousel" aria-label="Sample websites">
+      <div class="slides" id="slides">
+
+        <div class="slide">
+          <div class="slide-tag"><b>SEO website</b><span class="chip">Ranks on page 1</span></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourbusiness.co.ke</em></div>
+            <div class="pg serp">
+              <div class="q">🔍 best bakery in Nairobi</div>
+              <div class="r top"><span class="rank">#1</span><b>Your Bakery | Fresh Cakes in Nairobi</b>yourbakery.co.ke · Order online, delivery across Nairobi</div>
+              <div class="r"><b>Competitor Bakes</b>competitor.co.ke · Cakes and pastries</div>
+              <div class="r"><b>Another Bakery Ltd</b>anotherbakery.com · Wedding cakes Kenya</div>
+            </div></div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag"><b>Business website</b><span class="chip">From KES 15,000</span></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>greenclinic.co.ke</em></div>
+            <div class="pg">
+              <div class="nv"><b>Green Clinic</b><span><i>Services</i><i>About</i><i>Book</i></span></div>
+              <h4>Care you can <u>trust</u>, close to home.</h4>
+              <p>Book appointments online and find us fast on Google Maps.</p>
+              <span class="cta">Book now</span>
+              <div class="img g4"></div>
+            </div></div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag"><b>Learning management system</b><span class="chip">KES 80,000 to 120,000</span></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>academy.yourschool.ac.ke</em></div>
+            <div class="pg">
+              <div class="nv"><b>Your Academy</b><span><i>Courses</i><i>My learning</i><i>Certificates</i></span></div>
+              <h4>Learn anywhere. <u>Get certified.</u></h4>
+              <div class="row"><div><b>12</b>Courses</div><div><b>1,240</b>Students</div><div><b>94%</b>Completion</div></div>
+              <div class="img g2"></div>
+            </div></div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag"><b>Landing page</b><span class="chip">From KES 10,000</span></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourlaunch.co.ke</em></div>
+            <div class="pg">
+              <div class="nv"><b>Launch</b><span><i>Offer</i><i>FAQ</i></span></div>
+              <h4>One page. <u>One goal.</u> More customers.</h4>
+              <p>A fast, focused page built to turn visitors into calls and WhatsApp chats.</p>
+              <span class="cta">Get my offer</span>
+              <div class="img g1"></div>
+            </div></div>
+        </div>
+
+        <div class="slide">
+          <div class="slide-tag"><b>Institution website</b><span class="chip">Custom quote</span></div>
+          <div class="browser"><div class="bar"><i></i><i></i><i></i><em>yourcollege.ac.ke</em></div>
+            <div class="pg">
+              <div class="nv"><b>Your College</b><span><i>Admissions</i><i>Programs</i><i>News</i></span></div>
+              <h4>Shaping <u>tomorrow's</u> leaders.</h4>
+              <p>Admissions, programs, news and student portal in one trusted home.</p>
+              <span class="cta">Apply today</span>
+              <div class="img g3"></div>
+            </div></div>
+        </div>
+
+      </div>
+      <div class="slider-ctrl">
+        <div class="dots" id="dots"></div>
+        <div class="arrows"><button id="prev" aria-label="Previous slide">&larr;</button><button id="next" aria-label="Next slide">&rarr;</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="strip" aria-hidden="true"><div>
+  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>Institution websites</span><span>Logos KES 1,000</span>
+  <span>SEO websites</span><span>Landing pages</span><span>Basic websites</span><span>LMS for schools</span><span>Institution websites</span><span>Logos KES 1,000</span>
+</div></div>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <div class="section-head center reveal"><div class="eyebrow" style="justify-content:center">Prices in Kenyan shillings</div><h2>Pick what fits your business</h2><p class="muted">Clear starting prices. The final quote depends on pages and features, and you will know it before we begin.</p></div>
+    <div class="price-grid" data-stagger>
+
+      <div class="pcard"><div class="ico">🎨</div><h3>Logo design</h3><p class="sub">Look professional from day one.</p>
+        <div class="amt">KES 1,000</div>
+        <ul><li>Clean, modern logo</li><li>Ready for social media and print</li><li>Fast turnaround</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="Logo design">Get a logo</a></div>
+
+      <div class="pcard"><div class="ico">📄</div><h3>Landing page</h3><p class="sub">One focused page that sells.</p>
+        <div class="amt"><small>from</small> KES 10,000</div>
+        <ul><li>Single high-converting page</li><li>WhatsApp and call buttons</li><li>Mobile friendly and fast</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="Landing page">Start a landing page</a></div>
+
+      <div class="pcard"><div class="ico">🌐</div><h3>Basic website</h3><p class="sub">Your business, online.</p>
+        <div class="amt"><small>from</small> KES 15,000</div>
+        <ul><li>Up to 5 pages</li><li>Contact form and Google Maps</li><li>Mobile friendly design</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="Basic website">Get a website</a></div>
+
+      <div class="pcard hot"><span class="badge">Most popular</span><div class="ico">🚀</div><h3>SEO website</h3><p class="sub">Built to rank and bring customers.</p>
+        <div class="amt">KES 40,000 <small>to 80,000</small></div>
+        <ul><li>On-page SEO and fast loading</li><li>Google Business and Search Console setup</li><li>Blog and keyword-ready pages</li><li>Local targeting for Nairobi and Kenya</li></ul>
+        <a class="btn btn-gold" href="#enquire" data-pick="SEO website">Get an SEO website</a></div>
+
+      <div class="pcard"><div class="ico">🎓</div><h3>Learning management system</h3><p class="sub">Sell and run online courses.</p>
+        <div class="amt">KES 80,000 <small>to 120,000</small></div>
+        <ul><li>Courses, lessons, quizzes and certificates</li><li>Student dashboards and progress</li><li>Admin panel and online payments</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="Learning management system">Build my LMS</a></div>
+
+      <div class="pcard"><div class="ico">🏫</div><h3>Institution websites</h3><p class="sub">Schools, colleges, NGOs and organisations.</p>
+        <div class="amt">Custom quote</div>
+        <ul><li>Admissions, programs and news</li><li>Staff, events and downloads</li><li>Optional student portal or LMS</li></ul>
+        <a class="btn btn-azure" href="#enquire" data-pick="Institution website">Request a quote</a></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" style="padding-top:0">
+  <div class="container">
+    <div class="section-head center reveal"><div class="eyebrow" style="justify-content:center">How it works</div><h2>From idea to live website</h2></div>
+    <div class="steps" data-stagger>
+      <div class="step"><h3>Tell us your goal</h3><p class="muted">Message us on WhatsApp or fill the form below.</p></div>
+      <div class="step"><h3>Get a clear quote</h3><p class="muted">A fixed price in KES before any work starts.</p></div>
+      <div class="step"><h3>We design and build</h3><p class="muted">You review the work and request changes.</p></div>
+      <div class="step"><h3>Launch and grow</h3><p class="muted">Your site goes live, ready for Google.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="padding-top:0">
+  <div class="container" style="max-width:820px">
+    <div class="section-head center reveal"><div class="eyebrow" style="justify-content:center">Questions</div><h2>Before you start</h2></div>
+    <div class="faq reveal">
+      <details><summary>How much does a website cost in Kenya?</summary><p>Landing pages start at KES 10,000 and basic websites at KES 15,000. SEO websites are KES 40,000 to 80,000, and learning management systems are KES 80,000 to 120,000. Logos are KES 1,000.</p></details>
+      <details><summary>What is an SEO website?</summary><p>It is a website built so Google can understand it and show it to people searching in Nairobi and across Kenya. That includes fast loading, clean structure, keyword-focused pages and local setup.</p></details>
+      <details><summary>What is a learning management system (LMS)?</summary><p>An LMS lets you sell and run online courses with lessons, quizzes, certificates, student dashboards and payments. It suits trainers, schools and companies.</p></details>
+      <details><summary>Can you build a website for my school or institution?</summary><p>Yes. We build institution websites with admissions, programs, news and an optional student portal. Request a quote and we will price it to your needs.</p></details>
+      <details><summary>How do I pay?</summary><p>Prices are in Kenyan shillings. We agree the quote first and share payment details on WhatsApp.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ENQUIRY -->
+<section class="section" id="enquire" style="padding-top:0">
+  <div class="container">
+    <div class="auth-card" style="max-width:640px;margin:0 auto">
+      <div class="eyebrow" style="justify-content:center">Get your quote</div>
+      <h2 class="center" style="font-size:1.8rem">Tell us what you need</h2>
+      <p class="muted center" style="margin-bottom:24px">Share a few details and we will reach out on WhatsApp.</p>
+      <div id="ws-notice"></div>
+      <form id="ws-form">
+        <div class="pay-row" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="field"><label>Your name</label><input id="ws-name" required placeholder="Full name"></div>
+          <div class="field"><label>Phone / WhatsApp</label><input id="ws-phone" required placeholder="+254…"></div>
+        </div>
+        <div class="field"><label>What do you need?</label>
+          <select id="ws-type"><option>Logo design</option><option>Landing page</option><option>Basic website</option><option selected>SEO website</option><option>Learning management system</option><option>Institution website</option><option>Not sure yet</option></select></div>
+        <div class="field"><label>Tell us about your business</label><textarea id="ws-msg" placeholder="e.g. I run a salon in Nairobi and want customers to find me on Google…"></textarea></div>
+        <button class="btn btn-gold btn-block" type="submit">Send my request</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0">
+  <div class="container"><div class="big-cta reveal">
+    <h2>Ready to get your business online?</h2>
+    <p class="muted" style="margin-bottom:22px">Logos from KES 1,000. Websites from KES 15,000.</p>
+    <a class="btn btn-whatsapp" href="https://wa.me/254729384374?text=Hi%20Ruth%2C%20I%20need%20a%20website" target="_blank" rel="noopener">WhatsApp</a>
+  </div></div>
+</section>
+
+<footer class="footer"><div class="container"><div class="footer-bottom" style="border:0">
+  <span>© <span data-year></span> Ruth Jackson.</span><span><a href="tel:+254729384374">+254 729 384374</a> · <a href="https://wa.me/254729384374">WhatsApp</a></span>
+</div></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chat.js"></script>
+<script>
+(function(){
+  var track=document.getElementById("slides"), n=track.children.length, i=0, timer;
+  var dots=document.getElementById("dots");
+  for(var k=0;k<n;k++){var b=document.createElement("button");b.setAttribute("aria-label","Slide "+(k+1));(function(k){b.onclick=function(){go(k,true)}})(k);dots.appendChild(b)}
+  function go(x,user){i=(x+n)%n;track.style.transform="translateX(-"+(i*100)+"%)";
+    [].forEach.call(dots.children,function(d,j){d.className=j===i?"on":""});
+    if(user)restart()}
+  function restart(){clearInterval(timer);timer=setInterval(function(){go(i+1)},4500)}
+  document.getElementById("next").onclick=function(){go(i+1,true)};
+  document.getElementById("prev").onclick=function(){go(i-1,true)};
+  var sx=null,s=document.getElementById("slider");
+  s.addEventListener("touchstart",function(e){sx=e.touches[0].clientX},{passive:true});
+  s.addEventListener("touchend",function(e){if(sx===null)return;var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40)go(i+(d<0?1:-1),true);sx=null});
+  go(0);restart();
+})();
+
+document.querySelectorAll("[data-pick]").forEach(function(a){
+  a.addEventListener("click",function(){document.getElementById("ws-type").value=a.getAttribute("data-pick")});
+});
+document.getElementById("ws-form").onsubmit=function(e){
+  e.preventDefault();
+  var $=function(id){return document.getElementById(id)};
+  var name=$("ws-name").value.trim(), phone=$("ws-phone").value.trim(), type=$("ws-type").value, msg=$("ws-msg").value.trim();
+  var text=encodeURIComponent("Hi Ruth! I'd like a quote.\nName: "+name+"\nPhone: "+phone+"\nService: "+type+(msg?("\nDetails: "+msg):""));
+  $("ws-notice").innerHTML='<div class="notice ok">Thank you, '+(name.split(" ")[0]||"there")+'! Opening WhatsApp so your request reaches us instantly, or we will reach you on '+phone+'.</div>';
+  setTimeout(function(){window.open("https://wa.me/254729384374?text="+text,"_blank")},700);
+  this.reset();
+};
+</script>
+</body>
+</html>

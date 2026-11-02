@@ -154,6 +154,7 @@
           <a href="program.html?id=ai-women-entrepreneurs">AI for Entrepreneurs</a>
           <a href="program.html?id=digital-marketing-social">Digital Marketing</a>
           <a href="customer-service.html">Customer Service</a>
+          <a href="websites.html">Websites &amp; SEO</a>
         </div>
         <div><h4>Company</h4>
           <a href="about.html">About Ruth</a>
